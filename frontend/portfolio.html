@@ -376,7 +376,7 @@
   </footer>
 
   <script>
-    const API_URL = "";
+    const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
 
     // Function to create video card
     function createVideoCard(videoPath, index) {

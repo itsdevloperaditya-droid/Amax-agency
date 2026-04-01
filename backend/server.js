@@ -78,7 +78,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage, limits: { fileSize: 100 * 1024 * 1024 } });
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: 'https://amax-gr31.onrender.com', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -86,7 +86,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')));
-app.use('/video-editing samples', express.static(path.join(__dirname, 'video-editing samples')));
+app.use('/video-editing-samples', express.static(path.join(__dirname, 'video-editing samples')));
 
 // Serve specific hero video safely
 app.get('/WhatsApp%20Video%202026-03-30%20at%2012.46.06.mp4', (req, res) => {
@@ -213,14 +213,27 @@ app.get('/api/media', (req, res) => {
     if (!fs.existsSync(dir)) return [];
     return fs.readdirSync(dir)
       .filter(file => !file.startsWith('.') && fs.statSync(path.join(dir, file)).isFile())
-      .map(file => ({ name: file, path: `${urlPrefix}/${file}`, mtime: fs.statSync(path.join(dir, file)).mtime }))
+      .map(file => ({ name: file, path: `${urlPrefix}/${encodeURIComponent(file)}`, mtime: fs.statSync(path.join(dir, file)).mtime }))
       .sort((a, b) => b.mtime - a.mtime);
   };
-  res.json({ videos: getFiles(videoDir, 'video-editing samples'), thumbnails: getFiles(thumbDir, 'thumbnails') });
+  res.json({ videos: getFiles(videoDir, 'video-editing-samples'), thumbnails: getFiles(thumbDir, 'thumbnails') });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'));
+app.get('/api/video-view/:id', async (req, res) => {
+  try {
+    if (isMongoConnected) {
+      const entry = await History.findById(req.params.id);
+      if (!entry) return res.status(404).json({ error: 'Not found' });
+      return res.json(entry);
+    } else {
+      const history = readJSON(HISTORY_FILE);
+      const entry = history.find(h => h._id === req.params.id);
+      if (!entry) return res.status(404).json({ error: 'Not found' });
+      return res.json(entry);
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch video' });
+  }
 });
 
 app.listen(PORT, () => {

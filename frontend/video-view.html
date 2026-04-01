@@ -74,8 +74,10 @@
       <h2 class="text-xl font-bold mb-2">Video Not Found</h2>
       <p class="text-gray-400 mb-6">The link might be expired or incorrect.</p>
       <a href="services.html" class="btn-gradient px-8 py-3 rounded-xl font-bold inline-block">Go Back</a>
-    <script>
-      const API_URL = "";
+    </div>
+  </div>
+  <script>
+      const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
       const urlParams = new URLSearchParams(window.location.search);
       const historyId = urlParams.get('id');
 

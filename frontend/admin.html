@@ -91,7 +91,7 @@
       setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
     };
 
-    const API_URL = "";
+    const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
     const adminAuthModal = document.getElementById('adminAuthModal');
     const dashboardContent = document.getElementById('dashboardContent');
     const userTableBody = document.getElementById('userTableBody');
