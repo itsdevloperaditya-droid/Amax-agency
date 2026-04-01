@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -13,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/amax_portfolio';
 
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Successfully connected to local MongoDB at 127.0.0.1!'))
+  .then(() => console.log('Successfully connected to MongoDB Atlas!'))
   .catch(err => {
     console.error('MongoDB connection error:', err.message);
   });
@@ -67,7 +68,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
+app.use(express.static(__dirname)); // Serve backend root for the hero video
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')));
+app.use('/video-editing samples', express.static(path.join(__dirname, 'video-editing samples')));
 
 // ADMIN ROUTES
 app.post('/api/admin/login', (req, res) => {
@@ -178,8 +182,8 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.get('/api/media', (req, res) => {
-  const videoDir = path.resolve(__dirname, '..', 'frontend', 'video-editing samples');
-  const thumbDir = path.resolve(__dirname, '..', 'frontend', 'thumbnails');
+  const videoDir = path.resolve(__dirname, 'video-editing samples');
+  const thumbDir = path.resolve(__dirname, 'thumbnails');
   const getFiles = (dir, urlPrefix) => {
     try {
       if (!fs.existsSync(dir)) return [];

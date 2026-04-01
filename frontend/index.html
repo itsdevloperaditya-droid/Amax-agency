@@ -417,7 +417,7 @@
     <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-2xl blur-2xl opacity-30"></div>
     <div class="relative glass-card p-3 rounded-2xl overflow-hidden shadow-2xl transform -translate-y-6"> <!-- upar shift: -translate-y-6 -->
       <video class="rounded-xl w-full h-auto object-cover" autoplay loop muted playsinline>
-        <source src="${API_URL}/WhatsApp Video 2026-03-30 at 12.46.06.mp4" type="video/mp4">
+        <source src="/WhatsApp%20Video%202026-03-30%20at%2012.46.06.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
       <div class="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-sm rounded-xl p-2 flex items-center justify-between">
@@ -1023,30 +1023,20 @@ Join Amax_editor and grow your income 🚀</p>
       }
     };
 
-const API_URL = 'https://amax-backend.onrender.com';
+    const API_URL = '';
 
-    const API_URL = 'https://amax-backend.onrender.com';
+    // Signup Form Submission
+    document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-        const API_URL = 'https://amax-backend.onrender.com';
-
-            const API_URL = 'https://amax-backend.onrender.com';
-
-                const API_URL = 'https://amax-backend.onrender.com';
-
-                    const API_URL = 'https://amax-backend.onrender.com';
-
-                        // Form Submissions
-                        document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
-                          e.preventDefault();
-                          const formData = new FormData(e.target);
-                          const data = Object.fromEntries(formData.entries());
-
-                          try {
-                            const response = await fetch(`${API_URL}/api/signup`, {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify(data)
-                            });
+      try {
+        const response = await fetch(`${API_URL}/api/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
         const result = await response.json();
         if (response.ok) {
           showToast('Account created successfully! Please login.', 'success');
@@ -1058,28 +1048,19 @@ const API_URL = 'https://amax-backend.onrender.com';
         showToast('Server connection error. Please try again later.', 'error');
       }
     });
-const API_URL = 'https://amax-backend.onrender.com';
 
-    const API_URL = 'https://amax-backend.onrender.com';
+    // Login Form Submission
+    document.getElementById('loginFormEl').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
 
-        const API_URL = 'https://amax-backend.onrender.com';
-
-            const API_URL = 'https://amax-backend.onrender.com';
-
-                const API_URL = 'https://amax-backend.onrender.com';
-
-                    // Form Submissions
-                    document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
-                      e.preventDefault();
-                      const formData = new FormData(e.target);
-                      const data = Object.fromEntries(formData.entries());
-
-                      try {
-                        const response = await fetch(`${API_URL}/api/signup`, {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify(data)
-                        });
+      try {
+        const response = await fetch(`${API_URL}/api/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
         const result = await response.json();
         if (response.ok) {
           localStorage.setItem('isLoggedIn', 'true');
