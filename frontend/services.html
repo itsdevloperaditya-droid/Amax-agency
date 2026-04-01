@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Our Services | Amax Services</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: #05050A; overflow-x: hidden; color: #e5e7eb; }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+    
+    .bg-gradient-animate {
+      background: linear-gradient(-45deg, #05050A, #0f0f1a, #1a0b2e, #05050A);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+    .glass-card {
+      background: rgba(15, 15, 25, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 2rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card:hover { transform: translateY(-10px); border-color: #8B5CF6; box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.4); background: rgba(20, 20, 35, 0.8); }
+
+    .service-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #8B5CF6, #D946EF);
+      border-radius: 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem; margin-bottom: 1.5rem;
+      box-shadow: 0 10px 20px -5px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-primary { background: linear-gradient(95deg, #8B5CF6, #A855F7); transition: all 0.3s ease; }
+    .btn-primary:hover { box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); transform: scale(1.02); }
+
+    .animate-in { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(12px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-content { 
+      background: #0d0d16; border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 2rem; 
+      width: 100%; max-width: 500px; max-height: 95vh; position: relative; overflow-y: auto;
+    }
+    
+    .step-container { display: none; padding: 2.5rem 2rem; }
+    .step-container.active { display: block; animation: stepFade 0.4s ease-out; }
+    @keyframes stepFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+    .input-group label { display: block; font-size: 0.75rem; color: #8B5CF6; margin-bottom: 0.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .input-field { 
+      width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); 
+      color: white; border-radius: 1rem; padding: 0.9rem 1rem; outline: none; transition: all 0.3s;
+    }
+    .input-field:focus { border-color: #8B5CF6; background: rgba(139, 92, 246, 0.05); }
+
+    .choice-grid { display: grid; grid-template-cols: repeat(2, 1fr); gap: 0.75rem; }
+    .choice-card { 
+      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); 
+      border-radius: 1rem; padding: 1.25rem 1rem; text-align: center; cursor: pointer; transition: all 0.3s;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    }
+    .choice-card:hover { border-color: rgba(139, 92, 246, 0.5); }
+    .choice-card.selected { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(217, 70, 239, 0.1)); border-color: #8B5CF6; }
+    .choice-card i { font-size: 1.5rem; color: #8B5CF6; }
+    .choice-card span { font-size: 0.85rem; font-weight: 600; }
+
+    .multi-choice-card { 
+      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); 
+      border-radius: 0.75rem; padding: 0.75rem; cursor: pointer; transition: all 0.3s;
+      font-size: 0.8rem; font-weight: 600; text-align: center;
+    }
+    .multi-choice-card.selected { background: rgba(139, 92, 246, 0.2); border-color: #8B5CF6; }
+
+    .progress-bar { height: 4px; background: rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 10; width: 100%; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #8B5CF6, #D946EF); transition: width 0.5s; }
+    
+    .summary-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1.25rem; padding: 1rem; }
+    .summary-item { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.8rem; }
+    .summary-label { color: #6b7280; }
+    .summary-value { color: #e5e7eb; font-weight: 600; text-align: right; max-width: 60%; }
+  </style>
+</head>
+<body class="bg-gradient-animate min-h-screen">
+
+  <div id="serviceModal" class="modal-overlay">
+    <div class="modal-content shadow-2xl">
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 hover:text-white transition z-20"><i class="fas fa-times text-lg"></i></button>
+
+      <!-- Step 1: Basic Info (Shared) -->
+      <div id="step1" class="step-container active">
+        <div class="mb-8"><h2 class="text-3xl font-extrabold mb-2">Basic Info</h2><p class="text-gray-500 text-sm font-medium">Your contact details.</p></div>
+        <div class="space-y-4">
+          <div class="input-group"><label>Full Name</label><input type="text" id="fullName" class="input-field" placeholder="Rahul Sharma"></div>
+          <div class="input-group"><label>WhatsApp Number</label><input type="text" id="whatsappNum" class="input-field" placeholder="+91 95091 36278"></div>
+          <div class="input-group"><label>Email Address</label><input type="email" id="email" class="input-field" placeholder="rahul@example.com"></div>
+          <div class="input-group"><label>Brand Name (Optional)</label><input type="text" id="brandName" class="input-field" placeholder="Amax Agency"></div>
+          <button onclick="nextStep(2)" class="btn-primary py-4 rounded-2xl font-bold text-white w-full">Continue</button>
+        </div>
+      </div>
+
+      <!-- VIDEO FLOW -->
+      <div id="step2-video" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Project Type</h2></div>
+        <div class="space-y-6">
+          <div class="choice-grid">
+            <div class="choice-card" onclick="setOption('v_type', 'YouTube', this)"><span>YouTube</span></div>
+            <div class="choice-card" onclick="setOption('v_type', 'Reel', this)"><span>Reel</span></div>
+            <div class="choice-card" onclick="setOption('v_type', 'Ad', this)"><span>Ad</span></div>
+            <div class="choice-card" onclick="setOption('v_type', 'Other', this)"><span>Other</span></div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-1/2 input-group"><label>Count</label><input type="number" id="v_count" class="input-field" value="1"></div>
+            <div class="w-1/2 input-group"><label>Duration</label><input type="text" id="v_duration" class="input-field" placeholder="5 min"></div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(1)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(3)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step3-video" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Requirements</h2></div>
+        <div class="space-y-6">
+          <textarea id="v_desc" class="input-field" rows="3" placeholder="Aap kya banana chahte ho?"></textarea>
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('v_style', 'Cinematic', this)"><span>Cinematic</span></div>
+            <div class="choice-card py-3" onclick="setOption('v_style', 'Fast', this)"><span>Fast</span></div>
+            <div class="choice-card py-3" onclick="setOption('v_style', 'Minimal', this)"><span>Minimal</span></div>
+            <div class="choice-card py-3" onclick="setOption('v_style', 'Funny', this)"><span>Funny</span></div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(2)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep('budget')" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+
+      <!-- THUMBNAIL FLOW -->
+      <div id="step2-thumb" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Platform</h2></div>
+        <div class="space-y-6">
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('t_platform', 'YouTube', this)"><span>YouTube</span></div>
+            <div class="choice-card py-3" onclick="setOption('t_platform', 'Instagram', this)"><span>Instagram</span></div>
+          </div>
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('t_category', 'Gaming', this)"><span>Gaming</span></div>
+            <div class="choice-card py-3" onclick="setOption('t_category', 'Finance', this)"><span>Finance</span></div>
+            <div class="choice-card py-3" onclick="setOption('t_category', 'Podcast', this)"><span>Podcast</span></div>
+            <div class="choice-card py-3" onclick="setOption('t_category', 'Vlog', this)"><span>Vlog</span></div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(1)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(3)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step3-thumb" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Creative Details</h2></div>
+        <div class="space-y-4">
+          <input type="text" id="t_title" class="input-field" placeholder="Video Title">
+          <input type="text" id="t_text" class="input-field" placeholder="Text on Thumbnail">
+          <textarea id="t_desc" class="input-field" rows="2" placeholder="Description/Vibe..."></textarea>
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('t_style', 'Clickbait', this)"><span>Clickbait</span></div>
+            <div class="choice-card py-3" onclick="setOption('t_style', 'Clean', this)"><span>Clean</span></div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(2)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep('budget')" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+
+      <!-- WEB FLOW -->
+      <div id="step2-web" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Website Type</h2></div>
+        <div class="space-y-6">
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('w_type', 'Portfolio', this)"><span>Portfolio</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_type', 'Business', this)"><span>Business</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_type', 'E-commerce', this)"><span>E-commerce</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_type', 'Landing', this)"><span>Landing Page</span></div>
+          </div>
+          <select id="w_purpose" class="input-field"><option value="Leads">Leads generate</option><option value="Sales">Products sell</option><option value="Branding">Personal branding</option></select>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(1)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(3)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step3-web" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Structure</h2></div>
+        <div class="space-y-6">
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('w_pages', '1 Page', this)"><span>1 Page</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_pages', '3-5 Pages', this)"><span>3-5 Pages</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_pages', '5+ Pages', this)"><span>5+ Pages</span></div>
+          </div>
+          <div class="grid grid-cols-3 gap-2" id="w_req_pages">
+            <div class="multi-choice-card" onclick="toggleMulti(this)">Home</div><div class="multi-choice-card" onclick="toggleMulti(this)">About</div><div class="multi-choice-card" onclick="toggleMulti(this)">Services</div><div class="multi-choice-card" onclick="toggleMulti(this)">Portfolio</div><div class="multi-choice-card" onclick="toggleMulti(this)">Contact</div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(2)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(4)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step4-web" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Design Pref</h2></div>
+        <div class="space-y-5">
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('w_style', 'Modern', this)"><span>Modern</span></div>
+            <div class="choice-card py-3" onclick="setOption('w_style', 'Corporate', this)"><span>Corporate</span></div>
+          </div>
+          <input type="text" id="w_refs" class="input-field" placeholder="Ref links (Very Important)">
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(3)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(5)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step5-web" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Features</h2></div>
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-2" id="w_feats">
+            <div class="multi-choice-card" onclick="toggleMulti(this)">Contact Form</div><div class="multi-choice-card" onclick="toggleMulti(this)">Payment</div><div class="multi-choice-card" onclick="toggleMulti(this)">Login</div><div class="multi-choice-card" onclick="toggleMulti(this)">Admin Panel</div><div class="multi-choice-card" onclick="toggleMulti(this)">SEO</div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(4)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep('budget')" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+
+      <!-- GRAPHICS FLOW -->
+      <div id="step2-gfx" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Design Type</h2></div>
+        <div class="space-y-6">
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('g_type', 'Logo', this)"><span>Logo Design</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_type', 'Post', this)"><span>Social Media</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_type', 'Branding', this)"><span>Branding Kit</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_type', 'Banner', this)"><span>Banner</span></div>
+          </div>
+          <div class="input-group"><label>Platform</label>
+            <div class="choice-grid">
+              <div class="choice-card py-2" onclick="setOption('g_plat', 'Instagram', this)"><span>Instagram</span></div>
+              <div class="choice-card py-2" onclick="setOption('g_plat', 'YouTube', this)"><span>YouTube</span></div>
+            </div>
+          </div>
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(1)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(3)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step3-gfx" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Creative Vibe</h2></div>
+        <div class="space-y-4">
+          <textarea id="g_content" class="input-field" rows="2" placeholder="Text to write on design..."></textarea>
+          <div class="choice-grid">
+            <div class="choice-card py-3" onclick="setOption('g_vibe', 'Minimal', this)"><span>Minimal</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_vibe', 'Luxury', this)"><span>Luxury</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_vibe', 'Bold', this)"><span>Bold</span></div>
+            <div class="choice-card py-3" onclick="setOption('g_vibe', 'Fun', this)"><span>Fun</span></div>
+          </div>
+          <input type="text" id="g_refs" class="input-field" placeholder="Ref links (Important)">
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(2)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep(4)" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+      <div id="step4-gfx" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Branding Info</h2></div>
+        <div class="space-y-5">
+          <div class="input-group"><label>Logo Available?</label>
+            <div class="choice-grid">
+              <div class="choice-card py-2" onclick="setOption('g_logo', 'Yes', this)"><span>Yes</span></div>
+              <div class="choice-card py-2" onclick="setOption('g_logo', 'No', this)"><span>No</span></div>
+            </div>
+          </div>
+          <input type="text" id="g_colors" class="input-field" placeholder="Brand colors">
+          <input type="text" id="g_fonts" class="input-field" placeholder="Font preference">
+          <div class="flex gap-3 pt-4"><button onclick="nextStep(3)" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep('budget')" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Next</button></div>
+        </div>
+      </div>
+
+      <!-- COMMON BUDGET & SUMMARY -->
+      <div id="step_budget" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Deal Info</h2></div>
+        <div class="space-y-6">
+          <div id="budgetOptions" class="space-y-2"></div>
+          <div id="deadlineOptions" class="choice-grid"></div>
+          <div class="flex gap-3 pt-4"><button id="budgetBackBtn" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="nextStep('summary')" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white">Review</button></div>
+        </div>
+      </div>
+      <div id="step_summary" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-2">Summary</h2></div>
+        <div id="summaryContent" class="summary-box mb-8"></div>
+        <div class="flex gap-3"><button id="summaryBackBtn" class="w-1/3 py-4 rounded-2xl font-bold text-gray-500 bg-white/5">Back</button><button onclick="finalizeRequest()" class="w-2/3 btn-primary py-4 rounded-2xl font-bold text-white flex items-center justify-center gap-2"><i class="fab fa-whatsapp"></i> WhatsApp</button></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2"><i class="fas fa-film text-purple-500 text-xl"></i><a href="index.html" class="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Amax</a></div>
+      <a href="index.html" class="text-xs font-medium hover:text-purple-400 transition">Home</a>
+    </div>
+  </nav>
+
+  <main class="pt-32 pb-20 px-4 md:px-6">
+    <div class="max-w-7xl mx-auto text-center mb-16 animate-in">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Choose Your Service</h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">Premium creative solutions to elevate your brand presence.</p>
+    </div>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="glass-card p-8 flex flex-col" onclick="selectService('video-editing')"><div class="service-icon"><i class="fas fa-video"></i></div><h3 class="text-2xl font-bold mb-4">Video Editing</h3><p class="text-gray-400 text-sm mb-6 flex-grow">Cinematic reels, ads & YouTube edits.</p><button class="btn-primary py-3 rounded-xl font-bold text-white w-full">Hire Now</button></div>
+        <div class="glass-card p-8 flex flex-col" onclick="selectService('thumbnail-design')"><div class="service-icon"><i class="fas fa-palette"></i></div><h3 class="text-2xl font-bold mb-4">Thumbnail Design</h3><p class="text-gray-400 text-sm mb-6 flex-grow">High-CTR visuals for your content.</p><button class="btn-primary py-3 rounded-xl font-bold text-white w-full">Hire Now</button></div>
+        <div class="glass-card p-8 flex flex-col" onclick="selectService('website-building')"><div class="service-icon"><i class="fas fa-code"></i></div><h3 class="text-2xl font-bold mb-4">Web Building</h3><p class="text-gray-400 text-sm mb-6 flex-grow">Modern portfolios & business sites.</p><button class="btn-primary py-3 rounded-xl font-bold text-white w-full">Hire Now</button></div>
+        <div class="glass-card p-8 flex flex-col" onclick="selectService('graphics-designing')"><div class="service-icon"><i class="fas fa-bullhorn"></i></div><h3 class="text-2xl font-bold mb-4">Graphics Design</h3><p class="text-gray-400 text-sm mb-6 flex-grow">Logos, branding & social kits.</p><button class="btn-primary py-3 rounded-xl font-bold text-white w-full">Hire Now</button></div>
+    </div>
+  </main>
+
+  <script>
+    let currentStep = 1; let selectedService = ''; let formData = {};
+
+    function selectService(service) {
+      selectedService = service; formData = {};
+      document.getElementById('serviceModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden'; nextStep(1);
+    }
+
+    function closeModal() { document.getElementById('serviceModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+    function setOption(k, v, e) {
+      formData[k] = v;
+      e.parentNode.querySelectorAll('.choice-card').forEach(el => el.classList.remove('selected'));
+      e.classList.add('selected');
+    }
+
+    function toggleMulti(e) { e.classList.toggle('selected'); }
+
+    function nextStep(step) {
+      if (currentStep === 1 && step > 1 && (!document.getElementById('fullName').value || !document.getElementById('whatsappNum').value)) { alert('Identity required!'); return; }
+      
+      document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
+      let target = '';
+      let total = { 'website-building': 7, 'graphics-designing': 6, 'video-editing': 5, 'thumbnail-design': 5 }[selectedService];
+
+      if (step === 1) target = 'step1';
+      else if (step === 2 || step === 3) target = `step${step}-${selectedService === 'website-building' ? 'web' : (selectedService === 'video-editing' ? 'video' : (selectedService === 'graphics-designing' ? 'gfx' : 'thumb'))}`;
+      else if (step === 4 && selectedService === 'website-building') target = 'step4-web';
+      else if (step === 4 && selectedService === 'graphics-designing') target = 'step4-gfx';
+      else if (step === 5 && selectedService === 'website-building') target = 'step5-web';
+      else if (step === 'summary') { generateSummary(); target = 'step_summary'; document.getElementById('summaryBackBtn').onclick = () => nextStep('budget'); }
+      else { 
+        injectBudgetOptions(); target = 'step_budget'; 
+        let prev = step === 'budget' ? (selectedService === 'website-building' ? 5 : (selectedService === 'graphics-designing' ? 4 : 3)) : 1;
+        document.getElementById('budgetBackBtn').onclick = () => nextStep(prev);
+      }
+
+      document.getElementById(target).classList.add('active');
+      currentStep = step === 'summary' ? total : (step === 'budget' ? total - 1 : step);
+      document.getElementById('progressFill').style.width = (currentStep / total) * 100 + '%';
+    }
+
+    function injectBudgetOptions() {
+      const b = document.getElementById('budgetOptions'), d = document.getElementById('deadlineOptions');
+      const sets = {
+        'website-building': { b: ['₹2k-₹5k', '₹5k-₹10k', '₹10k+'], d: ['Urgent', '1 week', 'Flexible'] },
+        'graphics-designing': { b: ['₹200-₹500', '₹500-₹1500', '₹1500+'], d: ['Urgent', '24-48h', 'Flexible'] },
+        'video-editing': { b: ['₹500-₹2k', '₹2k-₹5k', '₹5k+'], d: ['Urgent', '2-3 days'] },
+        'thumbnail-design': { b: ['₹100-₹300', '₹300-₹700', '₹700+'], d: ['Urgent', '24h'] }
+      }[selectedService];
+      b.innerHTML = sets.b.map(v => `<div class="choice-card flex-row justify-between py-3 px-5" onclick="setOption('budget', '${v}', this)"><span>${v}</span><i class="fas fa-wallet"></i></div>`).join('');
+      d.innerHTML = sets.d.map(v => `<div class="choice-card py-3" onclick="setOption('deadline', '${v}', this)"><span>${v}</span></div>`).join('');
+    }
+
+    function generateSummary() {
+      const s = document.getElementById('summaryContent');
+      let data = { 'Name': document.getElementById('fullName').value, 'Service': selectedService.toUpperCase() };
+      Object.assign(data, formData);
+      s.innerHTML = Object.entries(data).map(([l, v]) => `<div class="summary-item"><span class="summary-label">${l}</span><span class="summary-value">${v || 'N/A'}</span></div>`).join('');
+    }
+
+    function finalizeRequest() {
+      const name = document.getElementById('fullName').value, whatsapp = document.getElementById('whatsappNum').value;
+      let msg = `*NEW ENQUIRY* 🚀\n👤Client: ${name}\n📱WhatsApp: ${whatsapp}\n🛠️Service: ${selectedService.toUpperCase()}\n`;
+      Object.entries(formData).forEach(([k, v]) => msg += `🔹${k}: ${v}\n`);
+      window.open(`https://wa.me/919509136278?text=${encodeURIComponent(msg)}`, '_blank');
+      closeModal();
+    }
+  </script>
+</body>
+</html>

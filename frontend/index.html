@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Amax | Professional Video Editor & Creative Developer</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #05050A;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Glassmorphism + modern glow */
+    .glass-card {
+      background: rgba(15, 15, 25, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.2);
+      transform: translateY(-4px);
+    }
+
+    .service-card {
+      background: rgba(12, 12, 20, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 1.5rem;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: #8B5CF6;
+      box-shadow: 0 20px 35px -15px rgba(139, 92, 246, 0.3);
+    }
+
+    .gradient-border {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(0, 255, 255, 0.2));
+      padding: 1px;
+      border-radius: 2rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #8B5CF6, #A855F7);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(139, 92, 246, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: #8B5CF6;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0A0A0F;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #8B5CF6;
+      border-radius: 10px;
+    }
+
+    /* portfolio item */
+    .portfolio-item {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .portfolio-item img, .portfolio-item video {
+      transition: transform 0.4s ease;
+    }
+
+    .portfolio-item:hover img, .portfolio-item:hover video {
+      transform: scale(1.05);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    /* animation fade up */
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .delay-100 {
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+
+    /* filter buttons */
+    .filter-btn {
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active {
+      background: #8B5CF6;
+      color: white;
+      border-color: #8B5CF6;
+    }
+
+    /* TOAST STYLES */
+    #toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      pointer-events: auto;
+      min-width: 300px;
+      padding: 16px 20px;
+      border-radius: 1rem;
+      background: rgba(15, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: white;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateX(120%);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon { background: #10B981; }
+    .toast-error .toast-icon { background: #EF4444; }
+    .toast-info .toast-icon { background: #8B5CF6; }
+
+    /* HIRE ME MODAL STYLES */
+    .step-content {
+      display: none;
+    }
+    .step-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-indicator {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.875rem;
+      border: 2px solid rgba(139, 92, 246, 0.3);
+      background: rgba(15, 15, 25, 0.6);
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+    .step-indicator.active {
+      background: #8B5CF6;
+      border-color: #8B5CF6;
+      color: white;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+    }
+    .step-indicator.completed {
+      background: #10B981;
+      border-color: #10B981;
+      color: white;
+    }
+    .progress-line {
+      flex: 1;
+      height: 2px;
+      background: rgba(139, 92, 246, 0.2);
+      margin: 0 8px;
+    }
+    .progress-line-fill {
+      height: 100%;
+      background: #8B5CF6;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: white;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: #8B5CF6;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+    .option-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .option-card:hover {
+      background: rgba(139, 92, 246, 0.05);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+    .option-card.selected {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: #8B5CF6;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+    }
+    .option-card input[type="radio"], .option-card input[type="checkbox"] {
+      accent-color: #8B5CF6;
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    /* MODAL FOR FULLSCREEN MEDIA */
+    .media-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      padding: 20px;
+    }
+    .media-modal.active {
+      display: flex;
+    }
+    .media-modal-content {
+      max-width: 90%;
+      max-height: 90vh;
+      position: relative;
+    }
+    .media-modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 1rem;
+      box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
+    }
+    .close-media-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .close-media-modal:hover {
+      color: #8B5CF6;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-[#05050A] text-gray-200">
+
+  <!-- MEDIA MODAL -->
+  <div id="mediaModal" class="media-modal">
+    <div class="media-modal-content">
+      <span class="close-media-modal">&times;</span>
+      <img id="modalImg" src="" alt="Fullscreen View">
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-6 md:px-12 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-film text-purple-500 text-2xl"></i>
+        <span class="font-bold text-2xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Amax</span>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#home" class="hover:text-purple-400 transition">Home</a>
+        <a href="#services" class="hover:text-purple-400 transition">Services</a>
+        <a href="#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+      </div>
+      <div class="flex gap-3">
+        <button class="px-5 py-2 rounded-full text-sm font-semibold btn-primary text-white" id="navAuthBtn">Sign Up / Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 md:pt-28">
+    <!-- HERO SECTION with Personal Branding -->
+    <section id="home" class="relative px-6 md:px-12 overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none opacity-30">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-600 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-cyan-600 rounded-full blur-[130px]"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="space-y-6 animate-fade-up">
+            <div class="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-500/30 rounded-full px-4 py-1.5 text-sm">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+              </span>
+              <span class="text-purple-300 font-medium">🔥 Premium Creative Marketplace</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
+              <span class="bg-gradient-to-br from-white via-purple-100 to-purple-300 bg-clip-text text-transparent">Amax Services</span><br>
+              <span class="text-white">💜 Hire Top Creators or Start Earning Today</span>
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl max-w-lg leading-relaxed">Connect with skilled editors, designers & developers — or join as a creator and get real clients. Fast, simple, and powerful.</p>
+            <div class="flex flex-col gap-4 pt-3 items-start">
+              <button class="w-full md:w-80 px-8 py-3 rounded-full font-bold text-white btn-primary flex items-center justify-center gap-2 text-lg" id="videoEditorBtn"><i class="fas fa-video"></i> Hire a Freelancer Now</button>
+              <button class="w-full md:w-80 px-8 py-3 rounded-full font-semibold btn-outline flex items-center justify-center gap-2 text-lg" id="viewPortfolioBtn"><i class="fas fa-folder-open"></i> View Portfolio</button>
+              <button class="w-full md:w-80 px-8 py-3 rounded-full font-semibold btn-outline flex items-center justify-center gap-2 text-lg" id="heroHireBtn"><i class="fas fa-play-circle"></i> Join As Freelancer For Free</button>
+            </div>
+            <!-- Stats -->
+            <div class="flex flex-wrap gap-6 pt-6 border-t border-white/10 pt-6">
+              <div><span class="font-bold text-2xl text-purple-400">5+</span> <span class="text-gray-400 text-sm">Years Experience</span></div>
+              <div><span class="font-bold text-2xl text-purple-400">200+</span> <span class="text-gray-400 text-sm">Projects Completed</span></div>
+              <div><span class="font-bold text-2xl text-purple-400">50+</span> <span class="text-gray-400 text-sm">Happy Clients</span></div>
+              <div><span class="font-bold text-2xl text-purple-400">4.98</span> <span class="text-gray-400 text-sm"><i class="fas fa-star text-yellow-400 text-sm"></i> Client Rating</span></div>
+            </div>
+          </div>
+          <div class="relative flex justify-center animate-fade-up delay-100">
+  <div class="relative w-full max-w-lg"> <!-- width badhaya: max-w-md se max-w-lg -->
+    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-2xl blur-2xl opacity-30"></div>
+    <div class="relative glass-card p-3 rounded-2xl overflow-hidden shadow-2xl transform -translate-y-6"> <!-- upar shift: -translate-y-6 -->
+      <video class="rounded-xl w-full h-auto object-cover" autoplay loop muted playsinline>
+        <source src="${API_URL}/WhatsApp Video 2026-03-30 at 12.46.06.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-sm rounded-xl p-2 flex items-center justify-between">
+        <span class="text-xs"><i class="fas fa-cut text-purple-400"></i> 4K Editing Expert</span>
+        <span class="text-xs"><i class="fas fa-clock"></i> Fast Turnaround</span>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES SECTION (MUST HAVE) -->
+    <section id="services" class="px-6 md:px-12 py-24 max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent">What We Offer</h2>
+        <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Professional creative services tailored to your needs</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="service-card p-8 text-center animate-fade-up delay-100">
+          <div class="w-20 h-20 mx-auto bg-purple-500/20 rounded-2xl flex items-center justify-center text-4xl mb-5 border border-purple-500/30"><i class="fas fa-video text-purple-400"></i></div>
+          <h3 class="text-2xl font-semibold mb-3">Video Editing</h3>
+          <p class="text-gray-300 mb-4">YouTube videos, cinematic edits, social media content, color grading, motion graphics, and complete post-production.</p>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li>✓ 4K/8K Professional Editing</li>
+            <li>✓ Color Grading & Correction</li>
+            <li>✓ Motion Graphics & VFX</li>
+          </ul>
+        </div>
+        <div class="service-card p-8 text-center animate-fade-up delay-200">
+          <div class="w-20 h-20 mx-auto bg-purple-500/20 rounded-2xl flex items-center justify-center text-4xl mb-5 border border-purple-500/30"><i class="fas fa-palette text-purple-400"></i></div>
+          <h3 class="text-2xl font-semibold mb-3">Graphic Design</h3>
+          <p class="text-gray-300 mb-4">Eye-catching thumbnails, social media graphics, brand identity, logos, and marketing materials that convert.</p>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li>✓ YouTube Thumbnails</li>
+            <li>✓ Brand Identity & Logos</li>
+            <li>✓ Social Media Graphics</li>
+          </ul>
+        </div>
+        <div class="service-card p-8 text-center animate-fade-up delay-300">
+          <div class="w-20 h-20 mx-auto bg-purple-500/20 rounded-2xl flex items-center justify-center text-4xl mb-5 border border-purple-500/30"><i class="fas fa-code text-purple-400"></i></div>
+          <h3 class="text-2xl font-semibold mb-3">Web Development</h3>
+          <p class="text-gray-300 mb-4">Modern, responsive websites, portfolio sites, landing pages, and custom web solutions for creators.</p>
+          <ul class="text-sm text-gray-400 space-y-1">
+            <li>✓ Portfolio Websites</li>
+            <li>✓ Landing Pages</li>
+            <li>✓ Responsive Design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO SHOWCASE with Real Samples -->
+    <section id="portfolio" class="px-6 md:px-12 py-24 bg-[#080810]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">My Recent Work</h2>
+          <p class="text-gray-400 mt-4 max-w-2xl mx-auto text-lg">A glimpse into the high-quality content I've created for my clients</p>
+        </div>
+        
+        <!-- Thumbnail Samples Row -->
+        <div class="mb-16">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-1 h-8 bg-pink-500 rounded-full"></div>
+            <h3 class="text-2xl font-bold text-white">Latest Thumbnail Designs</h3>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors shadow-lg shadow-black/50 group cursor-pointer thumbnail-preview">
+              <img src="thumbnails/file_0000000080d071fa95b741a21645da4e.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Thumbnail">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors shadow-lg shadow-black/50 group cursor-pointer thumbnail-preview">
+              <img src="thumbnails/file_00000000068872088a7c4d673e94d5f4.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Thumbnail">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors shadow-lg shadow-black/50 group cursor-pointer thumbnail-preview">
+              <img src="thumbnails/1773397325999.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Thumbnail">
+            </div>
+            <div class="rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors shadow-lg shadow-black/50 group cursor-pointer thumbnail-preview">
+              <img src="thumbnails/WhatsApp Image 2026-03-30 at 19.10.52.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Thumbnail">
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-center mt-12">
+          <a href="portfolio.html" class="px-8 py-3 rounded-full font-bold text-white btn-primary flex items-center gap-3 text-lg transition-all hover:gap-5">
+            View Full Portfolio <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODERN SEPARATOR -->
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="h-px w-full bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="px-6 md:px-12 py-16 max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold">What Clients Say</h2>
+        <p class="text-gray-400">Trusted by creators and businesses worldwide</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex gap-3 items-center">
+            <img src="https://randomuser.me/api/portraits/men/21.jpg" class="w-12 h-12 rounded-full" alt="Client">
+            <div>
+              <h4 class="font-semibold">Daniel Ray</h4>
+              <div class="flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+          <p class="mt-3 text-gray-300">"Amax transformed my raw footage into a cinematic masterpiece. My YouTube views doubled after working with him. Highly recommended!"</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex gap-3 items-center">
+            <img src="https://randomuser.me/api/portraits/women/90.jpg" class="w-12 h-12 rounded-full" alt="Client">
+            <div>
+              <h4 class="font-semibold">Sophia M.</h4>
+              <div class="flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+          <p class="mt-3 text-gray-300">"The thumbnail designs Amax created increased my CTR by 40%. Professional, fast, and creative. Will definitely work again!"</p>
+        </div>
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex gap-3 items-center">
+            <img src="https://randomuser.me/api/portraits/men/55.jpg" class="w-12 h-12 rounded-full" alt="Client">
+            <div>
+              <h4 class="font-semibold">Jason Lin</h4>
+              <div class="flex text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+          <p class="mt-3 text-gray-300">"Amax built my portfolio website and it's stunning! Clean design, fast loading, and exactly what I wanted. 10/10 service."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="px-6 md:px-12 py-20 relative">
+      <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-cyan-900/20 blur-3xl"></div>
+      <div class="max-w-4xl mx-auto relative glass-card p-10 md:p-14 text-center border border-purple-500/30 rounded-3xl backdrop-blur-xl">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4">💰 Start Earning with Your Skills</h2>
+        <p class="text-gray-200 text-lg mb-8">Get real clients, consistent work, and earn without chasing projects.  
+Join Amax_editor and grow your income 🚀</p>
+        <button class="px-10 py-4 rounded-full font-bold text-white btn-primary text-xl inline-flex items-center gap-2" id="finalHireBtn"><i class="fas fa-rocket"></i> Join as Creator <i class="fas fa-arrow-right"></i></button>
+        <p class="text-xs text-gray-400 mt-5">💸 Get paid • 📈 Real projects • 🔒 Secure</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-12 px-6 mt-10">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
+        <div>
+          <div class="flex items-center gap-2 text-2xl font-bold">
+            <i class="fas fa-film text-purple-500"></i>
+            <span class="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Amax</span>
+          </div>
+          <p class="text-gray-400 text-sm mt-2">Professional Video Editor & Creative Developer</p>
+          <div class="flex gap-4 mt-4 text-xl">
+            <i class="fab fa-twitter hover:text-purple-400 cursor-pointer"></i>
+            <i class="fab fa-instagram hover:text-purple-400 cursor-pointer"></i>
+            <i class="fab fa-linkedin-in hover:text-purple-400 cursor-pointer"></i>
+            <i class="fab fa-youtube hover:text-purple-400 cursor-pointer"></i>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-8 md:gap-12">
+          <div>
+            <h4 class="font-semibold mb-3">Quick Links</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li><a href="#home" class="hover:text-purple-400 transition">Home</a></li>
+              <li><a href="#services" class="hover:text-purple-400 transition">Services</a></li>
+              <li><a href="#portfolio" class="hover:text-purple-400 transition">Portfolio</a></li>
+              <li><a href="admin.html" class="text-purple-500/50 hover:text-purple-400 transition font-semibold"><i class="fas fa-lock text-xs mr-1"></i> Admin Panel</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-3">Contact</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li><i class="fas fa-envelope mr-2"></i> amax@editor.com</li>
+              <li><i class="fas fa-phone mr-2"></i> +91 9509136278</li>
+              <li><i class="fab fa-whatsapp mr-2"></i> WhatsApp Available</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-gray-500 text-xs pt-8 border-t border-white/5 mt-8 max-w-7xl mx-auto">© 2025 Amax — Hire Services or start Earning Today. All rights reserved.</div>
+    </footer>
+  </main>
+
+  <!-- AUTH MODAL -->
+  <div id="authModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
+    <div class="glass-card w-full max-w-md p-8 relative animate-fade-up">
+      <button id="closeAuthModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+      
+      <div id="loginForm">
+        <h2 class="text-3xl font-bold mb-6 text-center">Login</h2>
+        <form id="loginFormEl" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Email Address</label>
+            <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" name="password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="••••••••">
+          </div>
+          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-4">Login</button>
+        </form>
+        <p class="text-center text-sm mt-6 text-gray-400">Don't have an account? <a href="#" id="toggleToSignup" class="text-purple-400 font-semibold">Sign Up</a></p>
+      </div>
+
+      <div id="signupForm" class="hidden">
+        <h2 class="text-3xl font-bold mb-6 text-center">Sign Up</h2>
+        <form id="signupFormEl" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Full Name</label>
+            <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="John Doe">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Email Address</label>
+            <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" name="password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="••••••••">
+          </div>
+          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-4">Create Account</button>
+        </form>
+        <p class="text-center text-sm mt-6 text-gray-400">Already have an account? <a href="#" id="toggleToLogin" class="text-purple-400 font-semibold">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIRE ME MODAL -->
+  <div id="hireMeModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-md px-4 py-8">
+    <div class="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-10 relative">
+      <button id="closeHireModal" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl transition-colors">&times;</button>
+      
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Join Our Creative Team</h2>
+        <p class="text-gray-400 mt-2">Apply to work with Amax and earn money from your skill</p>
+      </div>
+
+      <!-- Step Indicators -->
+      <div class="flex items-center justify-between mb-10 px-2">
+        <div class="step-indicator active" data-step="1">1</div>
+        <div class="progress-line"><div class="progress-line-fill" id="progress-1"></div></div>
+        <div class="step-indicator" data-step="2">2</div>
+        <div class="progress-line"><div class="progress-line-fill" id="progress-2"></div></div>
+        <div class="step-indicator" data-step="3">3</div>
+        <div class="progress-line"><div class="progress-line-fill" id="progress-3"></div></div>
+        <div class="step-indicator" data-step="4">4</div>
+        <div class="progress-line"><div class="progress-line-fill" id="progress-4"></div></div>
+        <div class="step-indicator" data-step="5">5</div>
+      </div>
+
+      <form id="hireMeForm" class="space-y-6">
+        <!-- Step 1: Basic Info -->
+        <div class="step-content active" data-step="1">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
+            <i class="fas fa-user-circle"></i> Step 1: Basic Info
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Full Name *</label>
+              <input type="text" name="fullName" class="form-input" placeholder="Enter your full name">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2 text-gray-300">WhatsApp Number (IMPORTANT) *</label>
+              <input type="tel" name="whatsapp" class="form-input" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Email (Optional)</label>
+              <input type="email" name="email" class="form-input" placeholder="your@email.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Skill Selection -->
+        <div class="step-content" data-step="2">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
+            <i class="fas fa-briefcase"></i> Step 2: Skill Selection
+          </h3>
+          <div class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Primary Skill *</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="option-card">
+                  <input type="radio" name="primarySkill" value="Video Editor">
+                  <span>Video Editor</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="primarySkill" value="Thumbnail Designer">
+                  <span>Thumbnail Designer</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="primarySkill" value="Graphic Designer">
+                  <span>Graphic Designer</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="primarySkill" value="Web Developer">
+                  <span>Web Developer</span>
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Experience Level *</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label class="option-card">
+                  <input type="radio" name="experience" value="Beginner">
+                  <span>Beginner</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="experience" value="Intermediate">
+                  <span>Intermediate</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="experience" value="Expert">
+                  <span>Expert</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Tools & Expertise -->
+        <div class="step-content" data-step="3">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
+            <i class="fas fa-tools"></i> Step 3: Tools & Expertise
+          </h3>
+          
+          <div id="dynamicToolsContainer" class="space-y-8">
+            <!-- Video Editor Set -->
+            <div id="set-VideoEditor" class="skill-set space-y-6 hidden">
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Video Editing Tools *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="tools" value="Premiere Pro"><span>Premiere Pro</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="After Effects"><span>After Effects</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="CapCut"><span>CapCut</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="DaVinci Resolve"><span>DaVinci Resolve</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Final Cut Pro"><span>Final Cut Pro</span></label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="workType" value="YouTube Editing"><span>YouTube Editing</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Reels/Shorts"><span>Reels/Shorts</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Ads/Promos"><span>Ads/Promos</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Documentaries"><span>Documentaries</span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thumbnail Designer Set -->
+            <div id="set-ThumbnailDesigner" class="skill-set space-y-6 hidden">
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Design Tools *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Canva"><span>Canva</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Lightroom"><span>Lightroom</span></label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="workType" value="Gaming Thumbnails"><span>Gaming Thumbnails</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Vlog Thumbnails"><span>Vlog Thumbnails</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Clickbait Style"><span>Clickbait Style</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Minimalist"><span>Minimalist</span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Graphic Designer Set -->
+            <div id="set-GraphicDesigner" class="skill-set space-y-6 hidden">
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Creative Tools *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Figma"><span>Figma</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="InDesign"><span>InDesign</span></label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="workType" value="Logo Design"><span>Logo Design</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Social Media Posts"><span>Social Media Posts</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Brand Identity"><span>Brand Identity</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Banners/Posters"><span>Banners/Posters</span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Web Developer Set -->
+            <div id="set-WebDeveloper" class="skill-set space-y-6 hidden">
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Development Stack *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="tools" value="HTML/CSS/JS"><span>HTML/CSS/JS</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="React/Vue"><span>React/Vue</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Tailwind CSS"><span>Tailwind CSS</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="WordPress"><span>WordPress</span></label>
+                  <label class="option-card"><input type="checkbox" name="tools" value="Node.js"><span>Node.js</span></label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <label class="option-card"><input type="checkbox" name="workType" value="Landing Pages"><span>Landing Pages</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Portfolio Sites"><span>Portfolio Sites</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="E-commerce"><span>E-commerce</span></label>
+                  <label class="option-card"><input type="checkbox" name="workType" value="Custom Web Apps"><span>Custom Web Apps</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Portfolio -->
+        <div class="step-content" data-step="4">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
+            <i class="fas fa-link"></i> Step 4: Portfolio (MOST IMPORTANT)
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Portfolio Link * (Google Drive / YouTube / Behance)</label>
+              <input type="url" name="portfolioLink" class="form-input" placeholder="https://...">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Past work description * (Short text)</label>
+              <textarea name="workDescription" class="form-input min-h-[120px]" placeholder="Tell us about your experience and the projects you've worked on..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Pricing & Availability -->
+        <div class="step-content" data-step="5">
+          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
+            <i class="fas fa-clock"></i> Step 5: Pricing & Availability
+          </h3>
+          <div class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Price Range *</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label class="option-card">
+                  <input type="radio" name="priceRange" value="₹500–₹2000">
+                  <span>₹500–₹2000</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="priceRange" value="₹2000–₹5000">
+                  <span>₹2000–₹5000</span>
+                </label>
+                <label class="option-card">
+                  <input type="radio" name="priceRange" value="₹5000+">
+                  <span>₹5000+</span>
+                </label>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Delivery Time *</label>
+                <select name="deliveryTime" class="form-input">
+                  <option value="24h">24h</option>
+                  <option value="2–3 days">2–3 days</option>
+                  <option value="Flexible">Flexible</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-4 text-gray-300">Availability *</label>
+                <select name="availability" class="form-input">
+                  <option value="Part-time">Part-time</option>
+                  <option value="Full-time">Full-time</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center pt-8 border-t border-white/10 mt-6">
+          <button type="button" id="prevStep" class="px-6 py-2.5 rounded-full font-semibold border border-purple-500/30 text-purple-300 hover:bg-purple-500/10 transition hidden">
+            <i class="fas fa-chevron-left mr-2"></i> Previous
+          </button>
+          <div class="flex-1"></div>
+          <button type="button" id="nextStep" class="px-8 py-2.5 rounded-full font-bold text-white btn-primary flex items-center gap-2">
+            Next Step <i class="fas fa-chevron-right ml-1"></i>
+          </button>
+          <button type="submit" id="submitHireForm" class="px-8 py-2.5 rounded-full font-bold text-white btn-primary flex items-center gap-2 hidden">
+            Submit Application <i class="fab fa-whatsapp ml-1"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGOUT CONFIRMATION MODAL -->
+  <div id="logoutModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
+    <div class="glass-card w-full max-w-sm p-8 relative animate-fade-up text-center">
+      <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-sign-out-alt text-3xl"></i>
+      </div>
+      <h2 class="text-2xl font-bold mb-2">Are you sure?</h2>
+      <p class="text-gray-400 mb-8">You will need to login again to access your account.</p>
+      <div class="flex gap-4">
+        <button id="cancelLogout" class="flex-1 py-3 rounded-full font-bold border border-white/10 hover:bg-white/5 transition text-gray-300">Cancel</button>
+        <button id="confirmLogout" class="flex-1 py-3 rounded-full font-bold bg-red-500 hover:bg-red-600 transition text-white">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TOAST SYSTEM
+    const toastContainer = document.getElementById('toast-container');
+    const showToast = (message, type = 'info') => {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      let icon = '<i class="fas fa-info-circle"></i>';
+      if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
+      if (type === 'error') icon = '<i class="fas fa-exclamation-circle"></i>';
+      
+      toast.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-message">${message}</div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      // Trigger animation
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      // Remove after 4 seconds
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    };
+
+    // AUTH LOGIC
+    const authModal = document.getElementById('authModal');
+    const logoutModal = document.getElementById('logoutModal');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const navAuthBtn = document.getElementById('navAuthBtn');
+    
+    const isLoggedIn = () => localStorage.getItem('isLoggedIn') === 'true';
+
+    const showAuthModal = (type = 'login') => {
+      authModal.classList.remove('hidden');
+      if (type === 'signup') {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+      } else {
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+      }
+    };
+
+    const hideAuthModal = () => authModal.classList.add('hidden');
+
+    const showLogoutModal = () => logoutModal.classList.remove('hidden');
+    const hideLogoutModal = () => logoutModal.classList.add('hidden');
+
+    document.getElementById('closeAuthModal').addEventListener('click', hideAuthModal);
+    document.getElementById('toggleToSignup').addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.classList.add('hidden');
+      signupForm.classList.remove('hidden');
+    });
+    document.getElementById('toggleToLogin').addEventListener('click', (e) => {
+      e.preventDefault();
+      signupForm.classList.add('hidden');
+      loginForm.classList.remove('hidden');
+    });
+
+    document.getElementById('cancelLogout').addEventListener('click', hideLogoutModal);
+    document.getElementById('confirmLogout').addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userName');
+      updateAuthUI();
+      hideLogoutModal();
+      showToast('Logged out successfully!', 'info');
+    });
+
+    navAuthBtn.addEventListener('click', () => {
+      if (isLoggedIn()) {
+        showLogoutModal();
+      } else {
+        showAuthModal();
+      }
+    });
+
+    const updateAuthUI = () => {
+      if (isLoggedIn()) {
+        const userName = localStorage.getItem('userName') || 'User';
+        navAuthBtn.textContent = `Logout (${userName})`;
+      } else {
+        navAuthBtn.textContent = 'Sign Up / Login';
+      }
+    };
+
+const API_URL = 'https://amax-backend.onrender.com';
+
+    const API_URL = 'https://amax-backend.onrender.com';
+
+        const API_URL = 'https://amax-backend.onrender.com';
+
+            const API_URL = 'https://amax-backend.onrender.com';
+
+                const API_URL = 'https://amax-backend.onrender.com';
+
+                    const API_URL = 'https://amax-backend.onrender.com';
+
+                        // Form Submissions
+                        document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
+                          e.preventDefault();
+                          const formData = new FormData(e.target);
+                          const data = Object.fromEntries(formData.entries());
+
+                          try {
+                            const response = await fetch(`${API_URL}/api/signup`, {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify(data)
+                            });
+        const result = await response.json();
+        if (response.ok) {
+          showToast('Account created successfully! Please login.', 'success');
+          showAuthModal('login');
+        } else {
+          showToast(result.error || 'Signup failed', 'error');
+        }
+      } catch (err) {
+        showToast('Server connection error. Please try again later.', 'error');
+      }
+    });
+const API_URL = 'https://amax-backend.onrender.com';
+
+    const API_URL = 'https://amax-backend.onrender.com';
+
+        const API_URL = 'https://amax-backend.onrender.com';
+
+            const API_URL = 'https://amax-backend.onrender.com';
+
+                const API_URL = 'https://amax-backend.onrender.com';
+
+                    // Form Submissions
+                    document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
+                      e.preventDefault();
+                      const formData = new FormData(e.target);
+                      const data = Object.fromEntries(formData.entries());
+
+                      try {
+                        const response = await fetch(`${API_URL}/api/signup`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify(data)
+                        });
+        const result = await response.json();
+        if (response.ok) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userName', result.name);
+          updateAuthUI();
+          hideAuthModal();
+          showToast(`Welcome back, ${result.name}!`, 'success');
+        } else {
+          showToast(result.error || 'Login failed', 'error');
+        }
+      } catch (err) {
+        showToast('Server connection error. Please try again later.', 'error');
+      }
+    });
+
+    // GLOBAL INTERCEPTOR
+    const withAuth = (callback) => {
+      return (...args) => {
+        if (isLoggedIn()) {
+          callback(...args);
+        } else {
+          showToast('Please login to access this feature', 'info');
+          showAuthModal();
+        }
+      };
+    };
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Portfolio Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', withAuth(() => {
+        // Update active class
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const filterValue = btn.getAttribute('data-filter');
+        
+        portfolioItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+            item.style.animation = 'fadeUp 0.5s ease forwards';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }));
+    });
+
+    // View Project functionality
+    const viewProjectBtns = document.querySelectorAll('.view-project');
+    viewProjectBtns.forEach(btn => {
+      btn.addEventListener('click', withAuth((e) => {
+        e.stopPropagation();
+        const project = btn.getAttribute('data-project');
+        showToast(`✨ Project showcase: "${project}" (Demo)`, 'info');
+      }));
+    });
+
+    // HIRE ME MODAL LOGIC
+    const hireMeModal = document.getElementById('hireMeModal');
+    const hireMeForm = document.getElementById('hireMeForm');
+    const closeHireModal = document.getElementById('closeHireModal');
+    const steps = document.querySelectorAll('.step-content');
+    const stepIndicators = document.querySelectorAll('.step-indicator');
+    const prevBtn = document.getElementById('prevStep');
+    const nextBtn = document.getElementById('nextStep');
+    const submitBtn = document.getElementById('submitHireForm');
+    let currentStep = 1;
+
+    // Hire Me dynamic tool sets logic
+    const primarySkillRadios = document.querySelectorAll('input[name="primarySkill"]');
+    const skillSets = document.querySelectorAll('.skill-set');
+
+    const updateSkillSets = (selectedSkill) => {
+      // Hide all sets and disable their inputs to prevent them from being part of form data
+      skillSets.forEach(set => {
+        set.classList.add('hidden');
+        set.querySelectorAll('input').forEach(input => {
+          input.disabled = true;
+          input.checked = false;
+          input.closest('.option-card').classList.remove('selected');
+        });
+      });
+
+      // Show the selected set and enable its inputs
+      const activeSetId = `set-${selectedSkill.replace(/\s+/g, '')}`;
+      const activeSet = document.getElementById(activeSetId);
+      if (activeSet) {
+        activeSet.classList.remove('hidden');
+        activeSet.querySelectorAll('input').forEach(input => {
+          input.disabled = false;
+        });
+      }
+    };
+
+    primarySkillRadios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        updateSkillSets(e.target.value);
+      });
+    });
+
+    const showHireMeModal = () => {
+      hireMeModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      resetForm();
+    };
+
+    const hideHireMeModal = () => {
+      hireMeModal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    };
+
+    const resetForm = () => {
+      currentStep = 1;
+      updateStepUI();
+      hireMeForm.reset();
+      document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+      // Hide all skill sets on reset
+      skillSets.forEach(set => set.classList.add('hidden'));
+    };
+
+    const updateStepUI = () => {
+      steps.forEach(step => {
+        step.classList.remove('active');
+        if (parseInt(step.dataset.step) === currentStep) {
+          step.classList.add('active');
+        }
+      });
+
+      // Special handling for Step 3 validation/display
+      if (currentStep === 3) {
+        const selectedSkill = document.querySelector('input[name="primarySkill"]:checked')?.value;
+        if (selectedSkill) {
+          updateSkillSets(selectedSkill);
+        }
+      }
+
+      stepIndicators.forEach(ind => {
+        const stepNum = parseInt(ind.dataset.step);
+        ind.classList.remove('active', 'completed');
+        if (stepNum === currentStep) {
+          ind.classList.add('active');
+        } else if (stepNum < currentStep) {
+          ind.classList.add('completed');
+          ind.innerHTML = '<i class="fas fa-check"></i>';
+        } else {
+          ind.innerHTML = stepNum;
+        }
+      });
+
+      // Update progress lines
+      for (let i = 1; i <= 4; i++) {
+        const line = document.getElementById(`progress-${i}`);
+        if (line) {
+          if (i < currentStep) {
+            line.style.width = '100%';
+          } else {
+            line.style.width = '0%';
+          }
+        }
+      }
+
+      // Update buttons
+      if (currentStep === 1) {
+        prevBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+      }
+
+      if (currentStep === 5) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+      } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+      }
+    };
+
+    const validateStep = (step) => {
+      const currentStepEl = document.querySelector(`.step-content[data-step="${step}"]`);
+      // We check for fields that should be filled based on our logic, since we removed HTML 'required'
+      let isValid = true;
+      
+      if (step === 1) {
+        const name = currentStepEl.querySelector('input[name="fullName"]').value.trim();
+        const wa = currentStepEl.querySelector('input[name="whatsapp"]').value.trim();
+        if (!name || !wa) isValid = false;
+      } else if (step === 2) {
+        const skill = currentStepEl.querySelector('input[name="primarySkill"]:checked');
+        const exp = currentStepEl.querySelector('input[name="experience"]:checked');
+        if (!skill || !exp) isValid = false;
+      } else if (step === 3) {
+        const tools = currentStepEl.querySelectorAll('input[name="tools"]:checked');
+        const workType = currentStepEl.querySelectorAll('input[name="workType"]:checked');
+        if (tools.length === 0 || workType.length === 0) isValid = false;
+      } else if (step === 4) {
+        const link = currentStepEl.querySelector('input[name="portfolioLink"]').value.trim();
+        const desc = currentStepEl.querySelector('textarea[name="workDescription"]').value.trim();
+        if (!link || !desc) isValid = false;
+      } else if (step === 5) {
+        const price = currentStepEl.querySelector('input[name="priceRange"]:checked');
+        if (!price) isValid = false;
+      }
+
+      if (!isValid) {
+        showToast('Please fill all required fields', 'error');
+      }
+      return isValid;
+    };
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (validateStep(currentStep)) {
+          currentStep++;
+          updateStepUI();
+        }
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        currentStep--;
+        updateStepUI();
+      });
+    }
+
+    if (closeHireModal) {
+      closeHireModal.addEventListener('click', hideHireMeModal);
+    }
+
+    // Option card selection styling
+    document.querySelectorAll('.option-card').forEach(card => {
+      const input = card.querySelector('input');
+      
+      card.addEventListener('click', () => {
+        if (input.type === 'radio') {
+          const name = input.name;
+          document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+            i.closest('.option-card').classList.remove('selected');
+          });
+          card.classList.add('selected');
+          input.checked = true;
+        } else {
+          input.checked = !input.checked;
+          if (input.checked) {
+            card.classList.add('selected');
+          } else {
+            card.classList.remove('selected');
+          }
+        }
+      });
+
+      // Prevent double click on radio/checkbox
+      input.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (input.type === 'radio') {
+          const name = input.name;
+          document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+            i.closest('.option-card').classList.remove('selected');
+          });
+          card.classList.add('selected');
+        } else {
+          if (input.checked) {
+            card.classList.add('selected');
+          } else {
+            card.classList.remove('selected');
+          }
+        }
+      });
+    });
+
+    // Form Submission -> WhatsApp Link
+    if (hireMeForm) {
+      hireMeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Final validation for step 5
+        if (!validateStep(5)) return;
+
+        const formData = new FormData(hireMeForm);
+        const data = {};
+        formData.forEach((value, key) => {
+          if (data[key]) {
+            if (!Array.isArray(data[key])) {
+              data[key] = [data[key]];
+            }
+            data[key].push(value);
+          } else {
+            data[key] = value;
+          }
+        });
+
+        // Format tools and workType as strings
+        const toolsArr = Array.isArray(data.tools) ? data.tools : (data.tools ? [data.tools] : []);
+        const workTypeArr = Array.isArray(data.workType) ? data.workType : (data.workType ? [data.workType] : []);
+        
+        const tools = toolsArr.join(', ');
+        const workType = workTypeArr.join(', ');
+
+        const whatsappMsg = `Hello Amax_editor 👋
+
+I want to join as a creator on your platform 🚀
+
+Here are my details:
+
+👤 Name: ${data.fullName}
+📱 WhatsApp: ${data.whatsapp}
+
+🎯 Skill: ${data.primarySkill}
+📊 Experience: ${data.experience}
+
+🛠️ Tools:
+${tools}
+
+💼 Work Type:
+${workType}
+
+🎨 Portfolio:
+${data.portfolioLink}
+
+📝 About My Work:
+${data.workDescription}
+
+💰 Pricing: ${data.priceRange}
+⏱️ Delivery Time: ${data.deliveryTime}
+📅 Availability: ${data.availability}
+
+Looking forward to working with you 🤝`;
+
+        const encodedMsg = encodeURIComponent(whatsappMsg);
+        const whatsappURL = `https://wa.me/919509136278?text=${encodedMsg}`;
+        
+        showToast('Redirecting to WhatsApp...', 'success');
+        setTimeout(() => {
+          window.open(whatsappURL, '_blank');
+          hideHireMeModal();
+        }, 1500);
+      });
+    }
+
+    // Hire Me buttons (all CTAs)
+    const hireBtns = ['heroHireBtn', 'finalHireBtn'];
+    hireBtns.forEach(id => {
+      const btn = document.getElementById(id);
+      if(btn) {
+        btn.addEventListener('click', withAuth(() => {
+          showHireMeModal();
+        }));
+      }
+    });
+
+    // View Portfolio button
+    const viewPortfolioBtn = document.getElementById('viewPortfolioBtn');
+    if(viewPortfolioBtn) {
+      viewPortfolioBtn.addEventListener('click', withAuth(() => {
+        window.location.href = 'portfolio.html';
+      }));
+    }
+
+    // Video Editor button
+    const videoEditorBtn = document.getElementById('videoEditorBtn');
+    if(videoEditorBtn) {
+      videoEditorBtn.addEventListener('click', withAuth(() => {
+        window.location.href = 'services.html';
+      }));
+    }
+
+    // View More button
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+    if(viewMoreBtn) {
+      viewMoreBtn.addEventListener('click', withAuth(() => {
+        showToast('🚀 Full portfolio available on request!', 'info');
+      }));
+    }
+
+    // Portfolio items click (for demonstration)
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', withAuth(() => {
+        const category = item.getAttribute('data-category');
+        showToast(`✨ Viewing ${category} project details...`, 'info');
+      }));
+    });
+
+    // MEDIA MODAL LOGIC
+    const mediaModal = document.getElementById('mediaModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeMediaModal = document.querySelector('.close-media-modal');
+    const thumbnailPreviews = document.querySelectorAll('.thumbnail-preview');
+
+    thumbnailPreviews.forEach(preview => {
+      preview.addEventListener('click', () => {
+        const img = preview.querySelector('img');
+        if (img) {
+          modalImg.src = img.src;
+          mediaModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    const closeMediaModalFunc = () => {
+      mediaModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      setTimeout(() => { modalImg.src = ''; }, 300);
+    };
+
+    if (closeMediaModal) {
+      closeMediaModal.addEventListener('click', closeMediaModalFunc);
+    }
+
+    mediaModal.addEventListener('click', (e) => {
+      if (e.target === mediaModal) closeMediaModalFunc();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mediaModal.classList.contains('active')) {
+        closeMediaModalFunc();
+      }
+    });
+
+    // Initial UI update
+    updateAuthUI();
+  </script>
+</body>
+</html>

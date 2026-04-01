@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Project Video | Amax Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #05050A;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .video-container {
+      background: rgba(15, 15, 25, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+    }
+    .btn-gradient {
+      background: linear-gradient(95deg, #8B5CF6, #A855F7);
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <div class="max-w-4xl mx-auto w-full flex-grow flex flex-col justify-center">
+    <div id="loading" class="text-center py-20">
+      <i class="fas fa-circle-notch fa-spin text-4xl text-purple-500 mb-4"></i>
+      <p class="text-gray-400">Loading your video...</p>
+    </div>
+
+    <div id="content" class="hidden">
+      <div class="mb-6 flex justify-between items-center">
+        <div>
+          <h1 id="userName" class="text-2xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Project Video</h1>
+          <p id="serviceInfo" class="text-gray-400 text-sm"></p>
+        </div>
+        <a href="services.html" class="text-gray-400 hover:text-white transition">
+          <i class="fas fa-times text-xl"></i>
+        </a>
+      </div>
+
+      <div class="video-container mb-8">
+        <video id="videoPlayer" controls class="w-full h-full aspect-video">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-white/5 p-6 rounded-2xl border border-white/10">
+        <div>
+          <p id="fileName" class="font-medium text-white mb-1"></p>
+          <p id="fileSize" class="text-xs text-gray-500"></p>
+        </div>
+        <div class="flex gap-4 w-full md:w-auto">
+          <a id="downloadBtn" download class="flex-1 md:flex-none text-center bg-white/10 hover:bg-white/20 px-6 py-3 rounded-xl font-bold transition">
+            <i class="fas fa-download mr-2"></i> Download
+          </a>
+          <button onclick="shareLink()" class="flex-1 md:flex-none btn-gradient px-6 py-3 rounded-xl font-bold text-white transition">
+            <i class="fas fa-share-alt mr-2"></i> Share
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="error" class="hidden text-center py-20">
+      <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+      <h2 class="text-xl font-bold mb-2">Video Not Found</h2>
+      <p class="text-gray-400 mb-6">The link might be expired or incorrect.</p>
+      <a href="services.html" class="btn-gradient px-8 py-3 rounded-xl font-bold inline-block">Go Back</a>
+    <script>
+      const API_URL = 'https://amax-backend.onrender.com';
+      const API_URL = 'https://amax-backend.onrender.com';
+      const API_URL = 'https://amax-backend.onrender.com';
+      <script>
+        <script>
+          const API_URL = 'https://amax-backend.onrender.com';
+          const urlParams = new URLSearchParams(window.location.search);
+          const historyId = urlParams.get('id');
+
+          async function loadVideo() {
+            if (!historyId) {
+              showError();
+              return;
+            }
+
+            try {
+              const response = await fetch(`${API_URL}/api/video-view/${historyId}`);
+              if (!response.ok) throw new Error('Not found');
+
+              const data = await response.json();
+
+              document.getElementById('userName').textContent = `${data.userName}'s Project`;
+              document.getElementById('serviceInfo').textContent = `${data.service} • ${data.budget}`;
+              document.getElementById('fileName').textContent = data.fileName;
+              document.getElementById('fileSize').textContent = data.fileSize;
+
+              const videoPlayer = document.getElementById('videoPlayer');
+              videoPlayer.src = `${API_URL}${data.filePath}`;
+
+              const downloadBtn = document.getElementById('downloadBtn');
+              downloadBtn.href = `${API_URL}${data.filePath}`;
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('content').classList.remove('hidden');
+      } catch (err) {
+        showError();
+      }
+    }
+
+    function showError() {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('error').classList.remove('hidden');
+    }
+
+    function shareLink() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard!');
+      });
+    }
+
+    loadVideo();
+  </script>
+</body>
+</html>

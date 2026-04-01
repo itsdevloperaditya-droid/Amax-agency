@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Portfolio | Amax - Video Editor & Creative Developer</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #05050A;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(15, 15, 25, 0.7);
+      backdrop-filter: blur(8px); /* Reduced blur for performance */
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .portfolio-item {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(12, 12, 20, 0.8);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      min-height: 250px;
+      /* Improve rendering performance */
+      will-change: transform;
+      contain: content;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-5px);
+      border-color: #8B5CF6;
+      box-shadow: 0 15px 30px -10px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Unmute toggle style */
+    .unmute-toggle {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+      z-index: 20;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s;
+    }
+
+    .unmute-toggle:hover {
+      background: #8B5CF6;
+      transform: scale(1.1);
+    }
+    
+    .filter-btn-modern {
+      position: relative;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      background: rgba(15, 15, 25, 0.6);
+      backdrop-filter: blur(6px); /* Reduced blur */
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .filter-btn-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(95deg, #8B5CF6, #A855F7);
+      transition: width 0.3s ease;
+      z-index: -1;
+      border-radius: 3rem;
+    }
+
+    .filter-btn-modern:hover::before,
+    .filter-btn-modern.active::before {
+      width: 100%;
+    }
+
+    .filter-btn-modern:hover,
+    .filter-btn-modern.active {
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+    }
+
+    .filter-btn-modern i {
+      margin-right: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    /* Modern Filter Buttons Container */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 4rem; /* Increased margin for better separation */
+      flex-wrap: wrap;
+    }
+
+    .filter-btn-modern {
+      position: relative;
+      padding: 1rem 2.5rem;
+      min-width: 280px; /* Ensure uniform width */
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      background: rgba(15, 15, 25, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Section Animation */
+    .section-content {
+      transition: all 0.4s ease;
+    }
+
+    .section-hidden {
+      display: none;
+    }
+
+    .section-visible {
+      display: block;
+      animation: fadeSlideUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+
+    .modal-content video, .modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 1rem;
+      box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #8B5CF6;
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #8B5CF6, #A855F7);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0A0A0F;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8B5CF6;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bg-[#05050A] text-gray-200">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-6 md:px-12 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-film text-purple-500 text-2xl"></i>
+        <a href="index.html" class="font-bold text-2xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Amax</a>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-purple-400 transition">Home</a>
+        <a href="portfolio.html" class="text-purple-400 transition">Portfolio</a>
+        <a href="index.html#services" class="hover:text-purple-400 transition">Services</a>
+        <a href="index.html#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+      </div>
+      <div class="flex gap-3">
+        <a href="index.html#contact" class="px-5 py-2 rounded-full text-sm font-semibold btn-primary text-white">Hire Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-28 pb-20 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Page Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent mb-4">Our Creative Portfolio</h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">Choose what you'd like to explore — cinematic video edits or stunning thumbnail designs</p>
+      </div>
+
+      <!-- Modern Filter Buttons -->
+      <div class="filter-container">
+        <button class="filter-btn-modern active" data-section="videos">
+          <i class="fas fa-video"></i> Our Video Edits
+        </button>
+        <button class="filter-btn-modern" data-section="thumbnails">
+          <i class="fas fa-images"></i> Our Thumbnail Designs
+        </button>
+      </div>
+
+      <!-- Video Editing Section -->
+      <div id="videosSection" class="section-content section-visible">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+          <h2 class="text-2xl md:text-3xl font-bold">🎬 Video Editing Samples</h2>
+          <span class="text-purple-400 text-sm bg-purple-500/20 px-3 py-1 rounded-full" id="videoCount">Loading...</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="videoGrid">
+          <div class="text-gray-500 py-10 text-center col-span-full">Scanning for videos...</div>
+        </div>
+      </div>
+
+      <!-- Thumbnail Designs Section -->
+      <div id="thumbnailsSection" class="section-content section-hidden">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+          <h2 class="text-2xl md:text-3xl font-bold">🎨 Thumbnail Designs</h2>
+          <span class="text-purple-400 text-sm bg-purple-500/20 px-3 py-1 rounded-full" id="thumbCount">Loading...</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="thumbnailGrid">
+          <div class="text-gray-500 py-10 text-center col-span-full">Scanning for designs...</div>
+        </div>
+      </div>
+
+      <!-- Back to Home Button -->
+      <div class="text-center mt-16">
+        <a href="index.html" class="inline-flex items-center gap-2 px-8 py-3 rounded-full font-semibold btn-primary text-white transition">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for fullscreen view -->
+  <div id="mediaModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <video id="modalVideo" controls style="display: none;" disableremoteplayback playsinline webkit-playsinline>
+        <source src="" type="video/mp4">
+      </video>
+      <img id="modalImage" src="" alt="Full size view" style="display: none;">
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
+      <div>
+        <div class="flex items-center gap-2 text-2xl font-bold">
+          <i class="fas fa-film text-purple-500"></i>
+          <span class="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Amax</span>
+        </div>
+        <p class="text-gray-400 text-sm mt-2">Professional Video Editor & Creative Developer</p>
+        <div class="flex gap-4 mt-4 text-xl">
+          <i class="fab fa-twitter hover:text-purple-400 cursor-pointer"></i>
+          <i class="fab fa-instagram hover:text-purple-400 cursor-pointer"></i>
+          <i class="fab fa-linkedin-in hover:text-purple-400 cursor-pointer"></i>
+          <i class="fab fa-youtube hover:text-purple-400 cursor-pointer"></i>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-8 md:gap-12">
+        <div>
+          <h4 class="font-semibold mb-3">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="index.html" class="hover:text-purple-400 transition">Home</a></li>
+            <li><a href="portfolio.html" class="hover:text-purple-400 transition">Portfolio</a></li>
+            <li><a href="index.html#services" class="hover:text-purple-400 transition">Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-3">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><i class="fas fa-envelope mr-2"></i> amax@editor.com</li>
+            <li><i class="fab fa-whatsapp mr-2"></i> +1 (555) 123-4567</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-gray-500 text-xs pt-8 border-t border-white/5 mt-8 max-w-7xl mx-auto">© 2025 Amax — Professional Video Editor & Creative Developer. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const API_URL = 'https://amax-backend.onrender.com';
+
+    const API_URL = 'https://amax-backend.onrender.com';
+
+    // Function to create video card
+    function createVideoCard(videoPath, index) {
+      return `
+        <div class="portfolio-item group" data-type="video" data-path="${API_URL}/${videoPath}">
+          <div class="loader-container"><div class="spinner"></div></div>
+          <video muted preload="none" class="lazy-video" onloadeddata="this.parentElement.classList.add('loaded')" loop disableremoteplayback playsinline webkit-playsinline>
+            <source src="${API_URL}/${videoPath}" type="video/mp4">
+          </video>
+          <div class="overlay">
+            <!-- Central icon removed as requested -->
+          </div>
+          <button class="unmute-toggle" title="Toggle Sound">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    // Function to create thumbnail card
+    function createThumbnailCard(thumbnailPath, index) {
+      return `
+        <div class="portfolio-item group" data-type="image" data-path="${API_URL}/${thumbnailPath}">
+          <div class="loader-container"><div class="spinner"></div></div>
+          <img src="" data-src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" onload="this.parentElement.classList.add('loaded')">
+          <div class="overlay">
+            <div class="play-icon">
+              <i class="fas fa-search-plus"></i>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Dynamic Media Loading from Server
+    async function loadMedia() {
+      const videoGrid = document.getElementById('videoGrid');
+      const thumbnailGrid = document.getElementById('thumbnailGrid');
+      const videoCount = document.getElementById('videoCount');
+      const thumbCount = document.getElementById('thumbCount');
+      
+      try {
+        const response = await fetch(`${API_URL}/api/media`);
+        const data = await response.json();
+        
+        // Update counts
+        videoCount.textContent = `${data.videos.length}+ Projects`;
+        thumbCount.textContent = `${data.thumbnails.length}+ Designs`;
+
+        // Clear grids before loading
+        videoGrid.innerHTML = '';
+        thumbnailGrid.innerHTML = '';
+
+        // Load videos
+        data.videos.forEach((video, index) => {
+          videoGrid.insertAdjacentHTML('beforeend', createVideoCard(video.path, index));
+        });
+
+        // Load thumbnails
+        data.thumbnails.forEach((thumb, index) => {
+          thumbnailGrid.insertAdjacentHTML('beforeend', createThumbnailCard(thumb.path, index));
+        });
+
+        initMediaListeners();
+        initAutoplayLogic();
+        
+      } catch (err) {
+        console.error('Failed to load media:', err);
+        videoCount.textContent = 'Error';
+        thumbCount.textContent = 'Error';
+      }
+    }
+
+    let isGlobalMuted = true;
+    let autoplayObserver = null;
+
+    function initAutoplayLogic() {
+      const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
+
+      // Individual Mute Toggle Logic with Global Sync
+      document.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.unmute-toggle');
+        if (toggle) {
+          e.preventDefault();
+          e.stopPropagation(); // Stop from bubbling to modal trigger
+          isGlobalMuted = !isGlobalMuted;
+          
+          // Update all toggle icons and video muted states
+          document.querySelectorAll('.unmute-toggle i').forEach(icon => {
+            icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+          });
+          
+          document.querySelectorAll('video').forEach(v => {
+            v.muted = isGlobalMuted;
+          });
+          return;
+        }
+      });
+
+      // Intersection Observer for Autoplay
+      const options = {
+        root: null,
+        threshold: [0, 0.25, 0.5, 0.75, 1.0]
+      };
+
+      const visibilityMap = new Map();
+
+      autoplayObserver = new IntersectionObserver((entries) => {
+        // If modal is active, don't change grid playback
+        if (document.getElementById('mediaModal').classList.contains('active')) return;
+
+        entries.forEach(entry => {
+          visibilityMap.set(entry.target, entry.intersectionRatio);
+        });
+
+        // Find the most visible video
+        let mostVisible = null;
+        let maxRatio = 0.5;
+
+        visibilityMap.forEach((ratio, element) => {
+          if (ratio > maxRatio) {
+            maxRatio = ratio;
+            mostVisible = element;
+          }
+        });
+
+        // Handle Playback
+        videoItems.forEach(item => {
+          const video = item.querySelector('video');
+          if (item === mostVisible) {
+            if (video.paused) {
+              video.muted = isGlobalMuted;
+              video.play().catch(() => {});
+            }
+          } else {
+            if (!video.paused) {
+              video.pause();
+            }
+          }
+        });
+      }, options);
+
+      videoItems.forEach(item => autoplayObserver.observe(item));
+    }
+
+    function initMediaListeners() {
+      // Intersection Observer for Lazy Loading
+      const observerOptions = {
+        root: null,
+        rootMargin: '200px 0px',
+        threshold: 0.1
+      };
+
+      const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const item = entry.target;
+            const video = item.querySelector('video');
+            const img = item.querySelector('img');
+
+            if (video && video.preload === 'none') {
+              video.preload = 'metadata';
+            }
+            if (img && img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.portfolio-item').forEach(item => {
+        lazyObserver.observe(item);
+      });
+    }
+
+    // Call loadMedia on page load
+    window.addEventListener('DOMContentLoaded', loadMedia);
+
+    // Filter Button Functionality
+    const filterBtns = document.querySelectorAll('.filter-btn-modern');
+    const videosSection = document.getElementById('videosSection');
+    const thumbnailsSection = document.getElementById('thumbnailsSection');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const section = btn.getAttribute('data-section');
+        
+        if (section === 'videos') {
+          videosSection.classList.remove('section-hidden');
+          videosSection.classList.add('section-visible');
+          thumbnailsSection.classList.remove('section-visible');
+          thumbnailsSection.classList.add('section-hidden');
+        } else {
+          thumbnailsSection.classList.remove('section-hidden');
+          thumbnailsSection.classList.add('section-visible');
+          videosSection.classList.remove('section-visible');
+          videosSection.classList.add('section-hidden');
+        }
+      });
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('mediaModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close-modal');
+
+    document.addEventListener('click', (e) => {
+      // Ignore if clicking the unmute toggle
+      if (e.target.closest('.unmute-toggle')) return;
+
+      const portfolioItem = e.target.closest('.portfolio-item');
+      if (!portfolioItem) return;
+      
+      const type = portfolioItem.getAttribute('data-type');
+      const path = portfolioItem.getAttribute('data-path');
+      
+      if (type === 'video') {
+        const gridVideo = portfolioItem.querySelector('video');
+        
+        // Pause all grid videos to stop background audio
+        document.querySelectorAll('.portfolio-item video').forEach(v => v.pause());
+
+        modalVideo.style.display = 'block';
+        modalImage.style.display = 'none';
+        modalVideo.src = path;
+        modalVideo.load();
+        
+        // Sync time: Continue from where grid video left off
+        if (gridVideo) {
+          modalVideo.currentTime = gridVideo.currentTime;
+        }
+        
+        modalVideo.muted = isGlobalMuted;
+        modalVideo.play();
+      } else {
+        modalVideo.style.display = 'none';
+        modalImage.style.display = 'block';
+        modalImage.src = path;
+      }
+      
+      modal.classList.add('active');
+    });
+
+    function closeModalFunc() {
+      modal.classList.remove('active');
+      modalVideo.pause();
+      modalVideo.src = '';
+      modalImage.src = '';
+      
+      // Force IntersectionObserver to re-evaluate after modal closes
+      // We do this by slightly scrolling or triggering the observer manually
+      if (autoplayObserver) {
+        window.dispatchEvent(new Event('scroll'));
+      }
+    }
+
+    closeModal.addEventListener('click', closeModalFunc);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModalFunc();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModalFunc();
+      }
+    });
+  </script>
+</body>
+</html>
