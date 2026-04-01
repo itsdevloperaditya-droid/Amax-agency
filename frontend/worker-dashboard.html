@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Creator Dashboard | Amax</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: #05050A; color: #e5e7eb; }
+    h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+    .bg-gradient-animate {
+      background: linear-gradient(-45deg, #05050A, #0f0f1a, #1a0b2e, #05050A);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    .glass-card {
+      background: rgba(15, 15, 25, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover { border-color: rgba(139, 92, 246, 0.4); }
+    .btn-primary { background: linear-gradient(95deg, #8B5CF6, #A855F7); transition: all 0.3s ease; }
+    .btn-primary:hover { box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); transform: scale(1.02); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .status-badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+    .status-pending { background: rgba(234, 179, 8, 0.15); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .status-approved { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .status-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .skill-tag { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); padding: 0.2rem 0.6rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 500; }
+    .animate-in { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(12px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-content { background: #0d0d16; border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 2rem; width: 100%; max-width: 520px; max-height: 95vh; position: relative; overflow-y: auto; }
+    .step-container { display: none; padding: 2.5rem 2rem; }
+    .step-container.active { display: block; animation: stepFade 0.4s ease-out; }
+    @keyframes stepFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+    .progress-bar { height: 4px; background: rgba(255, 255, 255, 0.05); position: sticky; top: 0; z-index: 10; width: 100%; border-radius: 2rem 2rem 0 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #8B5CF6, #D946EF); transition: width 0.5s; }
+    .step-progress { font-size: 0.75rem; color: #6b7280; font-weight: 600; text-align: center; margin-bottom: 1rem; }
+    .input-group label { display: block; font-size: 0.75rem; color: #8B5CF6; margin-bottom: 0.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .input-field { width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white; border-radius: 1rem; padding: 0.9rem 1rem; outline: none; transition: all 0.3s; }
+    .input-field:focus { border-color: #8B5CF6; background: rgba(139, 92, 246, 0.05); }
+    .choice-grid { display: grid; grid-template-cols: repeat(2, 1fr); gap: 0.75rem; }
+    .choice-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1rem; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .choice-card:hover { border-color: rgba(139, 92, 246, 0.5); }
+    .choice-card.selected { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(217, 70, 239, 0.1)); border-color: #8B5CF6; }
+    .choice-card span { font-size: 0.8rem; font-weight: 600; }
+    .other-input { margin-top: 0.5rem; display: none; }
+    .other-input.visible { display: block; animation: stepFade 0.3s ease-out; }
+    .optional-badge { font-size: 0.65rem; color: #6b7280; font-weight: 500; text-transform: none; letter-spacing: 0; margin-left: 0.5rem; }
+    .error-msg { color: #ef4444; font-size: 0.75rem; margin-top: 0.3rem; display: none; }
+    .error-msg.visible { display: block; }
+    .toast { position: fixed; top: 2rem; left: 50%; transform: translateX(-50%); padding: 0.75rem 1.5rem; border-radius: 1rem; font-size: 0.85rem; font-weight: 600; z-index: 999; animation: toastIn 0.3s ease-out; }
+    .toast-success { background: #065f46; color: #6ee7b7; border: 1px solid #059669; }
+    .toast-error { background: #7f1d1d; color: #fca5a5; border: 1px solid #dc2626; }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+  </style>
+</head>
+<body class="bg-gradient-animate min-h-screen">
+
+  <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i class="fas fa-film text-purple-500 text-xl"></i>
+        <a href="index.html" class="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Amax</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <span id="navUserName" class="text-sm text-gray-400"></span>
+        <button onclick="logout()" class="text-xs font-medium text-red-400 hover:text-red-300 transition">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 px-4 md:px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8 animate-in">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Creator Dashboard</h1>
+        <p class="text-gray-400">Manage your profile and track application status.</p>
+      </div>
+
+      <div id="loadingState" class="text-center py-20">
+        <i class="fas fa-spinner fa-spin text-3xl text-purple-500 mb-4"></i>
+        <p class="text-gray-400">Loading your profile...</p>
+      </div>
+
+      <div id="noProfileState" class="hidden animate-in">
+        <div class="glass-card p-8 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/20 flex items-center justify-center">
+            <i class="fas fa-user-plus text-2xl text-purple-400"></i>
+          </div>
+          <h2 class="text-xl font-bold mb-2">No Application Found</h2>
+          <p class="text-gray-400 text-sm mb-6">You haven't submitted your creator application yet.</p>
+          <a href="worker-onboarding.html" class="btn-primary py-3 px-6 rounded-xl font-bold text-white inline-block">Apply Now</a>
+        </div>
+      </div>
+
+      <div id="profileState" class="hidden animate-in space-y-6">
+        <!-- Status Card -->
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold">Application Status</h2>
+            <span id="statusBadge" class="status-badge"></span>
+          </div>
+          <p id="statusMessage" class="text-sm text-gray-400"></p>
+        </div>
+
+        <!-- Profile Info -->
+        <div class="glass-card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold">Your Profile</h2>
+            <button onclick="openEditModal()" class="text-sm text-purple-400 hover:text-purple-300 transition font-medium">
+              <i class="fas fa-edit mr-1"></i>Edit
+            </button>
+          </div>
+          <div class="space-y-3">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Name</span>
+              <span id="profName" class="font-medium"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Email</span>
+              <span id="profEmail" class="font-medium"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">WhatsApp</span>
+              <span id="profWhatsapp" class="font-medium"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Experience</span>
+              <span id="profExp" class="font-medium"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Availability</span>
+              <span id="profAvail" class="font-medium"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Portfolio</span>
+              <a id="profPortfolio" href="#" target="_blank" class="font-medium text-purple-400 hover:text-purple-300 truncate max-w-[200px] inline-block"></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="glass-card p-6">
+          <h2 class="text-lg font-bold mb-4">Skills</h2>
+          <div id="profSkills" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Tools & Work Types -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-bold mb-4">Tools</h2>
+            <div id="profTools" class="flex flex-wrap gap-2"></div>
+          </div>
+          <div class="glass-card p-6">
+            <h2 class="text-lg font-bold mb-4">Work Types</h2>
+            <div id="profWorkTypes" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="glass-card p-6">
+          <h2 class="text-lg font-bold mb-4">Pricing & Delivery</h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-500 block mb-1">Price Range</span>
+              <span id="profPrice" class="font-medium"></span>
+            </div>
+            <div>
+              <span class="text-gray-500 block mb-1">Delivery Time</span>
+              <span id="profDelivery" class="font-medium"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- EDIT MODAL -->
+  <div id="editModal" class="modal-overlay">
+    <div class="modal-content shadow-2xl">
+      <div class="progress-bar"><div id="editProgressFill" class="progress-fill" style="width: 20%"></div></div>
+      <button onclick="closeEditModal()" class="absolute top-6 right-6 text-gray-500 hover:text-white transition z-20"><i class="fas fa-times text-lg"></i></button>
+      <div id="editStepProgress" class="step-progress pt-6">Step 1 of 5</div>
+
+      <!-- EDIT STEP 1: Basic Info -->
+      <div id="editStep1" class="step-container active">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-1">Basic Info</h2></div>
+        <div class="space-y-4">
+          <div class="input-group"><label>Full Name</label><input type="text" id="e_name" class="input-field"></div>
+          <div class="input-group"><label>Email</label><input type="email" id="e_email" class="input-field" readonly></div>
+          <div class="input-group"><label>WhatsApp <span class="optional-badge">Optional</span></label><input type="text" id="e_whatsapp" class="input-field"></div>
+          <div class="flex gap-3 pt-4"><button onclick="editNextStep(2)" class="btn-primary py-3 rounded-xl font-bold text-white w-full">Continue</button></div>
+        </div>
+      </div>
+
+      <!-- EDIT STEP 2: Skills -->
+      <div id="editStep2" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-1">Skills & Experience</h2></div>
+        <div class="space-y-6">
+          <div class="input-group">
+            <label>Skills <span class="text-red-400">*</span></label>
+            <div class="choice-grid" id="editSkillsGrid">
+              <div class="choice-card" onclick="editToggleMulti(this, 'skills')"><span>Video Editing</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'skills')"><span>Thumbnail Design</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'skills')"><span>Graphic Design</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'skills')"><span>Web Development</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'skills')"><span>Other</span></div>
+            </div>
+            <div class="other-input" id="edit-other-skills"><input type="text" class="input-field" placeholder="Enter skill..." oninput="editFormData.otherSkills=this.value"></div>
+            <div class="error-msg" id="err-edit-skills">Select at least one skill</div>
+          </div>
+          <div class="input-group">
+            <label>Experience Level <span class="optional-badge">Optional</span></label>
+            <div class="choice-grid">
+              <div class="choice-card py-3" onclick="editSetSingle('experience', 'Beginner (0-1 yr)', this)"><span>Beginner</span></div>
+              <div class="choice-card py-3" onclick="editSetSingle('experience', 'Intermediate (1-3 yrs)', this)"><span>Intermediate</span></div>
+              <div class="choice-card py-3" onclick="editSetSingle('experience', 'Expert (3+ yrs)', this)"><span>Expert</span></div>
+            </div>
+          </div>
+          <div class="flex gap-3 pt-4">
+            <button onclick="editGoBack()" class="w-1/3 py-3 rounded-xl font-bold text-gray-500 bg-white/5">Back</button>
+            <button onclick="editValidateAndNext(2, 3)" class="w-2/3 btn-primary py-3 rounded-xl font-bold text-white">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT STEP 3: Tools -->
+      <div id="editStep3" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-1">Tools & Work Type</h2></div>
+        <div class="space-y-6">
+          <div class="input-group">
+            <label>Tools <span class="optional-badge">Optional</span></label>
+            <div class="choice-grid" id="editToolsGrid">
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>Premiere Pro</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>After Effects</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>Photoshop</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>Canva</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>Figma</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>VS Code</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>DaVinci</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'tools')"><span>Other</span></div>
+            </div>
+            <div class="other-input" id="edit-other-tools"><input type="text" class="input-field" placeholder="Enter tool..." oninput="editFormData.otherTools=this.value"></div>
+          </div>
+          <div class="input-group">
+            <label>Work Type <span class="optional-badge">Optional</span></label>
+            <div class="choice-grid" id="editWorkTypeGrid">
+              <div class="choice-card" onclick="editToggleMulti(this, 'workTypes')"><span>Freelance</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'workTypes')"><span>Long-term</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'workTypes')"><span>One-time</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'workTypes')"><span>Retainer</span></div>
+              <div class="choice-card" onclick="editToggleMulti(this, 'workTypes')"><span>Other</span></div>
+            </div>
+            <div class="other-input" id="edit-other-workTypes"><input type="text" class="input-field" placeholder="Enter work type..." oninput="editFormData.otherWorkTypes=this.value"></div>
+          </div>
+          <div class="flex gap-3 pt-4">
+            <button onclick="editGoBack()" class="w-1/3 py-3 rounded-xl font-bold text-gray-500 bg-white/5">Back</button>
+            <button onclick="editNextStep(4)" class="w-2/3 btn-primary py-3 rounded-xl font-bold text-white">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT STEP 4: Portfolio -->
+      <div id="editStep4" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-1">Portfolio</h2></div>
+        <div class="space-y-4">
+          <div class="input-group"><label>Portfolio Link <span class="text-red-400">*</span></label><input type="url" id="e_portfolio" class="input-field"><div class="error-msg" id="err-edit-portfolio">Portfolio link is required</div></div>
+          <div class="input-group"><label>About You <span class="optional-badge">Optional</span></label><textarea id="e_description" class="input-field" rows="3"></textarea></div>
+          <div class="flex gap-3 pt-4">
+            <button onclick="editGoBack()" class="w-1/3 py-3 rounded-xl font-bold text-gray-500 bg-white/5">Back</button>
+            <button onclick="editValidateAndNext(4, 5)" class="w-2/3 btn-primary py-3 rounded-xl font-bold text-white">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT STEP 5: Pricing -->
+      <div id="editStep5" class="step-container">
+        <div class="mb-8"><h2 class="text-2xl font-bold mb-1">Pricing & Availability</h2></div>
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-1/2 input-group"><label>Price Range <span class="optional-badge">Optional</span></label><div class="choice-grid"><div class="choice-card py-2" onclick="editSetSingle('priceRange', '₹500-₹2k', this)"><span>₹500-₹2k</span></div><div class="choice-card py-2" onclick="editSetSingle('priceRange', '₹2k-₹5k', this)"><span>₹2k-₹5k</span></div><div class="choice-card py-2" onclick="editSetSingle('priceRange', '₹5k-₹10k', this)"><span>₹5k-₹10k</span></div><div class="choice-card py-2" onclick="editSetSingle('priceRange', '₹10k+', this)"><span>₹10k+</span></div></div></div>
+            <div class="w-1/2 input-group"><label>Delivery Time <span class="optional-badge">Optional</span></label><div class="choice-grid"><div class="choice-card py-2" onclick="editSetSingle('deliveryTime', 'Same Day', this)"><span>Same Day</span></div><div class="choice-card py-2" onclick="editSetSingle('deliveryTime', '1-2 Days', this)"><span>1-2 Days</span></div><div class="choice-card py-2" onclick="editSetSingle('deliveryTime', '3-5 Days', this)"><span>3-5 Days</span></div><div class="choice-card py-2" onclick="editSetSingle('deliveryTime', '1 Week+', this)"><span>1 Week+</span></div></div></div>
+          </div>
+          <div class="input-group"><label>Availability <span class="optional-badge">Optional</span></label><div class="choice-grid"><div class="choice-card py-3" onclick="editSetSingle('availability', 'Part-time', this)"><span>Part-time</span></div><div class="choice-card py-3" onclick="editSetSingle('availability', 'Full-time', this)"><span>Full-time</span></div></div></div>
+          <div class="flex gap-3 pt-4">
+            <button onclick="editGoBack()" class="w-1/3 py-3 rounded-xl font-bold text-gray-500 bg-white/5">Back</button>
+            <button onclick="saveEdit()" id="editSaveBtn" class="w-2/3 btn-primary py-3 rounded-xl font-bold text-white">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let editCurrentStep = 1;
+    let editFormData = { skills: [], tools: [], workTypes: [], otherSkills: '', otherTools: '', otherWorkTypes: '' };
+    let existingWorkerData = null;
+
+    // Auth check
+    (function() {
+      const token = localStorage.getItem('amax_token');
+      if (!token) {
+        window.location.href = 'auth.html?redirect=worker-dashboard.html';
+      }
+    })();
+
+    // Load profile
+    (function() {
+      try {
+        const user = JSON.parse(localStorage.getItem('amax_user') || '{}');
+        document.getElementById('navUserName').textContent = user.name || 'Creator';
+
+        const workers = JSON.parse(localStorage.getItem('amax_workers') || '[]');
+        const worker = workers.find(w => w.email === user.email);
+
+        if (!worker) {
+          document.getElementById('loadingState').classList.add('hidden');
+          document.getElementById('noProfileState').classList.remove('hidden');
+          return;
+        }
+
+        existingWorkerData = worker;
+        renderProfile(worker);
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('profileState').classList.remove('hidden');
+      } catch (err) {
+        document.getElementById('loadingState').innerHTML = '<p class="text-red-400">Failed to load profile. Please refresh.</p>';
+      }
+    })();
+
+    function renderProfile(data) {
+      document.getElementById('profName').textContent = data.name || 'N/A';
+      document.getElementById('profEmail').textContent = data.email || 'N/A';
+      document.getElementById('profWhatsapp').textContent = data.whatsapp || 'Not provided';
+      document.getElementById('profExp').textContent = data.experience || 'Not specified';
+      document.getElementById('profAvail').textContent = data.availability || 'Not specified';
+      document.getElementById('profPortfolio').textContent = data.portfolio || 'N/A';
+      document.getElementById('profPortfolio').href = data.portfolio || '#';
+      document.getElementById('profPrice').textContent = data.priceRange || 'Not specified';
+      document.getElementById('profDelivery').textContent = data.deliveryTime || 'Not specified';
+
+      const statusBadge = document.getElementById('statusBadge');
+      statusBadge.textContent = data.status || 'Pending';
+      statusBadge.className = `status-badge status-${(data.status || 'pending').toLowerCase()}`;
+
+      const statusMessages = {
+        'Pending': 'Your application is under review. We\'ll notify you once it\'s approved.',
+        'Approved': 'Congratulations! Your profile has been approved. You may receive project assignments soon.',
+        'Rejected': 'Unfortunately, your application was not approved this time. You can reapply with updated information.'
+      };
+      document.getElementById('statusMessage').textContent = statusMessages[data.status] || '';
+
+      document.getElementById('profSkills').innerHTML = (data.skills || []).map(s => `<span class="skill-tag">${s}</span>`).join('') || '<span class="text-gray-500 text-sm">None</span>';
+      document.getElementById('profTools').innerHTML = (data.tools || []).map(t => `<span class="skill-tag">${t}</span>`).join('') || '<span class="text-gray-500 text-sm">None</span>';
+      document.getElementById('profWorkTypes').innerHTML = (data.workTypes || []).map(w => `<span class="skill-tag">${w}</span>`).join('') || '<span class="text-gray-500 text-sm">None</span>';
+    }
+
+    function logout() {
+      localStorage.removeItem('amax_token');
+      localStorage.removeItem('amax_user');
+      window.location.href = 'index.html';
+    }
+
+    // EDIT MODAL
+    function openEditModal() {
+      document.getElementById('editModal').style.display = 'flex';
+      editCurrentStep = 1;
+      editFormData = { skills: [], tools: [], workTypes: [], otherSkills: '', otherTools: '', otherWorkTypes: '' };
+
+      if (existingWorkerData) {
+        document.getElementById('e_name').value = existingWorkerData.name || '';
+        document.getElementById('e_email').value = existingWorkerData.email || '';
+        document.getElementById('e_whatsapp').value = existingWorkerData.whatsapp || '';
+        document.getElementById('e_portfolio').value = existingWorkerData.portfolio || '';
+        document.getElementById('e_description').value = existingWorkerData.description || '';
+
+        (existingWorkerData.skills || []).forEach(s => {
+          const cards = document.querySelectorAll('#editSkillsGrid .choice-card');
+          let found = false;
+          cards.forEach(c => {
+            const txt = c.querySelector('span').textContent.trim();
+            if (txt === s) { c.classList.add('selected'); found = true; }
+          });
+          if (!found && !['Video Editing','Thumbnail Design','Graphic Design','Web Development','Other'].includes(s)) {
+            editFormData.otherSkills = s;
+          }
+        });
+
+        (existingWorkerData.tools || []).forEach(t => {
+          const cards = document.querySelectorAll('#editToolsGrid .choice-card');
+          let found = false;
+          cards.forEach(c => {
+            const txt = c.querySelector('span').textContent.trim();
+            if (txt === t) { c.classList.add('selected'); found = true; }
+          });
+          if (!found && !['Premiere Pro','After Effects','Photoshop','Canva','Figma','VS Code','DaVinci','Other'].includes(t)) {
+            editFormData.otherTools = t;
+          }
+        });
+
+        (existingWorkerData.workTypes || []).forEach(w => {
+          const cards = document.querySelectorAll('#editWorkTypeGrid .choice-card');
+          let found = false;
+          cards.forEach(c => {
+            const txt = c.querySelector('span').textContent.trim();
+            if (txt === w) { c.classList.add('selected'); found = true; }
+          });
+          if (!found && !['Freelance','Long-term','One-time','Retainer','Other'].includes(w)) {
+            editFormData.otherWorkTypes = w;
+          }
+        });
+
+        if (existingWorkerData.experience) {
+          document.querySelectorAll('#editStep2 .choice-grid:first-of-type .choice-card').forEach(c => {
+            if (c.querySelector('span').textContent.trim() === existingWorkerData.experience) c.classList.add('selected');
+          });
+          editFormData.experience = existingWorkerData.experience;
+        }
+      }
+
+      editUpdateProgress();
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    function editToggleMulti(el, group) {
+      el.classList.toggle('selected');
+      const text = el.querySelector('span').textContent.trim();
+      if (text === 'Other') {
+        const otherInput = document.getElementById('edit-other-' + group);
+        if (el.classList.contains('selected')) {
+          otherInput.classList.add('visible');
+        } else {
+          otherInput.classList.remove('visible');
+          otherInput.querySelector('input').value = '';
+          editFormData['other' + group.charAt(0).toUpperCase() + group.slice(1)] = '';
+        }
+        return;
+      }
+      const idx = editFormData[group].indexOf(text);
+      if (idx > -1) editFormData[group].splice(idx, 1);
+      else editFormData[group].push(text);
+    }
+
+    function editSetSingle(key, val, el) {
+      editFormData[key] = val;
+      el.parentNode.querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function editNextStep(step) {
+      document.querySelectorAll('#editModal .step-container').forEach(s => s.classList.remove('active'));
+      document.getElementById('editStep' + step).classList.add('active');
+      editCurrentStep = step;
+      editUpdateProgress();
+    }
+
+    function editGoBack() {
+      if (editCurrentStep > 1) editNextStep(editCurrentStep - 1);
+    }
+
+    function editValidateAndNext(from, to) {
+      document.querySelectorAll('#editModal .error-msg.visible').forEach(e => e.classList.remove('visible'));
+      if (from === 2) {
+        const skills = getEditFinalSkills();
+        if (skills.length === 0) {
+          document.getElementById('err-edit-skills').classList.add('visible');
+          return;
+        }
+      }
+      if (from === 4) {
+        if (!document.getElementById('e_portfolio').value.trim()) {
+          document.getElementById('err-edit-portfolio').classList.add('visible');
+          return;
+        }
+      }
+      editNextStep(to);
+    }
+
+    function editUpdateProgress() {
+      document.getElementById('editProgressFill').style.width = (editCurrentStep / 5) * 100 + '%';
+      document.getElementById('editStepProgress').textContent = `Step ${editCurrentStep} of 5`;
+    }
+
+    function getEditFinalSkills() {
+      let s = [...editFormData.skills];
+      if (s.includes('Other')) { s = s.filter(x => x !== 'Other'); if (editFormData.otherSkills.trim()) s.push(editFormData.otherSkills.trim()); }
+      return s;
+    }
+    function getEditFinalTools() {
+      let t = [...editFormData.tools];
+      if (t.includes('Other')) { t = t.filter(x => x !== 'Other'); if (editFormData.otherTools.trim()) t.push(editFormData.otherTools.trim()); }
+      return t;
+    }
+    function getEditFinalWorkTypes() {
+      let w = [...editFormData.workTypes];
+      if (w.includes('Other')) { w = w.filter(x => x !== 'Other'); if (editFormData.otherWorkTypes.trim()) w.push(editFormData.otherWorkTypes.trim()); }
+      return w;
+    }
+
+    function saveEdit() {
+      const portfolio = document.getElementById('e_portfolio').value.trim();
+      if (!portfolio) {
+        document.getElementById('err-edit-portfolio').classList.add('visible');
+        return;
+      }
+      const skills = getEditFinalSkills();
+      if (skills.length === 0) {
+        document.getElementById('err-edit-skills').classList.add('visible');
+        return;
+      }
+
+      const btn = document.getElementById('editSaveBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+
+      const payload = {
+        name: document.getElementById('e_name').value.trim(),
+        email: document.getElementById('e_email').value.trim(),
+        whatsapp: document.getElementById('e_whatsapp').value.trim(),
+        skills,
+        experience: editFormData.experience || '',
+        tools: getEditFinalTools(),
+        workTypes: getEditFinalWorkTypes(),
+        portfolio,
+        description: document.getElementById('e_description').value.trim(),
+        priceRange: editFormData.priceRange || '',
+        deliveryTime: editFormData.deliveryTime || '',
+        availability: editFormData.availability || '',
+        status: existingWorkerData?.status || 'Pending'
+      };
+
+      try {
+        const workers = JSON.parse(localStorage.getItem('amax_workers') || '[]');
+        const user = JSON.parse(localStorage.getItem('amax_user') || '{}');
+        const idx = workers.findIndex(w => w.email === user.email);
+        if (idx >= 0) {
+          workers[idx] = { ...workers[idx], ...payload };
+        } else {
+          workers.push(payload);
+        }
+        localStorage.setItem('amax_workers', JSON.stringify(workers));
+        existingWorkerData = payload;
+        renderProfile(payload);
+        closeEditModal();
+        showToast('Profile updated successfully!');
+      } catch (err) {
+        showToast('Failed to save. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+      }
+    }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+  </script>
+</body>
+</html>

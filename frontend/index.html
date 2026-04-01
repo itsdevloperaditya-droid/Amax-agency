@@ -1412,14 +1412,15 @@ Looking forward to working with you 🤝`;
       });
     }
 
-    // Hire Me buttons (all CTAs)
+    // Hire Me buttons - redirect to auth/onboarding
     const hireBtns = ['heroHireBtn', 'finalHireBtn'];
     hireBtns.forEach(id => {
       const btn = document.getElementById(id);
       if(btn) {
-        btn.addEventListener('click', withAuth(() => {
-          showHireMeModal();
-        }));
+        btn.addEventListener('click', () => {
+          const token = localStorage.getItem('amax_token');
+          window.location.href = token ? 'worker-onboarding.html' : 'auth.html?redirect=worker-onboarding.html';
+        });
       }
     });
 
