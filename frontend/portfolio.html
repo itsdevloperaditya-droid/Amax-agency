@@ -418,8 +418,7 @@
   <script>
     const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
 
-    // Function to create video card
-    function createVideoCard(videoPath, index) {
+    function createVideoCard(videoPath) {
       return `
         <div class="portfolio-item group skeleton" data-type="video" data-path="${API_URL}/${videoPath}">
           <i class="fas fa-play-circle skeleton-icon"></i>
@@ -434,8 +433,7 @@
       `;
     }
 
-    // Function to create thumbnail card
-    function createThumbnailCard(thumbnailPath, index) {
+    function createThumbnailCard(thumbnailPath) {
       return `
         <div class="portfolio-item group skeleton" data-type="image" data-path="${API_URL}/${thumbnailPath}">
           <i class="fas fa-image skeleton-icon"></i>
@@ -449,7 +447,6 @@
       `;
     }
 
-    // Dynamic Media Loading from Server
     async function loadMedia() {
       const videoGrid = document.getElementById('videoGrid');
       const thumbnailGrid = document.getElementById('thumbnailGrid');
@@ -460,25 +457,22 @@
         const response = await fetch(`${API_URL}/api/media`);
         const data = await response.json();
         
-        // Update counts
         videoCount.textContent = `${data.videos.length}+ Projects`;
         thumbCount.textContent = `${data.thumbnails.length}+ Designs`;
 
-        // Clear grids before loading
         videoGrid.innerHTML = '';
         thumbnailGrid.innerHTML = '';
 
-        // Load videos
-        data.videos.forEach((video, index) => {
-          videoGrid.insertAdjacentHTML('beforeend', createVideoCard(video.path, index));
+        data.videos.forEach((video) => {
+          videoGrid.insertAdjacentHTML('beforeend', createVideoCard(video.path));
         });
 
-        // Load thumbnails
-        data.thumbnails.forEach((thumb, index) => {
-          thumbnailGrid.insertAdjacentHTML('beforeend', createThumbnailCard(thumb.path, index));
+        data.thumbnails.forEach((thumb) => {
+          thumbnailGrid.insertAdjacentHTML('beforeend', createThumbnailCard(thumb.path));
         });
 
-        initMediaListeners();
+        lazyLoadVideos();
+        lazyLoadThumbnails();
         initAutoplayLogic();
         
       } catch (err) {
@@ -493,9 +487,52 @@
     let isGlobalMuted = true;
     let autoplayObserver = null;
 
+    function lazyLoadVideos() {
+      const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const item = entry.target;
+            const video = item.querySelector('video');
+            if (video && video.preload === 'metadata') {
+              video.style.display = 'block';
+              video.addEventListener('loadedmetadata', () => {
+                item.classList.add('loaded');
+              }, { once: true });
+              video.addEventListener('error', () => {
+                item.classList.add('loaded');
+              }, { once: true });
+              video.load();
+            }
+            observer.unobserve(item);
+          }
+        });
+      }, { rootMargin: '300px 0px', threshold: 0.01 });
+
+      videoItems.forEach(item => observer.observe(item));
+    }
+
+    function lazyLoadThumbnails() {
+      const thumbItems = document.querySelectorAll('.portfolio-item[data-type="image"]');
+      thumbItems.forEach(item => {
+        const img = item.querySelector('img');
+        if (img && img.dataset.src && !img.src) {
+          img.onload = () => {
+            img.style.display = 'block';
+            item.classList.add('loaded');
+          };
+          img.onerror = () => {
+            img.style.display = 'block';
+            item.classList.add('loaded');
+          };
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+      });
+    }
+
     function initAutoplayLogic() {
       const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
-      let isPlaying = false;
 
       document.addEventListener('click', (e) => {
         const toggle = e.target.closest('.unmute-toggle');
@@ -507,18 +544,12 @@
           document.querySelectorAll('.unmute-toggle i').forEach(icon => {
             icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
           });
-          
           document.querySelectorAll('video').forEach(v => {
             v.muted = isGlobalMuted;
           });
           return;
         }
       });
-
-      const options = {
-        root: null,
-        threshold: [0, 0.25, 0.5, 0.75, 1.0]
-      };
 
       const visibilityMap = new Map();
 
@@ -544,10 +575,7 @@
           if (!video || video.style.display === 'none' || video.readyState < 2) return;
           if (item === mostVisible) {
             if (video.paused) {
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch(() => {});
-              }
+              video.play().catch(() => {});
             }
           } else {
             if (!video.paused) {
@@ -555,62 +583,13 @@
             }
           }
         });
-      }, options);
+      }, { threshold: [0, 0.25, 0.5, 0.75, 1.0] });
 
       videoItems.forEach(item => autoplayObserver.observe(item));
     }
 
-    function initMediaListeners() {
-      const observerOptions = {
-        root: null,
-        rootMargin: '300px 0px',
-        threshold: 0.01
-      };
-
-      const lazyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const item = entry.target;
-            const video = item.querySelector('video');
-            const img = item.querySelector('img');
-
-            if (video && video.preload === 'metadata') {
-              video.style.display = 'block';
-              video.addEventListener('loadedmetadata', () => {
-                item.classList.add('loaded');
-              }, { once: true });
-              video.addEventListener('error', () => {
-                item.classList.add('loaded');
-              }, { once: true });
-              video.load();
-            }
-
-            if (img && img.dataset.src && !img.src) {
-              img.onload = () => {
-                img.style.display = 'block';
-                item.classList.add('loaded');
-              };
-              img.onerror = () => {
-                item.classList.add('loaded');
-              };
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-            }
-
-            lazyObserver.unobserve(item);
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.portfolio-item').forEach(item => {
-        lazyObserver.observe(item);
-      });
-    }
-
-    // Call loadMedia on page load
     window.addEventListener('DOMContentLoaded', loadMedia);
 
-    // Filter Button Functionality
     const filterBtns = document.querySelectorAll('.filter-btn-modern');
     const videosSection = document.getElementById('videosSection');
     const thumbnailsSection = document.getElementById('thumbnailsSection');
@@ -636,7 +615,6 @@
       });
     });
 
-    // Modal functionality
     const modal = document.getElementById('mediaModal');
     const modalVideo = document.getElementById('modalVideo');
     const modalImage = document.getElementById('modalImage');
@@ -668,10 +646,7 @@
         }
         
         modalVideo.muted = isGlobalMuted;
-        const playPromise = modalVideo.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {});
-        }
+        modalVideo.play().catch(() => {});
       } else {
         modalVideo.style.display = 'none';
         modalImage.style.display = 'block';
@@ -683,10 +658,7 @@
 
     function closeModalFunc() {
       modal.classList.remove('active');
-      const pausePromise = modalVideo.pause();
-      if (pausePromise !== undefined) {
-        pausePromise.catch(() => {});
-      }
+      modalVideo.pause();
       modalVideo.src = '';
       modalImage.src = '';
       
