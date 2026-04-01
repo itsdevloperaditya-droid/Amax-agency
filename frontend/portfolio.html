@@ -242,6 +242,44 @@
       box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
     }
 
+    /* SKELETON LOADERS */
+    .skeleton {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .skeleton::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.08), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .portfolio-item.skeleton {
+      min-height: 250px;
+      border-radius: 1rem;
+    }
+    .skeleton-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: rgba(139, 92, 246, 0.2);
+      z-index: 1;
+    }
+    .portfolio-item.loaded .skeleton,
+    .portfolio-item.loaded .skeleton::after {
+      display: none;
+    }
+    .portfolio-item.loaded .skeleton-icon {
+      display: none;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -381,9 +419,9 @@
     // Function to create video card
     function createVideoCard(videoPath, index) {
       return `
-        <div class="portfolio-item group" data-type="video" data-path="${API_URL}/${videoPath}">
-          <div class="loader-container"><div class="spinner"></div></div>
-          <video muted preload="none" class="lazy-video" onloadeddata="this.parentElement.classList.add('loaded')" loop disableremoteplayback playsinline webkit-playsinline>
+        <div class="portfolio-item group skeleton" data-type="video" data-path="${API_URL}/${videoPath}">
+          <i class="fas fa-play-circle skeleton-icon"></i>
+          <video muted preload="metadata" class="lazy-video" style="display:none;" loop disableremoteplayback playsinline webkit-playsinline>
             <source src="${API_URL}/${videoPath}" type="video/mp4">
           </video>
           <div class="overlay">
@@ -399,9 +437,9 @@
     // Function to create thumbnail card
     function createThumbnailCard(thumbnailPath, index) {
       return `
-        <div class="portfolio-item group" data-type="image" data-path="${API_URL}/${thumbnailPath}">
-          <div class="loader-container"><div class="spinner"></div></div>
-          <img src="" data-src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" onload="this.parentElement.classList.add('loaded')">
+        <div class="portfolio-item group skeleton" data-type="image" data-path="${API_URL}/${thumbnailPath}">
+          <i class="fas fa-image skeleton-icon"></i>
+          <img src="" data-src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" loading="lazy" style="display:none;" onload="this.style.display='block'; this.parentElement.classList.add('loaded')">
           <div class="overlay">
             <div class="play-icon">
               <i class="fas fa-search-plus"></i>
@@ -447,6 +485,8 @@
         console.error('Failed to load media:', err);
         videoCount.textContent = 'Error';
         thumbCount.textContent = 'Error';
+        videoGrid.innerHTML = '<div class="text-gray-500 py-10 text-center col-span-full">Failed to load videos. Please refresh.</div>';
+        thumbnailGrid.innerHTML = '<div class="text-gray-500 py-10 text-center col-span-full">Failed to load thumbnails. Please refresh.</div>';
       }
     }
 
@@ -461,10 +501,9 @@
         const toggle = e.target.closest('.unmute-toggle');
         if (toggle) {
           e.preventDefault();
-          e.stopPropagation(); // Stop from bubbling to modal trigger
+          e.stopPropagation();
           isGlobalMuted = !isGlobalMuted;
           
-          // Update all toggle icons and video muted states
           document.querySelectorAll('.unmute-toggle i').forEach(icon => {
             icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
           });
@@ -485,14 +524,12 @@
       const visibilityMap = new Map();
 
       autoplayObserver = new IntersectionObserver((entries) => {
-        // If modal is active, don't change grid playback
         if (document.getElementById('mediaModal').classList.contains('active')) return;
 
         entries.forEach(entry => {
           visibilityMap.set(entry.target, entry.intersectionRatio);
         });
 
-        // Find the most visible video
         let mostVisible = null;
         let maxRatio = 0.5;
 
@@ -503,9 +540,9 @@
           }
         });
 
-        // Handle Playback
         videoItems.forEach(item => {
           const video = item.querySelector('video');
+          if (!video || video.style.display === 'none') return;
           if (item === mostVisible) {
             if (video.paused) {
               video.muted = isGlobalMuted;
@@ -523,10 +560,9 @@
     }
 
     function initMediaListeners() {
-      // Intersection Observer for Lazy Loading
       const observerOptions = {
         root: null,
-        rootMargin: '200px 0px',
+        rootMargin: '300px 0px',
         threshold: 0.1
       };
 
@@ -537,13 +573,19 @@
             const video = item.querySelector('video');
             const img = item.querySelector('img');
 
-            if (video && video.preload === 'none') {
-              video.preload = 'metadata';
+            if (video && video.preload === 'metadata') {
+              video.style.display = 'block';
+              video.load();
+              video.addEventListener('loadedmetadata', function handler() {
+                video.removeEventListener('loadedmetadata', handler);
+                item.classList.add('loaded');
+              }, { once: true });
             }
             if (img && img.dataset.src) {
               img.src = img.dataset.src;
               img.removeAttribute('data-src');
             }
+            lazyObserver.unobserve(item);
           }
         });
       }, observerOptions);

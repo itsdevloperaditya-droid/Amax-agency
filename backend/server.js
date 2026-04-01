@@ -86,7 +86,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')));
-app.use('/video-editing-samples', express.static(path.join(__dirname, 'video-editing samples')));
+app.use('/video-editing-samples', express.static(path.join(__dirname, 'video-editing samples'), {
+  maxAge: '1d',
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.mp4') || filePath.endsWith('.webm') || filePath.endsWith('.ogg')) {
+      res.setHeader('Accept-Ranges', 'bytes');
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+    if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif') || filePath.endsWith('.webp')) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    }
+  }
+}));
 
 // Serve specific hero video safely
 app.get('/WhatsApp%20Video%202026-03-30%20at%2012.46.06.mp4', (req, res) => {
