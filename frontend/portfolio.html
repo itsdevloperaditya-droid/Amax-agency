@@ -272,12 +272,14 @@
       color: rgba(139, 92, 246, 0.2);
       z-index: 1;
     }
-    .portfolio-item.loaded .skeleton,
     .portfolio-item.loaded .skeleton::after {
       display: none;
     }
     .portfolio-item.loaded .skeleton-icon {
       display: none;
+    }
+    .portfolio-item.loaded {
+      background: transparent;
     }
 
     ::-webkit-scrollbar {
@@ -424,9 +426,7 @@
           <video muted preload="metadata" class="lazy-video" style="display:none;" loop disableremoteplayback playsinline webkit-playsinline>
             <source src="${API_URL}/${videoPath}" type="video/mp4">
           </video>
-          <div class="overlay">
-            <!-- Central icon removed as requested -->
-          </div>
+          <div class="overlay"></div>
           <button class="unmute-toggle" title="Toggle Sound">
             <i class="fas fa-volume-mute"></i>
           </button>
@@ -439,7 +439,7 @@
       return `
         <div class="portfolio-item group skeleton" data-type="image" data-path="${API_URL}/${thumbnailPath}">
           <i class="fas fa-image skeleton-icon"></i>
-          <img src="" data-src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" loading="lazy" style="display:none;" onload="this.style.display='block'; this.parentElement.classList.add('loaded')">
+          <img src="" data-src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" style="display:none;">
           <div class="overlay">
             <div class="play-icon">
               <i class="fas fa-search-plus"></i>
@@ -495,8 +495,8 @@
 
     function initAutoplayLogic() {
       const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
+      let isPlaying = false;
 
-      // Individual Mute Toggle Logic with Global Sync
       document.addEventListener('click', (e) => {
         const toggle = e.target.closest('.unmute-toggle');
         if (toggle) {
@@ -515,7 +515,6 @@
         }
       });
 
-      // Intersection Observer for Autoplay
       const options = {
         root: null,
         threshold: [0, 0.25, 0.5, 0.75, 1.0]
@@ -542,11 +541,13 @@
 
         videoItems.forEach(item => {
           const video = item.querySelector('video');
-          if (!video || video.style.display === 'none') return;
+          if (!video || video.style.display === 'none' || video.readyState < 2) return;
           if (item === mostVisible) {
             if (video.paused) {
-              video.muted = isGlobalMuted;
-              video.play().catch(() => {});
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+              }
             }
           } else {
             if (!video.paused) {
@@ -563,7 +564,7 @@
       const observerOptions = {
         root: null,
         rootMargin: '300px 0px',
-        threshold: 0.1
+        threshold: 0.01
       };
 
       const lazyObserver = new IntersectionObserver((entries) => {
@@ -575,16 +576,27 @@
 
             if (video && video.preload === 'metadata') {
               video.style.display = 'block';
-              video.load();
-              video.addEventListener('loadedmetadata', function handler() {
-                video.removeEventListener('loadedmetadata', handler);
+              video.addEventListener('loadedmetadata', () => {
                 item.classList.add('loaded');
               }, { once: true });
+              video.addEventListener('error', () => {
+                item.classList.add('loaded');
+              }, { once: true });
+              video.load();
             }
-            if (img && img.dataset.src) {
+
+            if (img && img.dataset.src && !img.src) {
+              img.onload = () => {
+                img.style.display = 'block';
+                item.classList.add('loaded');
+              };
+              img.onerror = () => {
+                item.classList.add('loaded');
+              };
               img.src = img.dataset.src;
               img.removeAttribute('data-src');
             }
+
             lazyObserver.unobserve(item);
           }
         });
@@ -631,7 +643,6 @@
     const closeModal = document.querySelector('.close-modal');
 
     document.addEventListener('click', (e) => {
-      // Ignore if clicking the unmute toggle
       if (e.target.closest('.unmute-toggle')) return;
 
       const portfolioItem = e.target.closest('.portfolio-item');
@@ -643,21 +654,24 @@
       if (type === 'video') {
         const gridVideo = portfolioItem.querySelector('video');
         
-        // Pause all grid videos to stop background audio
-        document.querySelectorAll('.portfolio-item video').forEach(v => v.pause());
+        document.querySelectorAll('.portfolio-item video').forEach(v => {
+          if (!v.paused) v.pause();
+        });
 
         modalVideo.style.display = 'block';
         modalImage.style.display = 'none';
         modalVideo.src = path;
         modalVideo.load();
         
-        // Sync time: Continue from where grid video left off
-        if (gridVideo) {
+        if (gridVideo && !isNaN(gridVideo.currentTime)) {
           modalVideo.currentTime = gridVideo.currentTime;
         }
         
         modalVideo.muted = isGlobalMuted;
-        modalVideo.play();
+        const playPromise = modalVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
       } else {
         modalVideo.style.display = 'none';
         modalImage.style.display = 'block';
@@ -669,12 +683,13 @@
 
     function closeModalFunc() {
       modal.classList.remove('active');
-      modalVideo.pause();
+      const pausePromise = modalVideo.pause();
+      if (pausePromise !== undefined) {
+        pausePromise.catch(() => {});
+      }
       modalVideo.src = '';
       modalImage.src = '';
       
-      // Force IntersectionObserver to re-evaluate after modal closes
-      // We do this by slightly scrolling or triggering the observer manually
       if (autoplayObserver) {
         window.dispatchEvent(new Event('scroll'));
       }
