@@ -255,10 +255,15 @@
         box-shadow: none !important;
       }
       #amax-chatbot-toggle {
-        bottom: 16px;
-        right: 16px;
+        bottom: auto;
+        right: auto;
+        left: calc(100vw - 70px);
+        top: calc(100vh - 70px);
         width: 54px;
         height: 54px;
+        touch-action: none;
+        user-select: none;
+        -webkit-user-select: none;
       }
       #amax-chatbot-messages {
         -webkit-overflow-scrolling: touch;
@@ -328,8 +333,66 @@
     `;
     document.body.appendChild(chatWindow);
 
+    // Draggable toggle button on mobile
+    let isDragging = false;
+    let hasMoved = false;
+    let startX, startY, initialX, initialY;
+
+    function getBtnPosition() {
+      const rect = toggleBtn.getBoundingClientRect();
+      return { x: rect.left, y: rect.top };
+    }
+
+    function setBtnPosition(x, y) {
+      const btnSize = window.innerWidth <= 480 ? 54 : 60;
+      const maxX = window.innerWidth - btnSize;
+      const maxY = window.innerHeight - btnSize;
+      const newX = Math.max(0, Math.min(x, maxX));
+      const newY = Math.max(0, Math.min(y, maxY));
+      toggleBtn.style.left = newX + 'px';
+      toggleBtn.style.top = newY + 'px';
+      toggleBtn.style.right = 'auto';
+      toggleBtn.style.bottom = 'auto';
+    }
+
+    toggleBtn.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      hasMoved = false;
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      const pos = getBtnPosition();
+      initialX = pos.x;
+      initialY = pos.y;
+      toggleBtn.style.transition = 'none';
+    }, { passive: true });
+
+    toggleBtn.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        hasMoved = true;
+      }
+      setBtnPosition(initialX + dx, initialY + dy);
+    }, { passive: true });
+
+    toggleBtn.addEventListener('touchend', () => {
+      isDragging = false;
+      toggleBtn.style.transition = 'all 0.3s ease';
+    });
+
+    toggleBtn.addEventListener('click', (e) => {
+      if (hasMoved) {
+        e.preventDefault();
+        hasMoved = false;
+        return;
+      }
+      toggleChat();
+    });
+
     // Event listeners
-    toggleBtn.addEventListener('click', toggleChat);
     document.getElementById('amax-chatbot-close').addEventListener('click', toggleChat);
     document.getElementById('amax-chatbot-send').addEventListener('click', sendMessage);
     document.getElementById('amax-chatbot-input').addEventListener('keypress', (e) => {
