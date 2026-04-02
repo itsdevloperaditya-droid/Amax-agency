@@ -296,15 +296,6 @@
     `;
     document.body.appendChild(chatWindow);
 
-    // Load chat history from localStorage
-    try {
-      const saved = localStorage.getItem('amax_chat_history');
-      if (saved) {
-        chatHistory = JSON.parse(saved);
-        chatHistory.forEach(msg => addMessage(msg.text, msg.isUser, false));
-      }
-    } catch (e) {}
-
     // Event listeners
     toggleBtn.addEventListener('click', toggleChat);
     document.getElementById('amax-chatbot-close').addEventListener('click', toggleChat);
@@ -325,6 +316,7 @@
     isOpen = !isOpen;
     const chatWindow = document.getElementById('amax-chatbot-window');
     const toggleBtn = document.getElementById('amax-chatbot-toggle');
+    const messagesEl = document.getElementById('amax-chatbot-messages');
 
     if (isOpen) {
       chatWindow.classList.add('open');
@@ -333,6 +325,8 @@
     } else {
       chatWindow.classList.remove('open');
       toggleBtn.classList.remove('hidden');
+      chatHistory = [];
+      if (messagesEl) messagesEl.innerHTML = '';
     }
   }
 
@@ -352,9 +346,6 @@
 
     if (save) {
       chatHistory.push({ text, isUser });
-      try {
-        localStorage.setItem('amax_chat_history', JSON.stringify(chatHistory.slice(-20)));
-      } catch (e) {}
     }
   }
 
