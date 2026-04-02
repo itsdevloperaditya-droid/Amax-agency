@@ -255,6 +255,9 @@ app.get('/api/video-view/:id', async (req, res) => {
   }
 });
 
+const chatRoute = require('./routes/chat');
+app.use(chatRoute);
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
