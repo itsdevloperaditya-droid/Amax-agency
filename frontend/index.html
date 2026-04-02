@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#05050A">
+  <meta name="description" content="Amax - Professional Video Editor & Creative Developer. Hire top creators or start earning today.">
   <title>Amax | Professional Video Editor & Creative Developer</title>
   <!-- Google Fonts + Tailwind + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -209,6 +211,32 @@
     }
     .animate-pulse-slow { animation: pulseSlow 4s ease-in-out infinite; }
 
+    /* Extra modern animations */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 0px rgba(139,92,246,0); }
+      50% { text-shadow: 0 0 15px rgba(139,92,246,0.5); }
+      100% { text-shadow: 0 0 0px rgba(139,92,246,0); }
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-rotate-slow {
+      animation: rotateSlow 20s linear infinite;
+    }
+    .animate-shimmer {
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.2), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+    }
+    .glow-text {
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
     .perspective-1000 { perspective: 1000px; }
     .transform-3d { transform-style: preserve-3d; }
     .hover\:rotate-y-2:hover { transform: rotateY(5deg) rotateX(3deg); }
@@ -412,22 +440,115 @@
       color: #8B5CF6;
       transform: scale(1.1);
     }
+
+    /* ========== MOBILE RESPONSIVENESS FIXES ========== */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+      .glass-card {
+        border-radius: 1.5rem;
+        padding: 1rem !important;
+      }
+      .service-card {
+        padding: 1.25rem !important;
+      }
+      .hero-section {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+      }
+      .grid.md\:grid-cols-2 {
+        gap: 2rem !important;
+      }
+      .grid.md\:grid-cols-3 {
+        gap: 1.5rem !important;
+      }
+      section {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .text-5xl {
+        font-size: 2.5rem !important;
+      }
+      .text-7xl {
+        font-size: 3rem !important;
+      }
+      .btn-primary, .btn-outline {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+      .stat-item {
+        margin-bottom: 0.5rem;
+      }
+      .portfolio-item {
+        margin-bottom: 1rem;
+      }
+      .toast {
+        min-width: 260px;
+        font-size: 0.875rem;
+      }
+      .floating-element {
+        display: none;
+      }
+      .animate-float-bounce, .animate-float-bounce-delayed, .animate-float-bounce-slow {
+        animation: none;
+      }
+      .glass-card p, .service-card p {
+        font-size: 0.9rem;
+      }
+      .service-card .text-2xl {
+        font-size: 1.5rem;
+      }
+      footer .grid {
+        gap: 2rem;
+      }
+      .option-card {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+      }
+      .step-indicator {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+      .progress-line {
+        margin: 0 4px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .glass-card {
+        padding: 0.75rem !important;
+      }
+      .service-card {
+        padding: 1rem !important;
+      }
+      .text-3xl {
+        font-size: 1.75rem !important;
+      }
+      .text-5xl {
+        font-size: 2rem !important;
+      }
+      .grid {
+        gap: 1rem !important;
+      }
+      .flex-wrap {
+        gap: 0.75rem !important;
+      }
+      .stat-item span:first-child {
+        font-size: 1.25rem;
+      }
+      .toast {
+        right: 16px;
+        left: 16px;
+        min-width: auto;
+        width: calc(100% - 32px);
+      }
+    }
   </style>
 </head>
-<body class="bg-[#05050A] text-gray-200">
-
-  <!-- MEDIA MODAL -->
-  <div id="mediaModal" class="media-modal">
-    <div class="media-modal-content">
-      <span class="close-media-modal">&times;</span>
-      <img id="modalImg" src="" alt="Fullscreen View">
-    </div>
-  </div>
-
-  <!-- TOAST CONTAINER -->
-  <div id="toast-container"></div>
-
-  <!-- Navigation -->
+<body class="bg-[#05050A] text-gray-200">  
+    <!-- Navigation -->
   <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-4 md:px-6 py-3">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
       <div class="flex items-center gap-2">
@@ -703,1037 +824,3 @@ Join Amax_editor and grow your income 🚀</p>
         <p class="text-xs text-gray-400 mt-5">💸 Get paid • 📈 Real projects • 🔒 Secure</p>
       </div>
     </section>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-white/10 py-12 px-6 mt-10">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-        <div>
-          <div class="flex items-center gap-2 text-2xl font-bold">
-            <i class="fas fa-film text-purple-500"></i>
-            <span class="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Amax</span>
-          </div>
-          <p class="text-gray-400 text-sm mt-2">Professional Video Editor & Creative Developer</p>
-          <div class="flex gap-4 mt-4 text-xl">
-            <i class="fab fa-twitter hover:text-purple-400 cursor-pointer"></i>
-            <i class="fab fa-instagram hover:text-purple-400 cursor-pointer"></i>
-            <i class="fab fa-linkedin-in hover:text-purple-400 cursor-pointer"></i>
-            <i class="fab fa-youtube hover:text-purple-400 cursor-pointer"></i>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-8 md:gap-12">
-          <div>
-            <h4 class="font-semibold mb-3">Quick Links</h4>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li><a href="#home" class="hover:text-purple-400 transition">Home</a></li>
-              <li><a href="#services" class="hover:text-purple-400 transition">Services</a></li>
-              <li><a href="#portfolio" class="hover:text-purple-400 transition">Portfolio</a></li>
-              <li><a href="admin.html" class="text-purple-500/50 hover:text-purple-400 transition font-semibold"><i class="fas fa-lock text-xs mr-1"></i> Admin Panel</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-3">Contact</h4>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li><i class="fas fa-envelope mr-2"></i> amax@editor.com</li>
-              <li><i class="fas fa-phone mr-2"></i> +91 9509136278</li>
-              <li><i class="fab fa-whatsapp mr-2"></i> WhatsApp Available</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="text-center text-gray-500 text-xs pt-8 border-t border-white/5 mt-8 max-w-7xl mx-auto">© 2025 Amax — Hire Services or start Earning Today. All rights reserved.</div>
-    </footer>
-  </main>
-
-  <!-- AUTH MODAL -->
-  <div id="authModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
-    <div class="glass-card w-full max-w-md p-8 relative animate-fade-up">
-      <button id="closeAuthModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
-      
-      <div id="loginForm">
-        <h2 class="text-3xl font-bold mb-6 text-center">Login</h2>
-        <form id="loginFormEl" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Email Address</label>
-            <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="your@email.com">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="••••••••">
-          </div>
-          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-4">Login</button>
-        </form>
-        <p class="text-center text-sm mt-6 text-gray-400">Don't have an account? <a href="#" id="toggleToSignup" class="text-purple-400 font-semibold">Sign Up</a></p>
-      </div>
-
-      <div id="signupForm" class="hidden">
-        <h2 class="text-3xl font-bold mb-6 text-center">Sign Up</h2>
-        <form id="signupFormEl" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Full Name</label>
-            <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="John Doe">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Email Address</label>
-            <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="your@email.com">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500" placeholder="••••••••">
-          </div>
-          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-4">Create Account</button>
-        </form>
-        <p class="text-center text-sm mt-6 text-gray-400">Already have an account? <a href="#" id="toggleToLogin" class="text-purple-400 font-semibold">Login</a></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- HIRE ME MODAL -->
-  <div id="hireMeModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-md px-4 py-8">
-    <div class="glass-card w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 md:p-10 relative">
-      <button id="closeHireModal" class="absolute top-6 right-6 text-gray-400 hover:text-white text-2xl transition-colors">&times;</button>
-      
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Join Our Creative Team</h2>
-        <p class="text-gray-400 mt-2">Apply to work with Amax and earn money from your skill</p>
-      </div>
-
-      <!-- Step Indicators -->
-      <div class="flex items-center justify-between mb-10 px-2">
-        <div class="step-indicator active" data-step="1">1</div>
-        <div class="progress-line"><div class="progress-line-fill" id="progress-1"></div></div>
-        <div class="step-indicator" data-step="2">2</div>
-        <div class="progress-line"><div class="progress-line-fill" id="progress-2"></div></div>
-        <div class="step-indicator" data-step="3">3</div>
-        <div class="progress-line"><div class="progress-line-fill" id="progress-3"></div></div>
-        <div class="step-indicator" data-step="4">4</div>
-        <div class="progress-line"><div class="progress-line-fill" id="progress-4"></div></div>
-        <div class="step-indicator" data-step="5">5</div>
-      </div>
-
-      <form id="hireMeForm" class="space-y-6" novalidate>
-        <!-- Step 1: Basic Info -->
-        <div class="step-content active" data-step="1">
-          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-user-circle"></i> Step 1: Basic Info
-          </h3>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Full Name <span class="text-red-400">*</span></label>
-              <input type="text" name="fullName" class="form-input" placeholder="Enter your full name" data-required="true">
-              <p class="field-error hidden text-red-400 text-xs mt-1">Name is required</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">WhatsApp Number <span class="text-red-400">*</span></label>
-              <input type="tel" name="whatsapp" class="form-input" placeholder="+91 XXXXX XXXXX" data-required="true">
-              <p class="field-error hidden text-red-400 text-xs mt-1">WhatsApp number is required</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Email <span class="text-gray-500">(Optional)</span></label>
-              <input type="email" name="email" class="form-input" placeholder="your@email.com">
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 2: Skill Selection -->
-        <div class="step-content" data-step="2">
-          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-briefcase"></i> Step 2: Skill Selection
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Primary Skill <span class="text-red-400">*</span></label>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-group="primarySkill">
-                <label class="option-card"><input type="radio" name="primarySkill" value="Video Editor"><span>Video Editor</span></label>
-                <label class="option-card"><input type="radio" name="primarySkill" value="Thumbnail Designer"><span>Thumbnail Designer</span></label>
-                <label class="option-card"><input type="radio" name="primarySkill" value="Graphic Designer"><span>Graphic Designer</span></label>
-                <label class="option-card"><input type="radio" name="primarySkill" value="Web Developer"><span>Web Developer</span></label>
-                <label class="option-card" data-other="primarySkill">
-                  <input type="radio" name="primarySkill" value="Other"><span>Other</span>
-                </label>
-              </div>
-              <div class="other-input hidden mt-3">
-                <input type="text" name="primarySkillOther" class="form-input" placeholder="Enter your skill...">
-              </div>
-              <p class="field-error hidden text-red-400 text-xs mt-1">Please select a skill</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Experience Level <span class="text-red-400">*</span></label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-group="experience">
-                <label class="option-card"><input type="radio" name="experience" value="Beginner"><span>Beginner</span></label>
-                <label class="option-card"><input type="radio" name="experience" value="Intermediate"><span>Intermediate</span></label>
-                <label class="option-card"><input type="radio" name="experience" value="Expert"><span>Expert</span></label>
-              </div>
-              <p class="field-error hidden text-red-400 text-xs mt-1">Please select experience level</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3: Tools & Expertise -->
-        <div class="step-content" data-step="3">
-          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-tools"></i> Step 3: Tools & Expertise
-          </h3>
-          
-          <div id="dynamicToolsContainer" class="space-y-8">
-            <!-- Video Editor Set -->
-            <div id="set-VideoEditor" class="skill-set space-y-6 hidden">
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Video Editing Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Premiere Pro"><span>Premiere Pro</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="After Effects"><span>After Effects</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="CapCut"><span>CapCut</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="DaVinci Resolve"><span>DaVinci Resolve</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Final Cut Pro"><span>Final Cut Pro</span></label>
-                  <label class="option-card" data-other="tools">
-                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="YouTube Editing"><span>YouTube Editing</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Reels/Shorts"><span>Reels/Shorts</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Ads/Promos"><span>Ads/Promos</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Documentaries"><span>Documentaries</span></label>
-                  <label class="option-card" data-other="workType">
-                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-
-            <!-- Thumbnail Designer Set -->
-            <div id="set-ThumbnailDesigner" class="skill-set space-y-6 hidden">
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Design Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Canva"><span>Canva</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Lightroom"><span>Lightroom</span></label>
-                  <label class="option-card" data-other="tools">
-                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Gaming Thumbnails"><span>Gaming Thumbnails</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Vlog Thumbnails"><span>Vlog Thumbnails</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Clickbait Style"><span>Clickbait Style</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Minimalist"><span>Minimalist</span></label>
-                  <label class="option-card" data-other="workType">
-                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-
-            <!-- Graphic Designer Set -->
-            <div id="set-GraphicDesigner" class="skill-set space-y-6 hidden">
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Creative Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Figma"><span>Figma</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="InDesign"><span>InDesign</span></label>
-                  <label class="option-card" data-other="tools">
-                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Logo Design"><span>Logo Design</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Social Media Posts"><span>Social Media Posts</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Brand Identity"><span>Brand Identity</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Banners/Posters"><span>Banners/Posters</span></label>
-                  <label class="option-card" data-other="workType">
-                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-
-            <!-- Web Developer Set -->
-            <div id="set-WebDeveloper" class="skill-set space-y-6 hidden">
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Development Stack <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="HTML/CSS/JS"><span>HTML/CSS/JS</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="React/Vue"><span>React/Vue</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Tailwind CSS"><span>Tailwind CSS</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="WordPress"><span>WordPress</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Node.js"><span>Node.js</span></label>
-                  <label class="option-card" data-other="tools">
-                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools/frameworks...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Landing Pages"><span>Landing Pages</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Portfolio Sites"><span>Portfolio Sites</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="E-commerce"><span>E-commerce</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Custom Web Apps"><span>Custom Web Apps</span></label>
-                  <label class="option-card" data-other="workType">
-                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
-                  </label>
-                </div>
-                <div class="other-input hidden mt-3">
-                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
-                </div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4: Portfolio (Optional - Skippable) -->
-        <div class="step-content" data-step="4" data-skippable="true">
-          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-link"></i> Step 4: Portfolio <span class="text-sm font-normal text-gray-500">(Optional)</span>
-          </h3>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Portfolio Link <span class="text-gray-500">(Google Drive / YouTube / Behance)</span></label>
-              <input type="url" name="portfolioLink" class="form-input" placeholder="https://...">
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Past work description <span class="text-gray-500">(Short text)</span></label>
-              <textarea name="workDescription" class="form-input min-h-[120px]" placeholder="Tell us about your experience and the projects you've worked on..."></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 5: Pricing & Availability -->
-        <div class="step-content" data-step="5">
-          <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-clock"></i> Step 5: Pricing & Availability
-          </h3>
-          <div class="space-y-6">
-            <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Price Range <span class="text-red-400">*</span></label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-group="priceRange">
-                <label class="option-card"><input type="radio" name="priceRange" value="₹500–₹2000"><span>₹500–₹2000</span></label>
-                <label class="option-card"><input type="radio" name="priceRange" value="₹2000–₹5000"><span>₹2000–₹5000</span></label>
-                <label class="option-card"><input type="radio" name="priceRange" value="₹5000+"><span>₹5000+</span></label>
-              </div>
-              <p class="field-error hidden text-red-400 text-xs mt-1">Please select a price range</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Delivery Time <span class="text-red-400">*</span></label>
-                <select name="deliveryTime" class="form-input" data-required="true">
-                  <option value="">Select...</option>
-                  <option value="24h">24h</option>
-                  <option value="2–3 days">2–3 days</option>
-                  <option value="1 week">1 week</option>
-                  <option value="Flexible">Flexible</option>
-                </select>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Please select delivery time</p>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Availability <span class="text-red-400">*</span></label>
-                <select name="availability" class="form-input" data-required="true">
-                  <option value="">Select...</option>
-                  <option value="Part-time">Part-time</option>
-                  <option value="Full-time">Full-time</option>
-                </select>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Please select availability</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class="flex justify-between items-center pt-8 border-t border-white/10 mt-6">
-          <button type="button" id="prevStep" class="px-6 py-2.5 rounded-full font-semibold border border-purple-500/30 text-purple-300 hover:bg-purple-500/10 transition hidden">
-            <i class="fas fa-chevron-left mr-2"></i> Previous
-          </button>
-          <div class="flex-1"></div>
-          <button type="button" id="skipStep" class="px-6 py-2.5 rounded-full font-semibold text-gray-400 hover:text-gray-200 transition hidden">
-            Skip <i class="fas fa-forward ml-1"></i>
-          </button>
-          <button type="button" id="nextStep" class="px-8 py-2.5 rounded-full font-bold text-white btn-primary flex items-center gap-2">
-            Next Step <i class="fas fa-chevron-right ml-1"></i>
-          </button>
-          <button type="submit" id="submitHireForm" class="px-8 py-2.5 rounded-full font-bold text-white btn-primary flex items-center gap-2 hidden">
-            Submit Application <i class="fab fa-whatsapp ml-1"></i>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- LOGOUT CONFIRMATION MODAL -->
-  <div id="logoutModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
-    <div class="glass-card w-full max-w-sm p-8 relative animate-fade-up text-center">
-      <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
-        <i class="fas fa-sign-out-alt text-3xl"></i>
-      </div>
-      <h2 class="text-2xl font-bold mb-2">Are you sure?</h2>
-      <p class="text-gray-400 mb-8">You will need to login again to access your account.</p>
-      <div class="flex gap-4">
-        <button id="cancelLogout" class="flex-1 py-3 rounded-full font-bold border border-white/10 hover:bg-white/5 transition text-gray-300">Cancel</button>
-        <button id="confirmLogout" class="flex-1 py-3 rounded-full font-bold bg-red-500 hover:bg-red-600 transition text-white">Logout</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // TOAST SYSTEM
-    const toastContainer = document.getElementById('toast-container');
-    const showToast = (message, type = 'info') => {
-      const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
-      
-      let icon = '<i class="fas fa-info-circle"></i>';
-      if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
-      if (type === 'error') icon = '<i class="fas fa-exclamation-circle"></i>';
-      
-      toast.innerHTML = `
-        <div class="toast-icon">${icon}</div>
-        <div class="toast-message">${message}</div>
-      `;
-      
-      toastContainer.appendChild(toast);
-      
-      // Trigger animation
-      setTimeout(() => toast.classList.add('show'), 10);
-      
-      // Remove after 4 seconds
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400);
-      }, 4000);
-    };
-
-    // AUTH LOGIC
-    const authModal = document.getElementById('authModal');
-    const logoutModal = document.getElementById('logoutModal');
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-    const navAuthBtn = document.getElementById('navAuthBtn');
-    
-    const isLoggedIn = () => localStorage.getItem('isLoggedIn') === 'true';
-
-    const showAuthModal = (type = 'login') => {
-      authModal.classList.remove('hidden');
-      if (type === 'signup') {
-        loginForm.classList.add('hidden');
-        signupForm.classList.remove('hidden');
-      } else {
-        loginForm.classList.remove('hidden');
-        signupForm.classList.add('hidden');
-      }
-    };
-
-    const hideAuthModal = () => authModal.classList.add('hidden');
-
-    const showLogoutModal = () => logoutModal.classList.remove('hidden');
-    const hideLogoutModal = () => logoutModal.classList.add('hidden');
-
-    document.getElementById('closeAuthModal').addEventListener('click', hideAuthModal);
-    document.getElementById('toggleToSignup').addEventListener('click', (e) => {
-      e.preventDefault();
-      loginForm.classList.add('hidden');
-      signupForm.classList.remove('hidden');
-    });
-    document.getElementById('toggleToLogin').addEventListener('click', (e) => {
-      e.preventDefault();
-      signupForm.classList.add('hidden');
-      loginForm.classList.remove('hidden');
-    });
-
-    document.getElementById('cancelLogout').addEventListener('click', hideLogoutModal);
-    document.getElementById('confirmLogout').addEventListener('click', () => {
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userName');
-      updateAuthUI();
-      hideLogoutModal();
-      showToast('Logged out successfully!', 'info');
-    });
-
-    navAuthBtn.addEventListener('click', () => {
-      if (isLoggedIn()) {
-        showLogoutModal();
-      } else {
-        showAuthModal();
-      }
-    });
-
-    const updateAuthUI = () => {
-      if (isLoggedIn()) {
-        const userName = localStorage.getItem('userName') || 'User';
-        navAuthBtn.classList.remove('btn-primary');
-        navAuthBtn.classList.add('bg-white/5', 'border', 'border-white/10', 'hover:bg-white/10');
-        navAuthBtn.innerHTML = `
-          <span class="max-w-[100px] truncate text-purple-300" title="${userName}">${userName}</span>
-          <span class="ml-2 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition">Logout</span>
-        `;
-      } else {
-        navAuthBtn.classList.add('btn-primary');
-        navAuthBtn.classList.remove('bg-white/5', 'border', 'border-white/10', 'hover:bg-white/10');
-        navAuthBtn.textContent = 'Sign Up / Login';
-      }
-    };
-
-    const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
-
-    // Signup Form Submission
-    document.getElementById('signupFormEl').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        const response = await fetch(`${API_URL}/api/signup`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (response.ok) {
-          showToast('Account created successfully! Please login.', 'success');
-          showAuthModal('login');
-        } else {
-          showToast(result.error || 'Signup failed', 'error');
-        }
-      } catch (err) {
-        showToast('Server connection error. Please try again later.', 'error');
-      }
-    });
-
-    // Login Form Submission
-    document.getElementById('loginFormEl').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        const response = await fetch(`${API_URL}/api/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (response.ok) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('userName', result.name);
-          updateAuthUI();
-          hideAuthModal();
-          showToast(`Welcome back, ${result.name}!`, 'success');
-        } else {
-          showToast(result.error || 'Login failed', 'error');
-        }
-      } catch (err) {
-        showToast('Server connection error. Please try again later.', 'error');
-      }
-    });
-
-    // GLOBAL INTERCEPTOR
-    const withAuth = (callback) => {
-      return (...args) => {
-        if (isLoggedIn()) {
-          callback(...args);
-        } else {
-          showToast('Please login to access this feature', 'info');
-          showAuthModal();
-        }
-      };
-    };
-
-    // Smooth scroll for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if(target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Portfolio Filter functionality
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', withAuth(() => {
-        // Update active class
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const filterValue = btn.getAttribute('data-filter');
-        
-        portfolioItems.forEach(item => {
-          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-            item.style.display = 'block';
-            item.style.animation = 'fadeUp 0.5s ease forwards';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      }));
-    });
-
-    // View Project functionality
-    const viewProjectBtns = document.querySelectorAll('.view-project');
-    viewProjectBtns.forEach(btn => {
-      btn.addEventListener('click', withAuth((e) => {
-        e.stopPropagation();
-        const project = btn.getAttribute('data-project');
-        showToast(`✨ Project showcase: "${project}" (Demo)`, 'info');
-      }));
-    });
-
-    // HIRE ME MODAL LOGIC
-    const hireMeModal = document.getElementById('hireMeModal');
-    const hireMeForm = document.getElementById('hireMeForm');
-    const closeHireModal = document.getElementById('closeHireModal');
-    const steps = document.querySelectorAll('.step-content');
-    const stepIndicators = document.querySelectorAll('.step-indicator');
-    const prevBtn = document.getElementById('prevStep');
-    const nextBtn = document.getElementById('nextStep');
-    const skipBtn = document.getElementById('skipStep');
-    const submitBtn = document.getElementById('submitHireForm');
-    let currentStep = 1;
-    const totalSteps = 5;
-
-    // ── Other option handling ──
-    document.querySelectorAll('[data-other]').forEach(card => {
-      const input = card.querySelector('input');
-      const groupName = card.dataset.other;
-      const parent = card.closest('[data-group]');
-      const otherDiv = parent ? parent.parentElement.querySelector('.other-input') : null;
-
-      input.addEventListener('change', () => {
-        if (input.checked && input.value === 'Other') {
-          if (otherDiv) otherDiv.classList.remove('hidden');
-        } else {
-          const anyOtherChecked = parent && parent.querySelector('input[value="Other"]:checked');
-          if (!anyOtherChecked && otherDiv) otherDiv.classList.add('hidden');
-        }
-      });
-    });
-
-    // ── Dynamic tool sets based on primary skill ──
-    const primarySkillRadios = document.querySelectorAll('input[name="primarySkill"]');
-    const skillSets = document.querySelectorAll('.skill-set');
-
-    const updateSkillSets = (selectedSkill) => {
-      skillSets.forEach(set => {
-        set.classList.add('hidden');
-        set.querySelectorAll('input').forEach(input => {
-          input.disabled = true;
-          input.checked = false;
-          input.closest('.option-card').classList.remove('selected');
-        });
-        const otherDiv = set.querySelector('.other-input');
-        if (otherDiv) otherDiv.classList.add('hidden');
-        const otherInput = set.querySelector('.other-input input');
-        if (otherInput) otherInput.value = '';
-      });
-
-      const cleanSkill = selectedSkill === 'Other' ? document.querySelector('input[name="primarySkillOther"]')?.value || 'Video Editor' : selectedSkill;
-      const activeSetId = `set-${cleanSkill.replace(/\s+/g, '')}`;
-      const activeSet = document.getElementById(activeSetId);
-      if (activeSet) {
-        activeSet.classList.remove('hidden');
-        activeSet.querySelectorAll('input').forEach(input => { input.disabled = false; });
-      }
-    };
-
-    primarySkillRadios.forEach(radio => {
-      radio.addEventListener('change', (e) => { updateSkillSets(e.target.value); });
-    });
-
-    // ── Modal open/close ──
-    const showHireMeModal = () => {
-      hireMeModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      resetForm();
-    };
-
-    const hideHireMeModal = () => {
-      hireMeModal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    };
-
-    const resetForm = () => {
-      currentStep = 1;
-      hireMeForm.reset();
-      document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-      document.querySelectorAll('.other-input').forEach(d => d.classList.add('hidden'));
-      document.querySelectorAll('.field-error').forEach(e => e.classList.add('hidden'));
-      skillSets.forEach(set => set.classList.add('hidden'));
-      updateStepUI();
-    };
-
-    // ── Step UI update ──
-    const updateStepUI = () => {
-      steps.forEach(step => {
-        step.classList.remove('active');
-        if (parseInt(step.dataset.step) === currentStep) step.classList.add('active');
-      });
-
-      if (currentStep === 3) {
-        const selectedSkill = document.querySelector('input[name="primarySkill"]:checked')?.value;
-        if (selectedSkill) updateSkillSets(selectedSkill);
-      }
-
-      stepIndicators.forEach(ind => {
-        const stepNum = parseInt(ind.dataset.step);
-        ind.classList.remove('active', 'completed');
-        if (stepNum === currentStep) {
-          ind.classList.add('active');
-        } else if (stepNum < currentStep) {
-          ind.classList.add('completed');
-          ind.innerHTML = '<i class="fas fa-check"></i>';
-        } else {
-          ind.innerHTML = stepNum;
-        }
-      });
-
-      for (let i = 1; i <= 4; i++) {
-        const line = document.getElementById(`progress-${i}`);
-        if (line) line.style.width = i < currentStep ? '100%' : '0%';
-      }
-
-      prevBtn.classList.toggle('hidden', currentStep === 1);
-
-      const currentStepEl = document.querySelector(`.step-content[data-step="${currentStep}"]`);
-      const isSkippable = currentStepEl && currentStepEl.dataset.skippable === 'true';
-      skipBtn.classList.toggle('hidden', !isSkippable);
-
-      const isLastStep = currentStep === totalSteps;
-      nextBtn.classList.toggle('hidden', isLastStep);
-      submitBtn.classList.toggle('hidden', !isLastStep);
-    };
-
-    // ── Validation ──
-    const validateStep = (step) => {
-      const stepEl = document.querySelector(`.step-content[data-step="${step}"]`);
-      if (!stepEl) return true;
-      if (stepEl.dataset.skippable === 'true') return true;
-
-      let isValid = true;
-      stepEl.querySelectorAll('.field-error').forEach(e => e.classList.add('hidden'));
-
-      if (step === 1) {
-        const name = stepEl.querySelector('input[name="fullName"]');
-        const wa = stepEl.querySelector('input[name="whatsapp"]');
-        if (!name.value.trim()) {
-          name.nextElementSibling?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (!wa.value.trim()) {
-          wa.nextElementSibling?.classList.remove('hidden');
-          isValid = false;
-        }
-      } else if (step === 2) {
-        const skill = stepEl.querySelector('input[name="primarySkill"]:checked');
-        const exp = stepEl.querySelector('input[name="experience"]:checked');
-        if (!skill) {
-          stepEl.querySelector('[data-group="primarySkill"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (!exp) {
-          stepEl.querySelector('[data-group="experience"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (skill && skill.value === 'Other') {
-          const otherVal = stepEl.querySelector('input[name="primarySkillOther"]')?.value.trim();
-          if (!otherVal) { isValid = false; showToast('Please specify your skill', 'error'); }
-        }
-      } else if (step === 3) {
-        const tools = stepEl.querySelectorAll('input[name="tools"]:checked');
-        const workType = stepEl.querySelectorAll('input[name="workType"]:checked');
-        if (tools.length === 0) {
-          stepEl.querySelector('[data-group="tools"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (workType.length === 0) {
-          stepEl.querySelector('[data-group="workType"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
-          isValid = false;
-        }
-        const toolsOther = stepEl.querySelector('input[name="tools"]:checked[value="Other"]');
-        if (toolsOther && !stepEl.querySelector('input[name="toolsOther"]')?.value.trim()) {
-          isValid = false; showToast('Please specify your tool', 'error');
-        }
-        const wtOther = stepEl.querySelector('input[name="workType"]:checked[value="Other"]');
-        if (wtOther && !stepEl.querySelector('input[name="workTypeOther"]')?.value.trim()) {
-          isValid = false; showToast('Please specify your work type', 'error');
-        }
-      } else if (step === 5) {
-        const price = stepEl.querySelector('input[name="priceRange"]:checked');
-        const delivery = stepEl.querySelector('select[name="deliveryTime"]');
-        const avail = stepEl.querySelector('select[name="availability"]');
-        if (!price) {
-          stepEl.querySelector('[data-group="priceRange"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (!delivery.value) {
-          delivery.nextElementSibling?.classList.remove('hidden');
-          isValid = false;
-        }
-        if (!avail.value) {
-          avail.nextElementSibling?.classList.remove('hidden');
-          isValid = false;
-        }
-      }
-
-      if (!isValid) showToast('Please fill all required fields', 'error');
-      return isValid;
-    };
-
-    // ── Navigation ──
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        if (validateStep(currentStep)) {
-          currentStep++;
-          updateStepUI();
-        }
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        currentStep--;
-        updateStepUI();
-      });
-    }
-
-    if (skipBtn) {
-      skipBtn.addEventListener('click', () => {
-        currentStep++;
-        updateStepUI();
-      });
-    }
-
-    if (closeHireModal) closeHireModal.addEventListener('click', hideHireMeModal);
-
-    // ── Option card styling ──
-    document.querySelectorAll('.option-card').forEach(card => {
-      const input = card.querySelector('input');
-      card.addEventListener('click', () => {
-        if (input.type === 'radio') {
-          document.querySelectorAll(`input[name="${input.name}"]`).forEach(i => i.closest('.option-card').classList.remove('selected'));
-          card.classList.add('selected');
-          input.checked = true;
-        } else {
-          input.checked = !input.checked;
-          card.classList.toggle('selected', input.checked);
-        }
-      });
-      input.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (input.type === 'radio') {
-          document.querySelectorAll(`input[name="${input.name}"]`).forEach(i => i.closest('.option-card').classList.remove('selected'));
-          card.classList.add('selected');
-        } else {
-          card.classList.toggle('selected', input.checked);
-        }
-      });
-    });
-
-    // ── Form submission → WhatsApp ──
-    if (hireMeForm) {
-      hireMeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!validateStep(5)) return;
-
-        const data = {};
-        hireMeForm.querySelectorAll('input, select, textarea').forEach(el => {
-          if (el.type === 'radio' || el.type === 'checkbox') {
-            if (el.checked) {
-              if (el.value === 'Other') return;
-              if (!data[el.name]) data[el.name] = [];
-              if (!Array.isArray(data[el.name])) data[el.name] = [data[el.name]];
-              data[el.name].push(el.value);
-            }
-          } else if (el.value.trim()) {
-            data[el.name] = el.value.trim();
-          }
-        });
-
-        // Replace "Other" with actual user input
-        if (data.primarySkillOther) data.primarySkill = data.primarySkillOther;
-        if (data.toolsOther) {
-          if (!data.tools) data.tools = [];
-          data.tools.push(data.toolsOther);
-        }
-        if (data.workTypeOther) {
-          if (!data.workType) data.workType = [];
-          data.workType.push(data.workTypeOther);
-        }
-
-        // Build clean WhatsApp message (skip empty fields)
-        const lines = [`Hello Amax_editor 👋\n\nI want to join as a creator on your platform 🚀\n\nHere are my details:\n`];
-        lines.push(`👤 Name: ${data.fullName || 'N/A'}`);
-        lines.push(`📱 WhatsApp: ${data.whatsapp || 'N/A'}`);
-        if (data.email) lines.push(`📧 Email: ${data.email}`);
-        lines.push('');
-        lines.push(`🎯 Skill: ${data.primarySkill || 'N/A'}`);
-        lines.push(`📊 Experience: ${data.experience || 'N/A'}`);
-        if (data.tools && data.tools.length) lines.push(`🛠️ Tools: ${data.tools.join(', ')}`);
-        if (data.workType && data.workType.length) lines.push(`💼 Work Type: ${data.workType.join(', ')}`);
-        if (data.portfolioLink) lines.push(`\n🎨 Portfolio: ${data.portfolioLink}`);
-        if (data.workDescription) lines.push(`\n📝 About My Work:\n${data.workDescription}`);
-        lines.push(`\n💰 Pricing: ${data.priceRange || 'N/A'}`);
-        lines.push(`⏱️ Delivery Time: ${data.deliveryTime || 'N/A'}`);
-        lines.push(`📅 Availability: ${data.availability || 'N/A'}`);
-        lines.push(`\nLooking forward to working with you 🤝`);
-
-        const whatsappMsg = lines.join('\n');
-        const encodedMsg = encodeURIComponent(whatsappMsg);
-        const whatsappURL = `https://wa.me/919509136278?text=${encodedMsg}`;
-
-        showToast('Redirecting to WhatsApp...', 'success');
-        setTimeout(() => {
-          window.open(whatsappURL, '_blank');
-          hideHireMeModal();
-        }, 1500);
-      });
-    }
-
-    // Hire Me buttons - redirect to auth/onboarding
-    const hireBtns = ['heroHireBtn', 'finalHireBtn'];
-    hireBtns.forEach(id => {
-      const btn = document.getElementById(id);
-      if(btn) {
-        btn.addEventListener('click', () => {
-          const token = localStorage.getItem('amax_token');
-          const hasApplied = localStorage.getItem('amax_worker_applied');
-          if (hasApplied === 'true') {
-            window.location.href = 'worker-dashboard.html';
-          } else {
-            window.location.href = token ? 'worker-onboarding.html' : 'auth.html?redirect=worker-onboarding.html';
-          }
-        });
-      }
-    });
-
-    function updateFreelancerBtns() {
-      const hasApplied = localStorage.getItem('amax_worker_applied') === 'true';
-      const heroBtn = document.getElementById('heroHireBtn');
-      const finalBtn = document.getElementById('finalHireBtn');
-      if (hasApplied) {
-        if (heroBtn) {
-          heroBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> View Freelancer Dashboard';
-        }
-        if (finalBtn) {
-          finalBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> View Dashboard <i class="fas fa-arrow-right"></i>';
-        }
-      }
-    }
-
-    // View Portfolio button
-    const viewPortfolioBtn = document.getElementById('viewPortfolioBtn');
-    if(viewPortfolioBtn) {
-      viewPortfolioBtn.addEventListener('click', withAuth(() => {
-        window.location.href = 'portfolio.html';
-      }));
-    }
-
-    // Video Editor button
-    const videoEditorBtn = document.getElementById('videoEditorBtn');
-    if(videoEditorBtn) {
-      videoEditorBtn.addEventListener('click', withAuth(() => {
-        window.location.href = 'services.html';
-      }));
-    }
-
-    // View More button
-    const viewMoreBtn = document.getElementById('viewMoreBtn');
-    if(viewMoreBtn) {
-      viewMoreBtn.addEventListener('click', withAuth(() => {
-        showToast('🚀 Full portfolio available on request!', 'info');
-      }));
-    }
-
-    // Portfolio items click (for demonstration)
-    portfolioItems.forEach(item => {
-      item.addEventListener('click', withAuth(() => {
-        const category = item.getAttribute('data-category');
-        showToast(`✨ Viewing ${category} project details...`, 'info');
-      }));
-    });
-
-    // MEDIA MODAL LOGIC
-    const mediaModal = document.getElementById('mediaModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeMediaModal = document.querySelector('.close-media-modal');
-    const thumbnailPreviews = document.querySelectorAll('.thumbnail-preview');
-
-    thumbnailPreviews.forEach(preview => {
-      preview.addEventListener('click', () => {
-        const img = preview.querySelector('img');
-        if (img) {
-          modalImg.src = img.src;
-          mediaModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-
-    const closeMediaModalFunc = () => {
-      mediaModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-      setTimeout(() => { modalImg.src = ''; }, 300);
-    };
-
-    if (closeMediaModal) {
-      closeMediaModal.addEventListener('click', closeMediaModalFunc);
-    }
-
-    mediaModal.addEventListener('click', (e) => {
-      if (e.target === mediaModal) closeMediaModalFunc();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mediaModal.classList.contains('active')) {
-        closeMediaModalFunc();
-      }
-    });
-
-    // Initial UI update
-    updateAuthUI();
-    updateFreelancerBtns();
-  </script>
-  <script src="chatbot-widget.js"></script>
-</body>
-</html>
