@@ -310,7 +310,7 @@
     chatWindow.innerHTML = `
       <div id="amax-chatbot-header">
         <div id="amax-chatbot-header-left">
-          <div id="amax-chatbot-avatar">🤖</div>
+          <div id="amax-chatbot-avatar"><img src="amax-logo.jpeg" alt="Amax" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
           <div>
             <div id="amax-chatbot-title">Amax AI</div>
             <div id="amax-chatbot-status">Online</div>
