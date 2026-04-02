@@ -370,8 +370,8 @@
         <a href="#services" class="hover:text-purple-400 transition">Services</a>
         <a href="#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
       </div>
-      <div class="flex gap-3">
-        <button class="px-5 py-2 rounded-full text-sm font-semibold btn-primary text-white" id="navAuthBtn">Sign Up / Login</button>
+      <div class="flex gap-3 items-center">
+        <button class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold btn-primary text-white transition-all" id="navAuthBtn">Sign Up / Login</button>
       </div>
     </div>
   </nav>
@@ -1016,8 +1016,15 @@ Join Amax_editor and grow your income 🚀</p>
     const updateAuthUI = () => {
       if (isLoggedIn()) {
         const userName = localStorage.getItem('userName') || 'User';
-        navAuthBtn.textContent = `Logout (${userName})`;
+        navAuthBtn.classList.remove('btn-primary');
+        navAuthBtn.classList.add('bg-white/5', 'border', 'border-white/10', 'hover:bg-white/10');
+        navAuthBtn.innerHTML = `
+          <span class="max-w-[100px] truncate text-purple-300" title="${userName}">${userName}</span>
+          <span class="ml-2 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition">Logout</span>
+        `;
       } else {
+        navAuthBtn.classList.add('btn-primary');
+        navAuthBtn.classList.remove('bg-white/5', 'border', 'border-white/10', 'hover:bg-white/10');
         navAuthBtn.textContent = 'Sign Up / Login';
       }
     };
