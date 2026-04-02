@@ -1,9 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Groq = require('groq-sdk');
 const knowledgeBase = require('../knowledge-base');
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+let groq = null;
+try {
+  const Groq = require('groq-sdk');
+  if (process.env.GROQ_API_KEY) {
+    groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+  }
+} catch (e) {
+  console.log('Groq SDK not available');
+}
 
 // ─── Smart Intent Detection ───────────────────────────────────────────
 function detectIntent(query) {
@@ -303,46 +310,56 @@ router.post('/api/chat', async (req, res) => {
     }
 
     // Call Groq AI
-    try {
-      const systemPrompt = buildSystemPrompt(context, intent);
+    if (groq) {
+      try {
+        const systemPrompt = buildSystemPrompt(context, intent);
 
-      // Build conversation history (last 8 messages for better context)
-      const historyMessages = [];
-      const recentHistory = chatHistory.slice(-8);
+        // Build conversation history (last 8 messages for better context)
+        const historyMessages = [];
+        const recentHistory = chatHistory.slice(-8);
 
-      for (const msg of recentHistory) {
-        historyMessages.push({
-          role: msg.isUser ? 'user' : 'assistant',
-          content: msg.text
+        for (const msg of recentHistory) {
+          historyMessages.push({
+            role: msg.isUser ? 'user' : 'assistant',
+            content: msg.text
+          });
+        }
+
+        const messages = [
+          { role: 'system', content: systemPrompt },
+          ...historyMessages,
+          { role: 'user', content: message }
+        ];
+
+        const completion = await groq.chat.completions.create({
+          messages,
+          model: 'llama-3.3-70b-versatile',
+          temperature: 0.4,
+          max_tokens: 500,
+          top_p: 0.9,
+          stream: false,
+        });
+
+        const responseText = completion.choices[0]?.message?.content || "Sorry, main abhi respond nahi kar pa raha. Please try again!";
+
+        res.json({
+          response: responseText,
+          intent,
+          context: context.map(c => c.type)
+        });
+
+      } catch (aiError) {
+        console.log('Groq AI unavailable, using fallback:', aiError.message);
+        const fallbackResponse = generateFallbackResponse(message, context, intent);
+        res.json({
+          response: fallbackResponse,
+          intent,
+          context: context.map(c => c.type),
+          fallback: true
         });
       }
-
-      const messages = [
-        { role: 'system', content: systemPrompt },
-        ...historyMessages,
-        { role: 'user', content: message }
-      ];
-
-      const completion = await groq.chat.completions.create({
-        messages,
-        model: 'llama-3.3-70b-versatile',
-        temperature: 0.4,
-        max_tokens: 500,
-        top_p: 0.9,
-        stream: false,
-      });
-
-      const responseText = completion.choices[0]?.message?.content || "Sorry, main abhi respond nahi kar pa raha. Please try again!";
-
-      res.json({
-        response: responseText,
-        intent,
-        context: context.map(c => c.type)
-      });
-
-    } catch (aiError) {
-      console.log('Groq AI unavailable, using fallback:', aiError.message);
-      // Fallback to rule-based response
+    } else {
+      console.log('Groq API key not set, using fallback response');
       const fallbackResponse = generateFallbackResponse(message, context, intent);
       res.json({
         response: fallbackResponse,
