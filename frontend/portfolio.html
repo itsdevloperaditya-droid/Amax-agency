@@ -436,12 +436,7 @@
     function createThumbnailCard(thumbnailPath) {
       return `
         <div class="portfolio-item group" data-type="image" data-path="${API_URL}/${thumbnailPath}">
-          <img src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img">
-          <div class="overlay">
-            <div class="play-icon">
-              <i class="fas fa-search-plus"></i>
-            </div>
-          </div>
+          <img src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
       `;
     }
