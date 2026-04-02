@@ -2,6 +2,7 @@
   const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
   let chatHistory = [];
   let isOpen = false;
+  let inquiryState = null;
 
   const styles = `
     #amax-chatbot-toggle {
@@ -384,6 +385,7 @@
       chatWindow.classList.remove('open');
       toggleBtn.classList.remove('hidden');
       chatHistory = [];
+      inquiryState = null;
       if (messagesEl) messagesEl.innerHTML = '';
     }
   }
@@ -438,12 +440,16 @@
       const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, chatHistory })
+        body: JSON.stringify({ message, chatHistory, inquiryState })
       });
 
       const data = await response.json();
       hideTyping();
       addMessage(data.response || data.error || "Sorry, something went wrong. Try again!", false);
+
+      if (data.inquiryState) {
+        inquiryState = data.inquiryState;
+      }
     } catch (err) {
       hideTyping();
       addMessage("Sorry, I'm having trouble connecting. Please try again or contact us on [WhatsApp](https://wa.me/919509136278) 🚀", false);
