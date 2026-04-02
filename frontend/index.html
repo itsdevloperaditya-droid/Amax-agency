@@ -671,7 +671,7 @@ Join Amax_editor and grow your income 🚀</p>
         <div class="step-indicator" data-step="5">5</div>
       </div>
 
-      <form id="hireMeForm" class="space-y-6">
+      <form id="hireMeForm" class="space-y-6" novalidate>
         <!-- Step 1: Basic Info -->
         <div class="step-content active" data-step="1">
           <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
@@ -679,15 +679,17 @@ Join Amax_editor and grow your income 🚀</p>
           </h3>
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Full Name *</label>
-              <input type="text" name="fullName" class="form-input" placeholder="Enter your full name">
+              <label class="block text-sm font-medium mb-2 text-gray-300">Full Name <span class="text-red-400">*</span></label>
+              <input type="text" name="fullName" class="form-input" placeholder="Enter your full name" data-required="true">
+              <p class="field-error hidden text-red-400 text-xs mt-1">Name is required</p>
             </div>
             <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">WhatsApp Number (IMPORTANT) *</label>
-              <input type="tel" name="whatsapp" class="form-input" placeholder="+91 XXXXX XXXXX">
+              <label class="block text-sm font-medium mb-2 text-gray-300">WhatsApp Number <span class="text-red-400">*</span></label>
+              <input type="tel" name="whatsapp" class="form-input" placeholder="+91 XXXXX XXXXX" data-required="true">
+              <p class="field-error hidden text-red-400 text-xs mt-1">WhatsApp number is required</p>
             </div>
             <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Email (Optional)</label>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Email <span class="text-gray-500">(Optional)</span></label>
               <input type="email" name="email" class="form-input" placeholder="your@email.com">
             </div>
           </div>
@@ -700,42 +702,29 @@ Join Amax_editor and grow your income 🚀</p>
           </h3>
           <div class="space-y-6">
             <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Primary Skill *</label>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <label class="option-card">
-                  <input type="radio" name="primarySkill" value="Video Editor">
-                  <span>Video Editor</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="primarySkill" value="Thumbnail Designer">
-                  <span>Thumbnail Designer</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="primarySkill" value="Graphic Designer">
-                  <span>Graphic Designer</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="primarySkill" value="Web Developer">
-                  <span>Web Developer</span>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Primary Skill <span class="text-red-400">*</span></label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" data-group="primarySkill">
+                <label class="option-card"><input type="radio" name="primarySkill" value="Video Editor"><span>Video Editor</span></label>
+                <label class="option-card"><input type="radio" name="primarySkill" value="Thumbnail Designer"><span>Thumbnail Designer</span></label>
+                <label class="option-card"><input type="radio" name="primarySkill" value="Graphic Designer"><span>Graphic Designer</span></label>
+                <label class="option-card"><input type="radio" name="primarySkill" value="Web Developer"><span>Web Developer</span></label>
+                <label class="option-card" data-other="primarySkill">
+                  <input type="radio" name="primarySkill" value="Other"><span>Other</span>
                 </label>
               </div>
+              <div class="other-input hidden mt-3">
+                <input type="text" name="primarySkillOther" class="form-input" placeholder="Enter your skill...">
+              </div>
+              <p class="field-error hidden text-red-400 text-xs mt-1">Please select a skill</p>
             </div>
             <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Experience Level *</label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <label class="option-card">
-                  <input type="radio" name="experience" value="Beginner">
-                  <span>Beginner</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="experience" value="Intermediate">
-                  <span>Intermediate</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="experience" value="Expert">
-                  <span>Expert</span>
-                </label>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Experience Level <span class="text-red-400">*</span></label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-group="experience">
+                <label class="option-card"><input type="radio" name="experience" value="Beginner"><span>Beginner</span></label>
+                <label class="option-card"><input type="radio" name="experience" value="Intermediate"><span>Intermediate</span></label>
+                <label class="option-card"><input type="radio" name="experience" value="Expert"><span>Expert</span></label>
               </div>
+              <p class="field-error hidden text-red-400 text-xs mt-1">Please select experience level</p>
             </div>
           </div>
         </div>
@@ -750,107 +739,163 @@ Join Amax_editor and grow your income 🚀</p>
             <!-- Video Editor Set -->
             <div id="set-VideoEditor" class="skill-set space-y-6 hidden">
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Video Editing Tools *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Video Editing Tools <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
                   <label class="option-card"><input type="checkbox" name="tools" value="Premiere Pro"><span>Premiere Pro</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="After Effects"><span>After Effects</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="CapCut"><span>CapCut</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="DaVinci Resolve"><span>DaVinci Resolve</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Final Cut Pro"><span>Final Cut Pro</span></label>
+                  <label class="option-card" data-other="tools">
+                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
                   <label class="option-card"><input type="checkbox" name="workType" value="YouTube Editing"><span>YouTube Editing</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Reels/Shorts"><span>Reels/Shorts</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Ads/Promos"><span>Ads/Promos</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Documentaries"><span>Documentaries</span></label>
+                  <label class="option-card" data-other="workType">
+                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
               </div>
             </div>
 
             <!-- Thumbnail Designer Set -->
             <div id="set-ThumbnailDesigner" class="skill-set space-y-6 hidden">
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Design Tools *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Design Tools <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
                   <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Canva"><span>Canva</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Lightroom"><span>Lightroom</span></label>
+                  <label class="option-card" data-other="tools">
+                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
                   <label class="option-card"><input type="checkbox" name="workType" value="Gaming Thumbnails"><span>Gaming Thumbnails</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Vlog Thumbnails"><span>Vlog Thumbnails</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Clickbait Style"><span>Clickbait Style</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Minimalist"><span>Minimalist</span></label>
+                  <label class="option-card" data-other="workType">
+                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
               </div>
             </div>
 
             <!-- Graphic Designer Set -->
             <div id="set-GraphicDesigner" class="skill-set space-y-6 hidden">
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Creative Tools *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Creative Tools <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
                   <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Figma"><span>Figma</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="InDesign"><span>InDesign</span></label>
+                  <label class="option-card" data-other="tools">
+                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools you use...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
                   <label class="option-card"><input type="checkbox" name="workType" value="Logo Design"><span>Logo Design</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Social Media Posts"><span>Social Media Posts</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Brand Identity"><span>Brand Identity</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Banners/Posters"><span>Banners/Posters</span></label>
+                  <label class="option-card" data-other="workType">
+                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
               </div>
             </div>
 
             <!-- Web Developer Set -->
             <div id="set-WebDeveloper" class="skill-set space-y-6 hidden">
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Development Stack *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Development Stack <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="tools">
                   <label class="option-card"><input type="checkbox" name="tools" value="HTML/CSS/JS"><span>HTML/CSS/JS</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="React/Vue"><span>React/Vue</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Tailwind CSS"><span>Tailwind CSS</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="WordPress"><span>WordPress</span></label>
                   <label class="option-card"><input type="checkbox" name="tools" value="Node.js"><span>Node.js</span></label>
+                  <label class="option-card" data-other="tools">
+                    <input type="checkbox" name="tools" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools/frameworks...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type *</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Work Type <span class="text-red-400">*</span></label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" data-group="workType">
                   <label class="option-card"><input type="checkbox" name="workType" value="Landing Pages"><span>Landing Pages</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Portfolio Sites"><span>Portfolio Sites</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="E-commerce"><span>E-commerce</span></label>
                   <label class="option-card"><input type="checkbox" name="workType" value="Custom Web Apps"><span>Custom Web Apps</span></label>
+                  <label class="option-card" data-other="workType">
+                    <input type="checkbox" name="workType" value="Other"><span>Other</span>
+                  </label>
                 </div>
+                <div class="other-input hidden mt-3">
+                  <input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types...">
+                </div>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Step 4: Portfolio -->
-        <div class="step-content" data-step="4">
+        <!-- Step 4: Portfolio (Optional - Skippable) -->
+        <div class="step-content" data-step="4" data-skippable="true">
           <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-purple-400">
-            <i class="fas fa-link"></i> Step 4: Portfolio (MOST IMPORTANT)
+            <i class="fas fa-link"></i> Step 4: Portfolio <span class="text-sm font-normal text-gray-500">(Optional)</span>
           </h3>
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Portfolio Link * (Google Drive / YouTube / Behance)</label>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Portfolio Link <span class="text-gray-500">(Google Drive / YouTube / Behance)</span></label>
               <input type="url" name="portfolioLink" class="form-input" placeholder="https://...">
             </div>
             <div>
-              <label class="block text-sm font-medium mb-2 text-gray-300">Past work description * (Short text)</label>
+              <label class="block text-sm font-medium mb-2 text-gray-300">Past work description <span class="text-gray-500">(Short text)</span></label>
               <textarea name="workDescription" class="form-input min-h-[120px]" placeholder="Tell us about your experience and the projects you've worked on..."></textarea>
             </div>
           </div>
@@ -863,37 +908,34 @@ Join Amax_editor and grow your income 🚀</p>
           </h3>
           <div class="space-y-6">
             <div>
-              <label class="block text-sm font-medium mb-4 text-gray-300">Price Range *</label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <label class="option-card">
-                  <input type="radio" name="priceRange" value="₹500–₹2000">
-                  <span>₹500–₹2000</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="priceRange" value="₹2000–₹5000">
-                  <span>₹2000–₹5000</span>
-                </label>
-                <label class="option-card">
-                  <input type="radio" name="priceRange" value="₹5000+">
-                  <span>₹5000+</span>
-                </label>
+              <label class="block text-sm font-medium mb-4 text-gray-300">Price Range <span class="text-red-400">*</span></label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" data-group="priceRange">
+                <label class="option-card"><input type="radio" name="priceRange" value="₹500–₹2000"><span>₹500–₹2000</span></label>
+                <label class="option-card"><input type="radio" name="priceRange" value="₹2000–₹5000"><span>₹2000–₹5000</span></label>
+                <label class="option-card"><input type="radio" name="priceRange" value="₹5000+"><span>₹5000+</span></label>
               </div>
+              <p class="field-error hidden text-red-400 text-xs mt-1">Please select a price range</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Delivery Time *</label>
-                <select name="deliveryTime" class="form-input">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Delivery Time <span class="text-red-400">*</span></label>
+                <select name="deliveryTime" class="form-input" data-required="true">
+                  <option value="">Select...</option>
                   <option value="24h">24h</option>
                   <option value="2–3 days">2–3 days</option>
+                  <option value="1 week">1 week</option>
                   <option value="Flexible">Flexible</option>
                 </select>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Please select delivery time</p>
               </div>
               <div>
-                <label class="block text-sm font-medium mb-4 text-gray-300">Availability *</label>
-                <select name="availability" class="form-input">
+                <label class="block text-sm font-medium mb-4 text-gray-300">Availability <span class="text-red-400">*</span></label>
+                <select name="availability" class="form-input" data-required="true">
+                  <option value="">Select...</option>
                   <option value="Part-time">Part-time</option>
                   <option value="Full-time">Full-time</option>
                 </select>
+                <p class="field-error hidden text-red-400 text-xs mt-1">Please select availability</p>
               </div>
             </div>
           </div>
@@ -905,6 +947,9 @@ Join Amax_editor and grow your income 🚀</p>
             <i class="fas fa-chevron-left mr-2"></i> Previous
           </button>
           <div class="flex-1"></div>
+          <button type="button" id="skipStep" class="px-6 py-2.5 rounded-full font-semibold text-gray-400 hover:text-gray-200 transition hidden">
+            Skip <i class="fas fa-forward ml-1"></i>
+          </button>
           <button type="button" id="nextStep" class="px-8 py-2.5 rounded-full font-bold text-white btn-primary flex items-center gap-2">
             Next Step <i class="fas fa-chevron-right ml-1"></i>
           </button>
@@ -1144,15 +1189,33 @@ Join Amax_editor and grow your income 🚀</p>
     const stepIndicators = document.querySelectorAll('.step-indicator');
     const prevBtn = document.getElementById('prevStep');
     const nextBtn = document.getElementById('nextStep');
+    const skipBtn = document.getElementById('skipStep');
     const submitBtn = document.getElementById('submitHireForm');
     let currentStep = 1;
+    const totalSteps = 5;
 
-    // Hire Me dynamic tool sets logic
+    // ── Other option handling ──
+    document.querySelectorAll('[data-other]').forEach(card => {
+      const input = card.querySelector('input');
+      const groupName = card.dataset.other;
+      const parent = card.closest('[data-group]');
+      const otherDiv = parent ? parent.parentElement.querySelector('.other-input') : null;
+
+      input.addEventListener('change', () => {
+        if (input.checked && input.value === 'Other') {
+          if (otherDiv) otherDiv.classList.remove('hidden');
+        } else {
+          const anyOtherChecked = parent && parent.querySelector('input[value="Other"]:checked');
+          if (!anyOtherChecked && otherDiv) otherDiv.classList.add('hidden');
+        }
+      });
+    });
+
+    // ── Dynamic tool sets based on primary skill ──
     const primarySkillRadios = document.querySelectorAll('input[name="primarySkill"]');
     const skillSets = document.querySelectorAll('.skill-set');
 
     const updateSkillSets = (selectedSkill) => {
-      // Hide all sets and disable their inputs to prevent them from being part of form data
       skillSets.forEach(set => {
         set.classList.add('hidden');
         set.querySelectorAll('input').forEach(input => {
@@ -1160,25 +1223,26 @@ Join Amax_editor and grow your income 🚀</p>
           input.checked = false;
           input.closest('.option-card').classList.remove('selected');
         });
+        const otherDiv = set.querySelector('.other-input');
+        if (otherDiv) otherDiv.classList.add('hidden');
+        const otherInput = set.querySelector('.other-input input');
+        if (otherInput) otherInput.value = '';
       });
 
-      // Show the selected set and enable its inputs
-      const activeSetId = `set-${selectedSkill.replace(/\s+/g, '')}`;
+      const cleanSkill = selectedSkill === 'Other' ? document.querySelector('input[name="primarySkillOther"]')?.value || 'Video Editor' : selectedSkill;
+      const activeSetId = `set-${cleanSkill.replace(/\s+/g, '')}`;
       const activeSet = document.getElementById(activeSetId);
       if (activeSet) {
         activeSet.classList.remove('hidden');
-        activeSet.querySelectorAll('input').forEach(input => {
-          input.disabled = false;
-        });
+        activeSet.querySelectorAll('input').forEach(input => { input.disabled = false; });
       }
     };
 
     primarySkillRadios.forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        updateSkillSets(e.target.value);
-      });
+      radio.addEventListener('change', (e) => { updateSkillSets(e.target.value); });
     });
 
+    // ── Modal open/close ──
     const showHireMeModal = () => {
       hireMeModal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
@@ -1192,27 +1256,24 @@ Join Amax_editor and grow your income 🚀</p>
 
     const resetForm = () => {
       currentStep = 1;
-      updateStepUI();
       hireMeForm.reset();
       document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-      // Hide all skill sets on reset
+      document.querySelectorAll('.other-input').forEach(d => d.classList.add('hidden'));
+      document.querySelectorAll('.field-error').forEach(e => e.classList.add('hidden'));
       skillSets.forEach(set => set.classList.add('hidden'));
+      updateStepUI();
     };
 
+    // ── Step UI update ──
     const updateStepUI = () => {
       steps.forEach(step => {
         step.classList.remove('active');
-        if (parseInt(step.dataset.step) === currentStep) {
-          step.classList.add('active');
-        }
+        if (parseInt(step.dataset.step) === currentStep) step.classList.add('active');
       });
 
-      // Special handling for Step 3 validation/display
       if (currentStep === 3) {
         const selectedSkill = document.querySelector('input[name="primarySkill"]:checked')?.value;
-        if (selectedSkill) {
-          updateSkillSets(selectedSkill);
-        }
+        if (selectedSkill) updateSkillSets(selectedSkill);
       }
 
       stepIndicators.forEach(ind => {
@@ -1228,66 +1289,99 @@ Join Amax_editor and grow your income 🚀</p>
         }
       });
 
-      // Update progress lines
       for (let i = 1; i <= 4; i++) {
         const line = document.getElementById(`progress-${i}`);
-        if (line) {
-          if (i < currentStep) {
-            line.style.width = '100%';
-          } else {
-            line.style.width = '0%';
-          }
+        if (line) line.style.width = i < currentStep ? '100%' : '0%';
+      }
+
+      prevBtn.classList.toggle('hidden', currentStep === 1);
+
+      const currentStepEl = document.querySelector(`.step-content[data-step="${currentStep}"]`);
+      const isSkippable = currentStepEl && currentStepEl.dataset.skippable === 'true';
+      skipBtn.classList.toggle('hidden', !isSkippable);
+
+      const isLastStep = currentStep === totalSteps;
+      nextBtn.classList.toggle('hidden', isLastStep);
+      submitBtn.classList.toggle('hidden', !isLastStep);
+    };
+
+    // ── Validation ──
+    const validateStep = (step) => {
+      const stepEl = document.querySelector(`.step-content[data-step="${step}"]`);
+      if (!stepEl) return true;
+      if (stepEl.dataset.skippable === 'true') return true;
+
+      let isValid = true;
+      stepEl.querySelectorAll('.field-error').forEach(e => e.classList.add('hidden'));
+
+      if (step === 1) {
+        const name = stepEl.querySelector('input[name="fullName"]');
+        const wa = stepEl.querySelector('input[name="whatsapp"]');
+        if (!name.value.trim()) {
+          name.nextElementSibling?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (!wa.value.trim()) {
+          wa.nextElementSibling?.classList.remove('hidden');
+          isValid = false;
+        }
+      } else if (step === 2) {
+        const skill = stepEl.querySelector('input[name="primarySkill"]:checked');
+        const exp = stepEl.querySelector('input[name="experience"]:checked');
+        if (!skill) {
+          stepEl.querySelector('[data-group="primarySkill"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (!exp) {
+          stepEl.querySelector('[data-group="experience"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (skill && skill.value === 'Other') {
+          const otherVal = stepEl.querySelector('input[name="primarySkillOther"]')?.value.trim();
+          if (!otherVal) { isValid = false; showToast('Please specify your skill', 'error'); }
+        }
+      } else if (step === 3) {
+        const tools = stepEl.querySelectorAll('input[name="tools"]:checked');
+        const workType = stepEl.querySelectorAll('input[name="workType"]:checked');
+        if (tools.length === 0) {
+          stepEl.querySelector('[data-group="tools"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (workType.length === 0) {
+          stepEl.querySelector('[data-group="workType"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
+          isValid = false;
+        }
+        const toolsOther = stepEl.querySelector('input[name="tools"]:checked[value="Other"]');
+        if (toolsOther && !stepEl.querySelector('input[name="toolsOther"]')?.value.trim()) {
+          isValid = false; showToast('Please specify your tool', 'error');
+        }
+        const wtOther = stepEl.querySelector('input[name="workType"]:checked[value="Other"]');
+        if (wtOther && !stepEl.querySelector('input[name="workTypeOther"]')?.value.trim()) {
+          isValid = false; showToast('Please specify your work type', 'error');
+        }
+      } else if (step === 5) {
+        const price = stepEl.querySelector('input[name="priceRange"]:checked');
+        const delivery = stepEl.querySelector('select[name="deliveryTime"]');
+        const avail = stepEl.querySelector('select[name="availability"]');
+        if (!price) {
+          stepEl.querySelector('[data-group="priceRange"]')?.parentElement.querySelector('.field-error')?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (!delivery.value) {
+          delivery.nextElementSibling?.classList.remove('hidden');
+          isValid = false;
+        }
+        if (!avail.value) {
+          avail.nextElementSibling?.classList.remove('hidden');
+          isValid = false;
         }
       }
 
-      // Update buttons
-      if (currentStep === 1) {
-        prevBtn.classList.add('hidden');
-      } else {
-        prevBtn.classList.remove('hidden');
-      }
-
-      if (currentStep === 5) {
-        nextBtn.classList.add('hidden');
-        submitBtn.classList.remove('hidden');
-      } else {
-        nextBtn.classList.remove('hidden');
-        submitBtn.classList.add('hidden');
-      }
-    };
-
-    const validateStep = (step) => {
-      const currentStepEl = document.querySelector(`.step-content[data-step="${step}"]`);
-      // We check for fields that should be filled based on our logic, since we removed HTML 'required'
-      let isValid = true;
-      
-      if (step === 1) {
-        const name = currentStepEl.querySelector('input[name="fullName"]').value.trim();
-        const wa = currentStepEl.querySelector('input[name="whatsapp"]').value.trim();
-        if (!name || !wa) isValid = false;
-      } else if (step === 2) {
-        const skill = currentStepEl.querySelector('input[name="primarySkill"]:checked');
-        const exp = currentStepEl.querySelector('input[name="experience"]:checked');
-        if (!skill || !exp) isValid = false;
-      } else if (step === 3) {
-        const tools = currentStepEl.querySelectorAll('input[name="tools"]:checked');
-        const workType = currentStepEl.querySelectorAll('input[name="workType"]:checked');
-        if (tools.length === 0 || workType.length === 0) isValid = false;
-      } else if (step === 4) {
-        const link = currentStepEl.querySelector('input[name="portfolioLink"]').value.trim();
-        const desc = currentStepEl.querySelector('textarea[name="workDescription"]').value.trim();
-        if (!link || !desc) isValid = false;
-      } else if (step === 5) {
-        const price = currentStepEl.querySelector('input[name="priceRange"]:checked');
-        if (!price) isValid = false;
-      }
-
-      if (!isValid) {
-        showToast('Please fill all required fields', 'error');
-      }
+      if (!isValid) showToast('Please fill all required fields', 'error');
       return isValid;
     };
 
+    // ── Navigation ──
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
         if (validateStep(currentStep)) {
@@ -1304,112 +1398,91 @@ Join Amax_editor and grow your income 🚀</p>
       });
     }
 
-    if (closeHireModal) {
-      closeHireModal.addEventListener('click', hideHireMeModal);
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        currentStep++;
+        updateStepUI();
+      });
     }
 
-    // Option card selection styling
+    if (closeHireModal) closeHireModal.addEventListener('click', hideHireMeModal);
+
+    // ── Option card styling ──
     document.querySelectorAll('.option-card').forEach(card => {
       const input = card.querySelector('input');
-      
       card.addEventListener('click', () => {
         if (input.type === 'radio') {
-          const name = input.name;
-          document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
-            i.closest('.option-card').classList.remove('selected');
-          });
+          document.querySelectorAll(`input[name="${input.name}"]`).forEach(i => i.closest('.option-card').classList.remove('selected'));
           card.classList.add('selected');
           input.checked = true;
         } else {
           input.checked = !input.checked;
-          if (input.checked) {
-            card.classList.add('selected');
-          } else {
-            card.classList.remove('selected');
-          }
+          card.classList.toggle('selected', input.checked);
         }
       });
-
-      // Prevent double click on radio/checkbox
       input.addEventListener('click', (e) => {
         e.stopPropagation();
         if (input.type === 'radio') {
-          const name = input.name;
-          document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
-            i.closest('.option-card').classList.remove('selected');
-          });
+          document.querySelectorAll(`input[name="${input.name}"]`).forEach(i => i.closest('.option-card').classList.remove('selected'));
           card.classList.add('selected');
         } else {
-          if (input.checked) {
-            card.classList.add('selected');
-          } else {
-            card.classList.remove('selected');
-          }
+          card.classList.toggle('selected', input.checked);
         }
       });
     });
 
-    // Form Submission -> WhatsApp Link
+    // ── Form submission → WhatsApp ──
     if (hireMeForm) {
       hireMeForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        // Final validation for step 5
         if (!validateStep(5)) return;
 
-        const formData = new FormData(hireMeForm);
         const data = {};
-        formData.forEach((value, key) => {
-          if (data[key]) {
-            if (!Array.isArray(data[key])) {
-              data[key] = [data[key]];
+        hireMeForm.querySelectorAll('input, select, textarea').forEach(el => {
+          if (el.type === 'radio' || el.type === 'checkbox') {
+            if (el.checked) {
+              if (el.value === 'Other') return;
+              if (!data[el.name]) data[el.name] = [];
+              if (!Array.isArray(data[el.name])) data[el.name] = [data[el.name]];
+              data[el.name].push(el.value);
             }
-            data[key].push(value);
-          } else {
-            data[key] = value;
+          } else if (el.value.trim()) {
+            data[el.name] = el.value.trim();
           }
         });
 
-        // Format tools and workType as strings
-        const toolsArr = Array.isArray(data.tools) ? data.tools : (data.tools ? [data.tools] : []);
-        const workTypeArr = Array.isArray(data.workType) ? data.workType : (data.workType ? [data.workType] : []);
-        
-        const tools = toolsArr.join(', ');
-        const workType = workTypeArr.join(', ');
+        // Replace "Other" with actual user input
+        if (data.primarySkillOther) data.primarySkill = data.primarySkillOther;
+        if (data.toolsOther) {
+          if (!data.tools) data.tools = [];
+          data.tools.push(data.toolsOther);
+        }
+        if (data.workTypeOther) {
+          if (!data.workType) data.workType = [];
+          data.workType.push(data.workTypeOther);
+        }
 
-        const whatsappMsg = `Hello Amax_editor 👋
+        // Build clean WhatsApp message (skip empty fields)
+        const lines = [`Hello Amax_editor 👋\n\nI want to join as a creator on your platform 🚀\n\nHere are my details:\n`];
+        lines.push(`👤 Name: ${data.fullName || 'N/A'}`);
+        lines.push(`📱 WhatsApp: ${data.whatsapp || 'N/A'}`);
+        if (data.email) lines.push(`📧 Email: ${data.email}`);
+        lines.push('');
+        lines.push(`🎯 Skill: ${data.primarySkill || 'N/A'}`);
+        lines.push(`📊 Experience: ${data.experience || 'N/A'}`);
+        if (data.tools && data.tools.length) lines.push(`🛠️ Tools: ${data.tools.join(', ')}`);
+        if (data.workType && data.workType.length) lines.push(`💼 Work Type: ${data.workType.join(', ')}`);
+        if (data.portfolioLink) lines.push(`\n🎨 Portfolio: ${data.portfolioLink}`);
+        if (data.workDescription) lines.push(`\n📝 About My Work:\n${data.workDescription}`);
+        lines.push(`\n💰 Pricing: ${data.priceRange || 'N/A'}`);
+        lines.push(`⏱️ Delivery Time: ${data.deliveryTime || 'N/A'}`);
+        lines.push(`📅 Availability: ${data.availability || 'N/A'}`);
+        lines.push(`\nLooking forward to working with you 🤝`);
 
-I want to join as a creator on your platform 🚀
-
-Here are my details:
-
-👤 Name: ${data.fullName}
-📱 WhatsApp: ${data.whatsapp}
-
-🎯 Skill: ${data.primarySkill}
-📊 Experience: ${data.experience}
-
-🛠️ Tools:
-${tools}
-
-💼 Work Type:
-${workType}
-
-🎨 Portfolio:
-${data.portfolioLink}
-
-📝 About My Work:
-${data.workDescription}
-
-💰 Pricing: ${data.priceRange}
-⏱️ Delivery Time: ${data.deliveryTime}
-📅 Availability: ${data.availability}
-
-Looking forward to working with you 🤝`;
-
+        const whatsappMsg = lines.join('\n');
         const encodedMsg = encodeURIComponent(whatsappMsg);
         const whatsappURL = `https://wa.me/919509136278?text=${encodedMsg}`;
-        
+
         showToast('Redirecting to WhatsApp...', 'success');
         setTimeout(() => {
           window.open(whatsappURL, '_blank');
