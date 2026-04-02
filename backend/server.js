@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const fs = require('fs');
 const multer = require('multer');
+const { readJSONBin, writeJSONBin } = require('./middleware/jsonbin');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,22 +19,31 @@ const HISTORY_FILE = path.join(__dirname, 'history.json');
 if (!fs.existsSync(USERS_FILE)) fs.writeFileSync(USERS_FILE, '[]');
 if (!fs.existsSync(HISTORY_FILE)) fs.writeFileSync(HISTORY_FILE, '[]');
 
-// MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI;
+// Determine which DB backend to use
 let isMongoConnected = false;
+let useJsonBin = !!(process.env.JSONBIN_API_KEY && process.env.JSONBIN_BIN_ID);
+
+if (useJsonBin) {
+  console.log('✅ Using JSONBin cloud storage for persistent data');
+}
+
+// MongoDB Connection (optional override)
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (MONGODB_URI) {
   mongoose.connect(MONGODB_URI)
     .then(() => {
       console.log('✅ Successfully connected to MongoDB Atlas!');
       isMongoConnected = true;
+      useJsonBin = false;
     })
     .catch(err => {
       console.error('❌ MongoDB Connection Error:', err.message);
-      console.log('⚠️ Falling back to Local JSON Database.');
+      if (useJsonBin) console.log('✅ Falling back to JSONBin cloud storage.');
+      else console.log('⚠️ Falling back to Local JSON Database.');
     });
-} else {
-  console.log('⚠️ No MONGODB_URI found. Using Local JSON Database.');
+} else if (!useJsonBin) {
+  console.log('⚠️ No MONGODB_URI or JSONBIN found. Using Local JSON Database (data will be lost on restart).');
 }
 
 // Ensure Upload Directory Exists
@@ -122,6 +132,11 @@ app.post('/api/signup', async (req, res) => {
       if (existingUser) return res.status(400).json({ error: 'User already exists' });
       const newUser = new User({ name, email, password: hashedPassword });
       await newUser.save();
+    } else if (useJsonBin) {
+      let users = await readJSONBin('users');
+      if (users.find(u => u.email === email)) return res.status(400).json({ error: 'User already exists' });
+      users.push({ name, email, password: hashedPassword, createdAt: new Date() });
+      await writeJSONBin('users', users);
     } else {
       const users = readJSON(USERS_FILE);
       if (users.find(u => u.email === email)) return res.status(400).json({ error: 'User already exists' });
@@ -143,6 +158,9 @@ app.post('/api/login', async (req, res) => {
 
     if (isMongoConnected) {
       user = await User.findOne({ email });
+    } else if (useJsonBin) {
+      const users = await readJSONBin('users');
+      user = users.find(u => u.email === email);
     } else {
       const users = readJSON(USERS_FILE);
       user = users.find(u => u.email === email);
@@ -174,6 +192,9 @@ app.get('/api/admin/users', async (req, res) => {
     if (isMongoConnected) {
       const users = await User.find().sort({ createdAt: -1 });
       res.json(users);
+    } else if (useJsonBin) {
+      const users = await readJSONBin('users');
+      res.json(users.reverse());
     } else {
       const users = readJSON(USERS_FILE);
       res.json(users.reverse());
@@ -195,6 +216,10 @@ app.post('/api/upload', upload.single('video'), async (req, res) => {
     if (isMongoConnected) {
       const newHistory = new History({ userName, service, budget, budgetDesc, fileName, filePath, fileSize });
       await newHistory.save();
+    } else if (useJsonBin) {
+      let history = await readJSONBin('history');
+      history.push({ userName, service, budget, budgetDesc, fileName, filePath, fileSize, createdAt: new Date() });
+      await writeJSONBin('history', history);
     } else {
       const history = readJSON(HISTORY_FILE);
       history.push({ userName, service, budget, budgetDesc, fileName, filePath, fileSize, createdAt: new Date() });
@@ -213,6 +238,9 @@ app.get('/api/history/:name', async (req, res) => {
     if (isMongoConnected) {
       const history = await History.find({ userName: req.params.name }).sort({ createdAt: -1 });
       res.json(history);
+    } else if (useJsonBin) {
+      const history = await readJSONBin('history');
+      res.json(history.filter(h => h.userName === req.params.name).reverse());
     } else {
       const history = readJSON(HISTORY_FILE);
       res.json(history.filter(h => h.userName === req.params.name).reverse());
