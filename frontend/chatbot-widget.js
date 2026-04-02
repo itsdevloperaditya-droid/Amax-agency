@@ -242,17 +242,37 @@
 
     @media (max-width: 480px) {
       #amax-chatbot-window {
-        width: calc(100vw - 16px);
-        height: calc(100vh - 80px);
-        bottom: 8px;
-        right: 8px;
-        border-radius: 16px;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
       }
       #amax-chatbot-toggle {
         bottom: 16px;
         right: 16px;
         width: 54px;
         height: 54px;
+      }
+      #amax-chatbot-messages {
+        -webkit-overflow-scrolling: touch;
+        padding: 12px;
+      }
+      #amax-chatbot-input-area {
+        padding: 10px 12px;
+        padding-bottom: max(10px, env(safe-area-inset-bottom));
+        background: #0d0d16;
+      }
+      #amax-chatbot-input {
+        font-size: 16px;
+      }
+      .amax-msg {
+        max-width: 90%;
       }
     }
   `;
@@ -261,6 +281,17 @@
     const styleEl = document.createElement('style');
     styleEl.textContent = styles;
     document.head.appendChild(styleEl);
+
+    // Ensure proper viewport meta for mobile
+    let metaViewport = document.querySelector('meta[name="viewport"]');
+    if (metaViewport) {
+      if (!metaViewport.content.includes('interactive-widget')) {
+        metaViewport.content = metaViewport.content.replace('viewport-fit=cover', 'viewport-fit=cover, interactive-widget=resizes-content');
+        if (!metaViewport.content.includes('viewport-fit')) {
+          metaViewport.content += ', interactive-widget=resizes-content';
+        }
+      }
+    }
   }
 
   function createWidget() {
@@ -303,6 +334,28 @@
     document.getElementById('amax-chatbot-input').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') sendMessage();
     });
+
+    // Prevent keyboard shift issues on mobile
+    const inputEl = document.getElementById('amax-chatbot-input');
+    inputEl.addEventListener('focus', () => {
+      setTimeout(() => {
+        const messagesEl = document.getElementById('amax-chatbot-messages');
+        if (messagesEl) messagesEl.scrollTop = messagesEl.scrollHeight;
+      }, 300);
+    });
+
+    // Handle visual viewport changes (keyboard open/close)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', () => {
+        const chatWindow = document.getElementById('amax-chatbot-window');
+        if (chatWindow && chatWindow.classList.contains('open')) {
+          chatWindow.style.height = window.visualViewport.height + 'px';
+          chatWindow.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
+          const messagesEl = document.getElementById('amax-chatbot-messages');
+          if (messagesEl) messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+      });
+    }
 
   }
 
