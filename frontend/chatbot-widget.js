@@ -304,12 +304,6 @@
       if (e.key === 'Enter') sendMessage();
     });
 
-    // Show welcome message if first time
-    if (chatHistory.length === 0) {
-      setTimeout(() => {
-        addMessage("Hey! 👋 I'm Amax AI. I can help you with:\n\n🎬 Video Editing\n🎨 Thumbnail Design\n💻 Web Development\n🖌️ Graphic Design\n💰 Join as Freelancer\n\nWhat do you need?", false, true);
-      }, 500);
-    }
   }
 
   function toggleChat() {
@@ -322,6 +316,11 @@
       chatWindow.classList.add('open');
       toggleBtn.classList.add('hidden');
       document.getElementById('amax-chatbot-input').focus();
+      if (chatHistory.length === 0) {
+        setTimeout(() => {
+          addMessage("Hey! 👋 Welcome to Amax! Main aapki madad kar sakta hoon:\n\n🎬 Video Editing\n🎨 Thumbnail Design\n💻 Web Development\n🖌️ Graphic Design\n💰 Join as Freelancer\n\nBataiye, kya chahiye? 🚀 [Get Started](https://wa.me/919509136278)", false, false);
+        }, 300);
+      }
     } else {
       chatWindow.classList.remove('open');
       toggleBtn.classList.remove('hidden');
