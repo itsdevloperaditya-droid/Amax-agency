@@ -1418,10 +1418,29 @@ Looking forward to working with you 🤝`;
       if(btn) {
         btn.addEventListener('click', () => {
           const token = localStorage.getItem('amax_token');
-          window.location.href = token ? 'worker-onboarding.html' : 'auth.html?redirect=worker-onboarding.html';
+          const hasApplied = localStorage.getItem('amax_worker_applied');
+          if (hasApplied === 'true') {
+            window.location.href = 'worker-dashboard.html';
+          } else {
+            window.location.href = token ? 'worker-onboarding.html' : 'auth.html?redirect=worker-onboarding.html';
+          }
         });
       }
     });
+
+    function updateFreelancerBtns() {
+      const hasApplied = localStorage.getItem('amax_worker_applied') === 'true';
+      const heroBtn = document.getElementById('heroHireBtn');
+      const finalBtn = document.getElementById('finalHireBtn');
+      if (hasApplied) {
+        if (heroBtn) {
+          heroBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> View Freelancer Dashboard';
+        }
+        if (finalBtn) {
+          finalBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> View Dashboard <i class="fas fa-arrow-right"></i>';
+        }
+      }
+    }
 
     // View Portfolio button
     const viewPortfolioBtn = document.getElementById('viewPortfolioBtn');
@@ -1494,6 +1513,7 @@ Looking forward to working with you 🤝`;
 
     // Initial UI update
     updateAuthUI();
+    updateFreelancerBtns();
   </script>
 </body>
 </html>

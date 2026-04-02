@@ -445,6 +445,7 @@
           workers.push(payload);
         }
         localStorage.setItem('amax_workers', JSON.stringify(workers));
+        localStorage.setItem('amax_worker_applied', 'true');
       } catch(e) {}
 
       // Send WhatsApp notification
