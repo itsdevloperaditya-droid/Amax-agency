@@ -85,16 +85,21 @@ app.use(express.urlencoded({ extended: true }));
 // Static Routes
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')));
+app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails'), {
+  maxAge: '1h',
+  setHeaders: (res, filePath) => {
+    res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=60');
+  }
+}));
 app.use('/video-editing-samples', express.static(path.join(__dirname, 'video-editing samples'), {
-  maxAge: '1d',
+  maxAge: '1h',
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.mp4') || filePath.endsWith('.webm') || filePath.endsWith('.ogg')) {
       res.setHeader('Accept-Ranges', 'bytes');
-      res.setHeader('Cache-Control', 'public, max-age=86400');
+      res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=60');
     }
     if (filePath.endsWith('.png') || filePath.endsWith('.jpg') || filePath.endsWith('.jpeg') || filePath.endsWith('.gif') || filePath.endsWith('.webp')) {
-      res.setHeader('Cache-Control', 'public, max-age=86400');
+      res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=60');
     }
   }
 }));
@@ -218,6 +223,9 @@ app.get('/api/history/:name', async (req, res) => {
 });
 
 app.get('/api/media', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   const videoDir = path.resolve(__dirname, 'video-editing samples');
   const thumbDir = path.resolve(__dirname, 'thumbnails');
   const getFiles = (dir, urlPrefix) => {
