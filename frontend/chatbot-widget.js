@@ -242,16 +242,17 @@
 
     @media (max-width: 480px) {
       #amax-chatbot-window {
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        max-height: 100vh;
-        max-height: 100dvh;
-        bottom: 0;
-        right: 0;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
       }
       #amax-chatbot-toggle {
         bottom: 16px;
