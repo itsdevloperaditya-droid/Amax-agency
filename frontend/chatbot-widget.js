@@ -369,7 +369,9 @@
     if (isOpen) {
       chatWindow.classList.add('open');
       toggleBtn.classList.add('hidden');
-      document.getElementById('amax-chatbot-input').focus();
+      if (window.innerWidth > 480) {
+        document.getElementById('amax-chatbot-input').focus();
+      }
       if (chatHistory.length === 0) {
         setTimeout(() => {
           addMessage("Hey! 👋 Welcome to Amax! Main aapki madad kar sakta hoon:\n\n🎬 Video Editing\n🎨 Thumbnail Design\n💻 Web Development\n🖌️ Graphic Design\n💰 Join as Freelancer\n\nBataiye, kya chahiye? 🚀 [Get Started](https://wa.me/919509136278)", false, false);
