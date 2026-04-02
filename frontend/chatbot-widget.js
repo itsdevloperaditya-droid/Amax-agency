@@ -6,28 +6,31 @@
   const styles = `
     #amax-chatbot-toggle {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
       z-index: 99999;
-      width: 60px;
-      height: 60px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #8B5CF6, #A855F7);
-      border: none;
+      background: rgba(139, 92, 246, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
       transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     #amax-chatbot-toggle:hover {
       transform: scale(1.08);
-      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.6);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+      background: rgba(139, 92, 246, 0.95);
     }
     #amax-chatbot-toggle svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       fill: white;
       transition: all 0.3s ease;
     }
