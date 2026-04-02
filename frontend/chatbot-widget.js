@@ -12,21 +12,21 @@
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      background: rgba(139, 92, 246, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(139, 92, 246, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
       transition: all 0.3s ease;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
     #amax-chatbot-toggle:hover {
       transform: scale(1.08);
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
-      background: rgba(139, 92, 246, 0.95);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.55);
     }
     #amax-chatbot-toggle svg {
       width: 24px;
