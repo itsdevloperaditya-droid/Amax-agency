@@ -144,26 +144,26 @@
     /* ===== PORTFOLIO GRID ===== */
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
 
     @media (min-width: 768px) {
       .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
     @media (min-width: 1024px) {
       .portfolio-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
     }
 
     @media (min-width: 1280px) {
       .portfolio-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
       }
     }
 
@@ -172,12 +172,20 @@
       border-radius: 1rem;
       overflow: hidden;
       cursor: pointer;
-      aspect-ratio: 1;
       background: rgba(13, 13, 22, 0.8);
       border: 1px solid rgba(196, 30, 58, 0.2);
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      group: true;
       will-change: transform;
+    }
+
+    /* Aspect Ratio for Videos (Shorts) */
+    .portfolio-item.video-item {
+      aspect-ratio: 9/16;
+    }
+
+    /* Aspect Ratio for Thumbnails */
+    .portfolio-item.image-item {
+      aspect-ratio: 16/9;
     }
 
     .portfolio-item:hover {
@@ -273,34 +281,47 @@
       position: relative;
       max-width: 90vw;
       max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .modal-content video,
     .modal-content img {
       max-width: 100%;
-      max-height: 90vh;
+      max-height: 85vh;
       border-radius: 1rem;
       box-shadow: 0 0 60px rgba(196, 30, 58, 0.4);
     }
 
     .close-modal {
       position: absolute;
-      top: -50px;
+      top: -60px;
       right: 0;
       color: white;
-      font-size: 2.5rem;
+      font-size: 2rem;
       cursor: pointer;
       transition: all 0.2s;
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      z-index: 1100;
     }
 
     .close-modal:hover {
-      color: #c41e3a;
-      transform: rotate(90deg);
+      background: #c41e3a;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .close-modal {
+        top: -50px;
+        right: 0;
+      }
     }
 
     /* ===== SECTION TITLE ===== */
@@ -639,10 +660,7 @@
 
       <!-- Filter Buttons -->
       <div class="filter-container animate-fade-up delay-1">
-        <button class="filter-btn active" data-filter="all">
-          <i class="fas fa-th"></i> All Work
-        </button>
-        <button class="filter-btn" data-filter="videos">
+        <button class="filter-btn active" data-filter="videos">
           <i class="fas fa-video"></i> Video Edits
         </button>
         <button class="filter-btn" data-filter="thumbnails">
@@ -655,13 +673,12 @@
         <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
           <span style="width: 4px; height: 24px; background: linear-gradient(180deg, #c41e3a, #e31937); border-radius: 2px;"></span>
           🎬 Video Editing Samples
-          <span style="background: rgba(196, 30, 58, 0.2); color: #c41e3a; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;" id="videoCount">Loading...</span>
         </h3>
         <div class="portfolio-grid" id="videoGrid">
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 9/16;"></div>
+          <div class="skeleton" style="aspect-ratio: 9/16;"></div>
+          <div class="skeleton" style="aspect-ratio: 9/16;"></div>
+          <div class="skeleton" style="aspect-ratio: 9/16;"></div>
         </div>
       </div>
 
@@ -670,13 +687,12 @@
         <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
           <span style="width: 4px; height: 24px; background: linear-gradient(180deg, #c41e3a, #e31937); border-radius: 2px;"></span>
           🎨 Thumbnail Designs
-          <span style="background: rgba(196, 30, 58, 0.2); color: #c41e3a; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;" id="thumbCount">Loading...</span>
         </h3>
         <div class="portfolio-grid" id="thumbnailGrid">
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
-          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 16/9;"></div>
+          <div class="skeleton" style="aspect-ratio: 16/9;"></div>
+          <div class="skeleton" style="aspect-ratio: 16/9;"></div>
+          <div class="skeleton" style="aspect-ratio: 16/9;"></div>
         </div>
       </div>
     </div>
@@ -808,7 +824,7 @@
     // Create cards
     function createVideoCard(videoPath) {
       return `
-        <div class="portfolio-item" data-type="video" data-path="${API_URL}/${videoPath}">
+        <div class="portfolio-item video-item" data-type="video" data-path="${API_URL}/${videoPath}">
           <video muted preload="metadata" style="display:none;" loop disableremoteplayback playsinline webkit-playsinline>
             <source src="${API_URL}/${videoPath}" type="video/mp4">
           </video>
@@ -822,7 +838,7 @@
 
     function createThumbnailCard(thumbnailPath) {
       return `
-        <div class="portfolio-item" data-type="image" data-path="${API_URL}/${thumbnailPath}">
+        <div class="portfolio-item image-item" data-type="image" data-path="${API_URL}/${thumbnailPath}">
           <img src="${API_URL}/${thumbnailPath}" alt="Design" style="display:block; width:100%; height:100%; object-fit:cover;">
         </div>
       `;
@@ -833,9 +849,6 @@
       try {
         const response = await fetch(`${API_URL}/api/media`);
         const data = await response.json();
-
-        document.getElementById('videoCount').textContent = data.videos.length + ' Projects';
-        document.getElementById('thumbCount').textContent = data.thumbnails.length + ' Designs';
 
         const videoGrid = document.getElementById('videoGrid');
         const thumbGrid = document.getElementById('thumbnailGrid');
@@ -978,9 +991,6 @@
           thumbSection.style.display = 'none';
         } else if (filter === 'thumbnails') {
           videoSection.style.display = 'none';
-          thumbSection.style.display = 'block';
-        } else {
-          videoSection.style.display = 'block';
           thumbSection.style.display = 'block';
         }
       });
