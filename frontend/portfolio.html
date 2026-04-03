@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Portfolio | Amax - Video Editor & Creative Developer</title>
-  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <title>Akshara - UX UI Web Designer | Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,22 +14,227 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #05050A;
+      background: #05050A;
       overflow-x: hidden;
+      color: #e5e7eb;
     }
 
-    h1, h2, h3, .font-heading {
+    h1, h2, h3, h4, .font-heading {
       font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
     }
 
-    .glass-card {
-      background: rgba(15, 15, 25, 0.7);
-      backdrop-filter: blur(8px); /* Reduced blur for performance */
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      border-radius: 1.5rem;
+    /* ===== COLORS ===== */
+    :root {
+      --primary-red: #c41e3a;
+      --bright-red: #e31937;
+      --dark-red: #8B0000;
+      --light-red: #f0d9dd;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(5, 5, 10, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 30, 58, 0.15);
+      padding: 1rem 1.5rem;
+    }
+
+    nav .max-w-7xl {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a.nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav a.nav-link:hover,
+    nav a.nav-link.active {
+      color: #c41e3a;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(196, 30, 58, 0.08) 0%, rgba(227, 25, 55, 0.03) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-accent {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+    }
+
+    .hero-accent.top-left {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(196, 30, 58, 0.2), transparent);
+      top: -100px;
+      left: -150px;
+    }
+
+    .hero-accent.bottom-right {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(227, 25, 55, 0.15), transparent);
+      bottom: -150px;
+      right: -200px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #c41e3a, #e31937);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      background: linear-gradient(135deg, #c41e3a, #e31937);
+      color: white;
+      padding: 0.875rem 2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
       transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(196, 30, 58, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #c41e3a;
+      border: 2px solid #c41e3a;
+      padding: 0.75rem 2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(196, 30, 58, 0.1);
+      transform: translateY(-4px);
+    }
+
+    /* ===== FILTER BUTTONS ===== */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.75rem 2rem;
+      border-radius: 2rem;
+      background: rgba(13, 13, 22, 0.6);
+      border: 1px solid rgba(196, 30, 58, 0.2);
+      color: #9ca3af;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: linear-gradient(135deg, #c41e3a, #e31937);
+      border-color: transparent;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(196, 30, 58, 0.3);
+    }
+
+    /* ===== PORTFOLIO GRID ===== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     .portfolio-item {
@@ -38,148 +242,84 @@
       border-radius: 1rem;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-      background: rgba(12, 12, 20, 0.8);
-      border: 1px solid rgba(139, 92, 246, 0.15);
-      min-height: 250px;
-      /* Improve rendering performance */
+      aspect-ratio: 1;
+      background: rgba(13, 13, 22, 0.8);
+      border: 1px solid rgba(196, 30, 58, 0.2);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      group: true;
       will-change: transform;
-      contain: content;
     }
 
     .portfolio-item:hover {
-      transform: translateY(-5px);
-      border-color: #8B5CF6;
-      box-shadow: 0 15px 30px -10px rgba(139, 92, 246, 0.4);
+      transform: translateY(-8px) scale(1.02);
+      border-color: #c41e3a;
+      box-shadow: 0 20px 50px rgba(196, 30, 58, 0.3);
     }
 
-    /* Unmute toggle style */
+    .portfolio-item video,
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .portfolio-item:hover video,
+    .portfolio-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(196, 30, 58, 0.4) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 5;
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
     .unmute-toggle {
       position: absolute;
       bottom: 1rem;
       right: 1rem;
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 0.8rem;
-      z-index: 20;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
       transition: all 0.2s;
+      font-size: 0.9rem;
     }
 
     .unmute-toggle:hover {
-      background: #8B5CF6;
+      background: #c41e3a;
       transform: scale(1.1);
     }
-    
-    .filter-btn-modern {
-      position: relative;
-      padding: 1rem 2.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 3rem;
-      background: rgba(15, 15, 25, 0.6);
-      backdrop-filter: blur(6px); /* Reduced blur */
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      color: #9ca3af;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      overflow: hidden;
-      z-index: 1;
+
+    .skeleton {
+      background: linear-gradient(90deg, rgba(196, 30, 58, 0.05), rgba(196, 30, 58, 0.15), rgba(196, 30, 58, 0.05));
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
     }
 
-    .filter-btn-modern::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(95deg, #8B5CF6, #A855F7);
-      transition: width 0.3s ease;
-      z-index: -1;
-      border-radius: 3rem;
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
-    .filter-btn-modern:hover::before,
-    .filter-btn-modern.active::before {
-      width: 100%;
-    }
-
-    .filter-btn-modern:hover,
-    .filter-btn-modern.active {
-      color: white;
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
-    }
-
-    .filter-btn-modern i {
-      margin-right: 0.75rem;
-      font-size: 1.2rem;
-    }
-
-    /* Modern Filter Buttons Container */
-    .filter-container {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 4rem; /* Increased margin for better separation */
-      flex-wrap: wrap;
-    }
-
-    .filter-btn-modern {
-      position: relative;
-      padding: 1rem 2.5rem;
-      min-width: 280px; /* Ensure uniform width */
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 3rem;
-      background: rgba(15, 15, 25, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      color: #9ca3af;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      overflow: hidden;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Section Animation */
-    .section-content {
-      transition: all 0.4s ease;
-    }
-
-    .section-hidden {
-      display: none;
-    }
-
-    .section-visible {
-      display: block;
-      animation: fadeSlideUp 0.5s ease forwards;
-    }
-
-    @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Modal Styles */
+    /* ===== MODAL ===== */
     .modal {
       display: none;
       position: fixed;
@@ -188,100 +328,244 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.95);
-      z-index: 1000;
       backdrop-filter: blur(10px);
-      animation: fadeIn 0.3s ease;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
     }
 
     .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .modal-content video,
+    .modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 1rem;
+      box-shadow: 0 0 60px rgba(196, 30, 58, 0.4);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 50px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .modal-content {
-      max-width: 90%;
-      max-height: 90%;
-      position: relative;
-    }
-
-    .modal-content video, .modal-content img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 1rem;
-      box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      color: white;
-      font-size: 30px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
     .close-modal:hover {
-      color: #8B5CF6;
-      transform: scale(1.1);
+      color: #c41e3a;
+      transform: rotate(90deg);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* ===== SECTION TITLE ===== */
+    .section-header {
+      margin-bottom: 3rem;
     }
 
-    .btn-primary {
-      background: linear-gradient(95deg, #8B5CF6, #A855F7);
-      transition: all 0.2s ease;
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
     }
 
-    .btn-primary:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
+    .section-description {
+      color: #9ca3af;
+      font-size: 1.05rem;
+      max-width: 600px;
     }
 
-    /* SKELETON LOADERS */
-    .skeleton {
-      position: relative;
+    .title-accent {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #c41e3a, #e31937);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 4rem 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding: 6rem 3rem;
+      }
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196, 30, 58, 0.3), transparent);
+      margin: 2rem 0;
+    }
+
+    /* ===== GLASS CARD ===== */
+    .glass-card {
+      background: rgba(13, 13, 22, 0.6);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(196, 30, 58, 0.2);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(196, 30, 58, 0.4);
+      box-shadow: 0 15px 40px rgba(196, 30, 58, 0.15);
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .profile-circle {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.03);
-    }
-    .skeleton::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.08), transparent);
-      animation: shimmer 1.5s infinite;
-    }
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    .portfolio-item.skeleton {
-      min-height: 250px;
-      border-radius: 1rem;
-    }
-    .skeleton-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      color: rgba(139, 92, 246, 0.2);
-      z-index: 1;
-    }
-    .portfolio-item.loaded .skeleton::after {
-      display: none;
-    }
-    .portfolio-item.loaded .skeleton-icon {
-      display: none;
-    }
-    .portfolio-item.loaded {
-      background: transparent;
+      border: 3px solid #c41e3a;
+      box-shadow: 0 0 50px rgba(196, 30, 58, 0.3);
+      margin: 0 auto;
     }
 
+    .profile-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-box {
+      background: rgba(196, 30, 58, 0.08);
+      border: 1px solid rgba(196, 30, 58, 0.2);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .skill-box:hover {
+      background: rgba(196, 30, 58, 0.12);
+      border-color: rgba(196, 30, 58, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .skill-icon {
+      font-size: 2rem;
+      color: #c41e3a;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-name {
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .skill-desc {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact-box {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .contact-icon-circle {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #c41e3a, #e31937);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      margin: 0 auto 1rem;
+    }
+
+    .qr-container {
+      background: rgba(196, 30, 58, 0.08);
+      border: 1px solid rgba(196, 30, 58, 0.2);
+      border-radius: 1rem;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .qr-code {
+      width: 160px;
+      height: 160px;
+      background: white;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeSlideUp 0.7s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animate-fade-up.delay-1 { animation-delay: 0.1s; }
+    .animate-fade-up.delay-2 { animation-delay: 0.2s; }
+    .animate-fade-up.delay-3 { animation-delay: 0.3s; }
+
+    /* ===== SCROLLBAR ===== */
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -289,144 +573,334 @@
       background: #0A0A0F;
     }
     ::-webkit-scrollbar-thumb {
-      background: #8B5CF6;
+      background: #c41e3a;
       border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e31937;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: linear-gradient(135deg, rgba(196, 30, 58, 0.05) 0%, rgba(0,0,0,0) 100%);
+      border-top: 1px solid rgba(196, 30, 58, 0.1);
+      padding: 4rem 1.5rem 2rem;
+    }
+
+    footer a {
+      color: #9ca3af;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #c41e3a;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .profile-circle {
+        width: 200px;
+        height: 200px;
+      }
+
+      .filter-container {
+        gap: 0.75rem;
+      }
+
+      .filter-btn {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.85rem;
+      }
+
+      .close-modal {
+        top: 1rem;
+        right: 1rem;
+      }
     }
   </style>
 </head>
-<body class="bg-[#05050A] text-gray-200">
+<body>
 
   <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-50 bg-[#05050A]/80 backdrop-blur-md border-b border-white/5 px-6 md:px-12 py-4">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
+  <nav>
+    <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-2">
-        <i class="fas fa-film text-purple-500 text-2xl"></i>
-        <a href="index.html" class="font-bold text-2xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">Amax</a>
+        <i class="fas fa-palette text-red-500 text-2xl"></i>
+        <a href="index.html" class="font-bold text-xl bg-gradient-to-r from-white via-red-200 to-red-400 bg-clip-text text-transparent">Amax</a>
       </div>
-      <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="index.html" class="hover:text-purple-400 transition">Home</a>
-        <a href="portfolio.html" class="text-purple-400 transition">Portfolio</a>
-        <a href="index.html#services" class="hover:text-purple-400 transition">Services</a>
-        <a href="index.html#testimonials" class="hover:text-purple-400 transition">Testimonials</a>
+      <div class="hidden md:flex gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="portfolio.html" class="nav-link active">Portfolio</a>
+        <a href="index.html#services" class="nav-link">Services</a>
       </div>
-      <div class="flex gap-3">
-        <a href="index.html#contact" class="px-5 py-2 rounded-full text-sm font-semibold btn-primary text-white">Hire Me</a>
-      </div>
+      <a href="index.html#contact" class="btn-primary text-sm">Hire Me</a>
     </div>
   </nav>
 
-  <main class="pt-28 pb-20 px-6 md:px-12">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-accent top-left"></div>
+    <div class="hero-accent bottom-right"></div>
+    <div class="hero-content max-w-3xl mx-auto px-6">
+      <div class="animate-fade-up">
+        <p style="color: #c41e3a; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 1rem;">PORTFOLIO</p>
+        <h1 class="hero-title">
+          Creative Works &amp;<br/><span>Inspiring Projects</span>
+        </h1>
+        <p class="hero-subtitle">
+          Explore my latest design projects, video edits, and digital creations showcasing my passion for beautiful experiences
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-6xl mx-auto">
+      <div class="about-grid">
+        <div class="flex justify-center md:justify-start">
+          <div class="profile-circle animate-fade-up">
+            <img src="amax-logo.jpeg" alt="Akshara" />
+          </div>
+        </div>
+        <div class="animate-fade-up delay-1">
+          <div class="title-accent"></div>
+          <h2 class="section-title mb-6">About Me</h2>
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            I'm a passionate UX/UI designer and creative developer dedicated to crafting beautiful digital experiences. Every project is an opportunity to push creative boundaries and deliver exceptional results.
+          </p>
+          <p class="text-gray-300 mb-8 leading-relaxed">
+            With expertise in design, development, and user experience, I bring ideas to life through thoughtful creativity and technical precision.
+          </p>
+
+          <div class="skill-grid mb-8">
+            <div class="skill-box">
+              <div class="skill-icon"><i class="fas fa-pencil-ruler"></i></div>
+              <div class="skill-name">UI Design</div>
+              <div class="skill-desc">Modern & Beautiful</div>
+            </div>
+            <div class="skill-box">
+              <div class="skill-icon"><i class="fas fa-code"></i></div>
+              <div class="skill-name">Web Dev</div>
+              <div class="skill-desc">Responsive & Fast</div>
+            </div>
+            <div class="skill-box">
+              <div class="skill-icon"><i class="fas fa-video"></i></div>
+              <div class="skill-name">Video Edit</div>
+              <div class="skill-desc">Cinematic Edits</div>
+            </div>
+            <div class="skill-box">
+              <div class="skill-icon"><i class="fas fa-rocket"></i></div>
+              <div class="skill-name">Branding</div>
+              <div class="skill-desc">Creative Vision</div>
+            </div>
+          </div>
+
+          <button class="btn-primary">
+            <i class="fas fa-download"></i> Download CV
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-6xl mx-auto px-6"><div class="section-divider"></div></div>
+
+  <!-- Portfolio Section -->
+  <section>
     <div class="max-w-7xl mx-auto">
-      
-      <!-- Page Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-300 to-white bg-clip-text text-transparent mb-4">Our Creative Portfolio</h1>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto">Choose what you'd like to explore — cinematic video edits or stunning thumbnail designs</p>
+      <div class="section-header animate-fade-up">
+        <div class="title-accent"></div>
+        <h2 class="section-title">My Creative Work</h2>
+        <p class="section-description">Videos, designs, and projects that showcase my skills</p>
       </div>
 
-      <!-- Modern Filter Buttons -->
-      <div class="filter-container">
-        <button class="filter-btn-modern active" data-section="videos">
-          <i class="fas fa-video"></i> Our Video Edits
+      <!-- Filter Buttons -->
+      <div class="filter-container animate-fade-up delay-1">
+        <button class="filter-btn active" data-filter="all">
+          <i class="fas fa-th"></i> All Work
         </button>
-        <button class="filter-btn-modern" data-section="thumbnails">
-          <i class="fas fa-images"></i> Our Thumbnail Designs
+        <button class="filter-btn" data-filter="videos">
+          <i class="fas fa-video"></i> Video Edits
+        </button>
+        <button class="filter-btn" data-filter="thumbnails">
+          <i class="fas fa-images"></i> Thumbnails
         </button>
       </div>
 
-      <!-- Video Editing Section -->
-      <div id="videosSection" class="section-content section-visible">
-        <div class="flex items-center gap-3 mb-8">
-          <div class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
-          <h2 class="text-2xl md:text-3xl font-bold">🎬 Video Editing Samples</h2>
-          <span class="text-purple-400 text-sm bg-purple-500/20 px-3 py-1 rounded-full" id="videoCount">Loading...</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="videoGrid">
-          <div class="text-gray-500 py-10 text-center col-span-full">Scanning for videos...</div>
-        </div>
-      </div>
-
-      <!-- Thumbnail Designs Section -->
-      <div id="thumbnailsSection" class="section-content section-hidden">
-        <div class="flex items-center gap-3 mb-8">
-          <div class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
-          <h2 class="text-2xl md:text-3xl font-bold">🎨 Thumbnail Designs</h2>
-          <span class="text-purple-400 text-sm bg-purple-500/20 px-3 py-1 rounded-full" id="thumbCount">Loading...</span>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="thumbnailGrid">
-          <div class="text-gray-500 py-10 text-center col-span-full">Scanning for designs...</div>
+      <!-- Video Grid -->
+      <div id="videoSection" class="animate-fade-up delay-2">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span style="width: 4px; height: 24px; background: linear-gradient(180deg, #c41e3a, #e31937); border-radius: 2px;"></span>
+          🎬 Video Editing Samples
+          <span style="background: rgba(196, 30, 58, 0.2); color: #c41e3a; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;" id="videoCount">Loading...</span>
+        </h3>
+        <div class="portfolio-grid" id="videoGrid">
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
         </div>
       </div>
 
-      <!-- Back to Home Button -->
-      <div class="text-center mt-16">
-        <a href="index.html" class="inline-flex items-center gap-2 px-8 py-3 rounded-full font-semibold btn-primary text-white transition">
-          <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
+      <!-- Thumbnail Grid -->
+      <div id="thumbnailSection" style="display: none;" class="animate-fade-up delay-2">
+        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+          <span style="width: 4px; height: 24px; background: linear-gradient(180deg, #c41e3a, #e31937); border-radius: 2px;"></span>
+          🎨 Thumbnail Designs
+          <span style="background: rgba(196, 30, 58, 0.2); color: #c41e3a; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;" id="thumbCount">Loading...</span>
+        </h3>
+        <div class="portfolio-grid" id="thumbnailGrid">
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+          <div class="skeleton" style="aspect-ratio: 1;"></div>
+        </div>
       </div>
     </div>
-  </main>
+  </section>
 
-  <!-- Modal for fullscreen view -->
-  <div id="mediaModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <video id="modalVideo" controls style="display: none;" disableremoteplayback playsinline webkit-playsinline>
-        <source src="" type="video/mp4">
-      </video>
-      <img id="modalImage" src="" alt="Full size view" style="display: none;">
+  <div class="max-w-6xl mx-auto px-6"><div class="section-divider"></div></div>
+
+  <!-- Contact Section -->
+  <section>
+    <div class="max-w-6xl mx-auto">
+      <div class="section-header animate-fade-up mb-12">
+        <div class="title-accent"></div>
+        <h2 class="section-title">Let's Collaborate</h2>
+        <p class="section-description">Ready to start your next project? Let's create something amazing together!</p>
+      </div>
+
+      <div class="glass-card mb-12 text-center animate-fade-up delay-1">
+        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-white">Get In Touch</h3>
+        <p class="text-gray-300 mb-10">Choose your preferred way to connect with me</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="contact-box">
+            <div class="contact-icon-circle">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-1">Email</h4>
+            <p class="text-gray-300 text-sm">akshara@design.com</p>
+          </div>
+
+          <div class="contact-box">
+            <div class="contact-icon-circle">
+              <i class="fas fa-phone"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-1">WhatsApp</h4>
+            <p class="text-gray-300 text-sm">+1 (555) 123-4567</p>
+          </div>
+
+          <div class="contact-box">
+            <div class="contact-icon-circle">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h4 class="font-semibold text-white mb-1">Social Media</h4>
+            <p class="text-gray-300 text-sm">Instagram • Telegram</p>
+          </div>
+        </div>
+
+        <button class="btn-primary mt-10">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </div>
+
+      <!-- QR Codes -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="qr-container animate-fade-up delay-2">
+          <h4 class="font-semibold text-white text-lg">Instagram Profile</h4>
+          <p class="text-red-400 text-sm mb-3">@akshara.designs</p>
+          <div class="qr-code"><i class="fas fa-qrcode" style="font-size: 2rem; color: #ccc;"></i></div>
+          <p class="text-gray-400 text-sm">Scan to visit</p>
+        </div>
+
+        <div class="qr-container animate-fade-up delay-3">
+          <h4 class="font-semibold text-white text-lg">Telegram Channel</h4>
+          <p class="text-red-400 text-sm mb-3">@akshara_designs</p>
+          <div class="qr-code"><i class="fas fa-qrcode" style="font-size: 2rem; color: #ccc;"></i></div>
+          <p class="text-gray-400 text-sm">Scan to connect</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10 py-12 px-6 mt-10">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8">
-      <div>
-        <div class="flex items-center gap-2 text-2xl font-bold">
-          <i class="fas fa-film text-purple-500"></i>
-          <span class="bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">Amax</span>
+  <footer>
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        <div>
+          <div class="flex items-center gap-2 text-2xl font-bold mb-4">
+            <i class="fas fa-palette text-red-500"></i>
+            <span class="bg-gradient-to-r from-white to-red-400 bg-clip-text text-transparent">Akshara</span>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Creative designer and developer crafting beautiful digital experiences and innovative solutions.
+          </p>
+          <div class="flex gap-3 text-lg">
+            <a href="#" class="hover:text-red-400"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-red-400"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-red-400"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="hover:text-red-400"><i class="fab fa-behance"></i></a>
+          </div>
         </div>
-        <p class="text-gray-400 text-sm mt-2">Professional Video Editor & Creative Developer</p>
-        <div class="flex gap-4 mt-4 text-xl">
-          <i class="fab fa-twitter hover:text-purple-400 cursor-pointer"></i>
-          <i class="fab fa-instagram hover:text-purple-400 cursor-pointer"></i>
-          <i class="fab fa-linkedin-in hover:text-purple-400 cursor-pointer"></i>
-          <i class="fab fa-youtube hover:text-purple-400 cursor-pointer"></i>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="index.html" class="hover:text-red-400">Home</a></li>
+            <li><a href="portfolio.html" class="hover:text-red-400">Portfolio</a></li>
+            <li><a href="index.html#services" class="hover:text-red-400">Services</a></li>
+            <li><a href="#" class="hover:text-red-400">About</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><i class="fas fa-envelope text-red-500 mr-2"></i>akshara@design.com</li>
+            <li><i class="fas fa-phone text-red-500 mr-2"></i>+1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Creative Hub, NY</li>
+          </ul>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-8 md:gap-12">
-        <div>
-          <h4 class="font-semibold mb-3">Quick Links</h4>
-          <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="index.html" class="hover:text-purple-400 transition">Home</a></li>
-            <li><a href="portfolio.html" class="hover:text-purple-400 transition">Portfolio</a></li>
-            <li><a href="index.html#services" class="hover:text-purple-400 transition">Services</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-3">Contact</h4>
-          <ul class="space-y-2 text-sm text-gray-400">
-            <li><i class="fas fa-envelope mr-2"></i> amax@editor.com</li>
-            <li><i class="fab fa-whatsapp mr-2"></i> +1 (555) 123-4567</li>
-          </ul>
-        </div>
+
+      <div style="border-top: 1px solid rgba(196, 30, 58, 0.1); padding-top: 2rem; text-align: center; color: #6b7280; font-size: 0.875rem;">
+        © 2025 Akshara — Designer & Developer. All rights reserved.
       </div>
     </div>
-    <div class="text-center text-gray-500 text-xs pt-8 border-t border-white/5 mt-8 max-w-7xl mx-auto">© 2025 Amax — Professional Video Editor & Creative Developer. All rights reserved.</div>
   </footer>
+
+  <!-- Modal -->
+  <div id="mediaModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal"><i class="fas fa-times"></i></span>
+      <video id="modalVideo" controls style="display: none;" disableremoteplayback playsinline webkit-playsinline></video>
+      <img id="modalImage" src="" alt="Full view" style="display: none;">
+    </div>
+  </div>
 
   <script>
     const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
 
+    // Create cards
     function createVideoCard(videoPath) {
       return `
-        <div class="portfolio-item group skeleton" data-type="video" data-path="${API_URL}/${videoPath}">
-          <i class="fas fa-play-circle skeleton-icon"></i>
-          <video muted preload="metadata" class="lazy-video" style="display:none;" loop disableremoteplayback playsinline webkit-playsinline>
+        <div class="portfolio-item" data-type="video" data-path="${API_URL}/${videoPath}">
+          <video muted preload="metadata" style="display:none;" loop disableremoteplayback playsinline webkit-playsinline>
             <source src="${API_URL}/${videoPath}" type="video/mp4">
           </video>
-          <div class="overlay"></div>
-          <button class="unmute-toggle" title="Toggle Sound">
+          <div class="portfolio-overlay"></div>
+          <button class="unmute-toggle" title="Mute/Unmute" type="button">
             <i class="fas fa-volume-mute"></i>
           </button>
         </div>
@@ -435,242 +909,172 @@
 
     function createThumbnailCard(thumbnailPath) {
       return `
-        <div class="portfolio-item group" data-type="image" data-path="${API_URL}/${thumbnailPath}">
-          <img src="${API_URL}/${thumbnailPath}" alt="Thumbnail Design" class="lazy-img" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="portfolio-item" data-type="image" data-path="${API_URL}/${thumbnailPath}">
+          <img src="${API_URL}/${thumbnailPath}" alt="Design" style="display:block; width:100%; height:100%; object-fit:cover;">
         </div>
       `;
     }
 
+    // Load media
     async function loadMedia() {
-      const videoGrid = document.getElementById('videoGrid');
-      const thumbnailGrid = document.getElementById('thumbnailGrid');
-      const videoCount = document.getElementById('videoCount');
-      const thumbCount = document.getElementById('thumbCount');
-      
       try {
         const response = await fetch(`${API_URL}/api/media`);
         const data = await response.json();
-        
-        videoCount.textContent = `${data.videos.length}+ Projects`;
-        thumbCount.textContent = `${data.thumbnails.length}+ Designs`;
+
+        document.getElementById('videoCount').textContent = data.videos.length + ' Projects';
+        document.getElementById('thumbCount').textContent = data.thumbnails.length + ' Designs';
+
+        const videoGrid = document.getElementById('videoGrid');
+        const thumbGrid = document.getElementById('thumbnailGrid');
 
         videoGrid.innerHTML = '';
-        thumbnailGrid.innerHTML = '';
+        thumbGrid.innerHTML = '';
 
-        data.videos.forEach((video) => {
+        data.videos.forEach(video => {
           videoGrid.insertAdjacentHTML('beforeend', createVideoCard(video.path));
         });
 
-        data.thumbnails.forEach((thumb) => {
-          thumbnailGrid.insertAdjacentHTML('beforeend', createThumbnailCard(thumb.path));
+        data.thumbnails.forEach(thumb => {
+          thumbGrid.insertAdjacentHTML('beforeend', createThumbnailCard(thumb.path));
         });
 
         lazyLoadVideos();
-        lazyLoadThumbnails();
-        initAutoplayLogic();
-        
+        initAutoplay();
+        setupModals();
       } catch (err) {
-        console.error('Failed to load media:', err);
-        videoCount.textContent = 'Error';
-        thumbCount.textContent = 'Error';
-        videoGrid.innerHTML = '<div class="text-gray-500 py-10 text-center col-span-full">Failed to load videos. Please refresh.</div>';
-        thumbnailGrid.innerHTML = '<div class="text-gray-500 py-10 text-center col-span-full">Failed to load thumbnails. Please refresh.</div>';
+        console.error('Error loading media:', err);
+        document.getElementById('videoGrid').innerHTML = '<div style="grid-column: 1/-1; text-center; color: #999;">Failed to load videos</div>';
+        document.getElementById('thumbnailGrid').innerHTML = '<div style="grid-column: 1/-1; text-center; color: #999;">Failed to load thumbnails</div>';
       }
     }
 
     let isGlobalMuted = true;
-    let autoplayObserver = null;
 
     function lazyLoadVideos() {
-      const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
-      const observer = new IntersectionObserver((entries) => {
+      const videos = document.querySelectorAll('.portfolio-item[data-type="video"]');
+      const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const item = entry.target;
             const video = item.querySelector('video');
             if (video && video.preload === 'metadata') {
               video.style.display = 'block';
-              video.addEventListener('loadedmetadata', () => {
-                item.classList.add('loaded');
-              }, { once: true });
-              video.addEventListener('error', () => {
-                item.classList.add('loaded');
-              }, { once: true });
               video.load();
+              observer.unobserve(item);
             }
-            observer.unobserve(item);
           }
         });
-      }, { rootMargin: '300px 0px', threshold: 0.01 });
+      }, { rootMargin: '300px', threshold: 0.01 });
 
-      videoItems.forEach(item => observer.observe(item));
+      videos.forEach(v => observer.observe(v));
     }
 
-    function lazyLoadThumbnails() {
-      const thumbItems = document.querySelectorAll('.portfolio-item[data-type="image"]');
-      thumbItems.forEach(item => {
-        const img = item.querySelector('img');
-        if (img && img.dataset.src && !img.src) {
-          img.onload = () => {
-            img.style.display = 'block';
-            item.classList.add('loaded');
-          };
-          img.onerror = () => {
-            img.style.display = 'block';
-            item.classList.add('loaded');
-          };
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
-      });
-    }
-
-    function initAutoplayLogic() {
-      const videoItems = document.querySelectorAll('.portfolio-item[data-type="video"]');
-
-      document.addEventListener('click', (e) => {
-        const toggle = e.target.closest('.unmute-toggle');
-        if (toggle) {
-          e.preventDefault();
-          e.stopPropagation();
-          isGlobalMuted = !isGlobalMuted;
-          
-          document.querySelectorAll('.unmute-toggle i').forEach(icon => {
-            icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-          });
-          document.querySelectorAll('video').forEach(v => {
-            v.muted = isGlobalMuted;
-          });
-          return;
-        }
-      });
-
-      const visibilityMap = new Map();
-
-      autoplayObserver = new IntersectionObserver((entries) => {
-        if (document.getElementById('mediaModal').classList.contains('active')) return;
-
+    function initAutoplay() {
+      const videos = document.querySelectorAll('.portfolio-item[data-type="video"] video');
+      const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          visibilityMap.set(entry.target, entry.intersectionRatio);
-        });
-
-        let mostVisible = null;
-        let maxRatio = 0.5;
-
-        visibilityMap.forEach((ratio, element) => {
-          if (ratio > maxRatio) {
-            maxRatio = ratio;
-            mostVisible = element;
-          }
-        });
-
-        videoItems.forEach(item => {
-          const video = item.querySelector('video');
-          if (!video || video.style.display === 'none' || video.readyState < 2) return;
-          if (item === mostVisible) {
-            if (video.paused) {
+          const video = entry.target;
+          if (entry.intersectionRatio > 0.5) {
+            if (video.style.display !== 'none' && video.readyState >= 2) {
               video.play().catch(() => {});
             }
           } else {
-            if (!video.paused) {
-              video.pause();
-            }
+            video.pause();
           }
         });
-      }, { threshold: [0, 0.25, 0.5, 0.75, 1.0] });
+      }, { threshold: [0.5] });
 
-      videoItems.forEach(item => autoplayObserver.observe(item));
+      videos.forEach(v => observer.observe(v));
+
+      // Mute toggle
+      document.addEventListener('click', e => {
+        if (e.target.closest('.unmute-toggle')) {
+          e.stopPropagation();
+          isGlobalMuted = !isGlobalMuted;
+          document.querySelectorAll('video').forEach(v => v.muted = isGlobalMuted);
+          document.querySelectorAll('.unmute-toggle i').forEach(icon => {
+            icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+          });
+        }
+      });
     }
 
-    window.addEventListener('DOMContentLoaded', loadMedia);
+    function setupModals() {
+      const modal = document.getElementById('mediaModal');
+      const modalVideo = document.getElementById('modalVideo');
+      const modalImage = document.getElementById('modalImage');
 
-    const filterBtns = document.querySelectorAll('.filter-btn-modern');
-    const videosSection = document.getElementById('videosSection');
-    const thumbnailsSection = document.getElementById('thumbnailsSection');
+      document.addEventListener('click', e => {
+        if (e.target.closest('.unmute-toggle')) return;
+        const item = e.target.closest('.portfolio-item');
+        if (!item) return;
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const section = btn.getAttribute('data-section');
-        
-        if (section === 'videos') {
-          videosSection.classList.remove('section-hidden');
-          videosSection.classList.add('section-visible');
-          thumbnailsSection.classList.remove('section-visible');
-          thumbnailsSection.classList.add('section-hidden');
+        const type = item.dataset.type;
+        const path = item.dataset.path;
+
+        if (type === 'video') {
+          document.querySelectorAll('video').forEach(v => v.pause());
+          modalVideo.style.display = 'block';
+          modalImage.style.display = 'none';
+          modalVideo.src = path;
+          modalVideo.muted = isGlobalMuted;
+          modalVideo.play().catch(() => {});
         } else {
-          thumbnailsSection.classList.remove('section-hidden');
-          thumbnailsSection.classList.add('section-visible');
-          videosSection.classList.remove('section-visible');
-          videosSection.classList.add('section-hidden');
+          modalVideo.style.display = 'none';
+          modalImage.style.display = 'block';
+          modalImage.src = path;
+        }
+
+        modal.classList.add('active');
+      });
+
+      document.querySelector('.close-modal').addEventListener('click', () => {
+        modal.classList.remove('active');
+        modalVideo.pause();
+        modalVideo.src = '';
+        modalImage.src = '';
+      });
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        const videoSection = document.getElementById('videoSection');
+        const thumbSection = document.getElementById('thumbnailSection');
+
+        if (filter === 'videos') {
+          videoSection.style.display = 'block';
+          thumbSection.style.display = 'none';
+        } else if (filter === 'thumbnails') {
+          videoSection.style.display = 'none';
+          thumbSection.style.display = 'block';
+        } else {
+          videoSection.style.display = 'block';
+          thumbSection.style.display = 'block';
         }
       });
     });
 
-    const modal = document.getElementById('mediaModal');
-    const modalVideo = document.getElementById('modalVideo');
-    const modalImage = document.getElementById('modalImage');
-    const closeModal = document.querySelector('.close-modal');
-
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.unmute-toggle')) return;
-
-      const portfolioItem = e.target.closest('.portfolio-item');
-      if (!portfolioItem) return;
-      
-      const type = portfolioItem.getAttribute('data-type');
-      const path = portfolioItem.getAttribute('data-path');
-      
-      if (type === 'video') {
-        const gridVideo = portfolioItem.querySelector('video');
-        
-        document.querySelectorAll('.portfolio-item video').forEach(v => {
-          if (!v.paused) v.pause();
-        });
-
-        modalVideo.style.display = 'block';
-        modalImage.style.display = 'none';
-        modalVideo.src = path;
-        modalVideo.load();
-        
-        if (gridVideo && !isNaN(gridVideo.currentTime)) {
-          modalVideo.currentTime = gridVideo.currentTime;
-        }
-        
-        modalVideo.muted = isGlobalMuted;
-        modalVideo.play().catch(() => {});
-      } else {
-        modalVideo.style.display = 'none';
-        modalImage.style.display = 'block';
-        modalImage.src = path;
-      }
-      
-      modal.classList.add('active');
-    });
-
-    function closeModalFunc() {
-      modal.classList.remove('active');
-      modalVideo.pause();
-      modalVideo.src = '';
-      modalImage.src = '';
-      
-      if (autoplayObserver) {
-        window.dispatchEvent(new Event('scroll'));
-      }
-    }
-
-    closeModal.addEventListener('click', closeModalFunc);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModalFunc();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModalFunc();
-      }
-    });
+    // Load on ready
+    document.addEventListener('DOMContentLoaded', loadMedia);
   </script>
   <script src="chatbot-widget.js"></script>
 </body>
