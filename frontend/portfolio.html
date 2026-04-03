@@ -69,76 +69,6 @@
       color: #c41e3a;
     }
 
-    /* ===== HERO SECTION ===== */
-    .hero-section {
-      min-height: 100vh;
-      background: linear-gradient(135deg, rgba(196, 30, 58, 0.08) 0%, rgba(227, 25, 55, 0.03) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 80px;
-    }
-
-    .hero-accent {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-    }
-
-    .hero-accent.top-left {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(196, 30, 58, 0.2), transparent);
-      top: -100px;
-      left: -150px;
-    }
-
-    .hero-accent.bottom-right {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(227, 25, 55, 0.15), transparent);
-      bottom: -150px;
-      right: -200px;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 8vw, 5.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-
-    .hero-title span {
-      background: linear-gradient(135deg, #c41e3a, #e31937);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.25rem;
-      color: #9ca3af;
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
     /* ===== BUTTONS ===== */
     .btn-primary {
       background: linear-gradient(135deg, #c41e3a, #e31937);
@@ -646,25 +576,8 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-accent top-left"></div>
-    <div class="hero-accent bottom-right"></div>
-    <div class="hero-content max-w-3xl mx-auto px-6">
-      <div class="animate-fade-up">
-        <p style="color: #c41e3a; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 1rem;">PORTFOLIO</p>
-        <h1 class="hero-title">
-          Creative Works &amp;<br/><span>Inspiring Projects</span>
-        </h1>
-        <p class="hero-subtitle">
-          Explore my latest design projects, video edits, and digital creations showcasing my passion for beautiful experiences
-        </p>
-      </div>
-    </div>
-  </section>
-
   <!-- About Section -->
-  <section class="py-20 md:py-28">
+  <section class="pt-32 pb-20 md:pt-40 md:pb-28">
     <div class="max-w-6xl mx-auto">
       <div class="about-grid">
         <div class="flex justify-center md:justify-start">
