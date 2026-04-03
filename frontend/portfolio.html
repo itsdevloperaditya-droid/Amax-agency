@@ -874,8 +874,6 @@
       }
     }
 
-    let isGlobalMuted = true;
-
     function lazyLoadVideos() {
       const videos = document.querySelectorAll('.portfolio-item[data-type="video"]');
       const observer = new IntersectionObserver(entries => {
@@ -912,15 +910,17 @@
 
       videos.forEach(v => observer.observe(v));
 
-      // Mute toggle
+      // Individual Mute toggle
       document.addEventListener('click', e => {
-        if (e.target.closest('.unmute-toggle')) {
+        const toggle = e.target.closest('.unmute-toggle');
+        if (toggle) {
           e.stopPropagation();
-          isGlobalMuted = !isGlobalMuted;
-          document.querySelectorAll('video').forEach(v => v.muted = isGlobalMuted);
-          document.querySelectorAll('.unmute-toggle i').forEach(icon => {
-            icon.className = isGlobalMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-          });
+          const video = toggle.closest('.portfolio-item').querySelector('video');
+          if (video) {
+            video.muted = !video.muted;
+            const icon = toggle.querySelector('i');
+            icon.className = video.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+          }
         }
       });
     }
@@ -939,11 +939,13 @@
         const path = item.dataset.path;
 
         if (type === 'video') {
-          document.querySelectorAll('video').forEach(v => v.pause());
+          // Pause all background videos
+          document.querySelectorAll('.portfolio-item video').forEach(v => v.pause());
+          
           modalVideo.style.display = 'block';
           modalImage.style.display = 'none';
           modalVideo.src = path;
-          modalVideo.muted = isGlobalMuted;
+          modalVideo.muted = false; // Unmute by default in modal
           modalVideo.play().catch(() => {});
         } else {
           modalVideo.style.display = 'none';
