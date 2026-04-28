@@ -29,46 +29,56 @@
     }
 
     /* Light Mode */
-    html.light-mode {
-      --purple: #7C3AED;
-      --purple-light: #8B5CF6;
-      --purple-dark: #6D28D9;
-      --cyan: #0891B2;
-      --bg: #F8FAFC;
-      --bg-2: #F1F5F9;
-      --card: rgba(255, 255, 255, 0.8);
-      --border: rgba(124, 58, 237, 0.15);
-      --border-hover: rgba(124, 58, 237, 0.4);
-      --text-muted: #64748B;
-      --text-secondary: #475569;
-    }
-
-    html.light-mode body { background-color: var(--bg); color: #1E293B; }
-    html.light-mode .bg-gradient-to-b { background: linear-gradient(to bottom, transparent, var(--bg)); }
-    html.light-mode nav { background: rgba(248, 250, 252, 0.92); border-bottom: 1px solid rgba(124, 58, 237, 0.1); }
-    html.light-mode .nav-link { color: #475569; }
-    html.light-mode .nav-link:hover, html.light-mode .nav-link.active { color: var(--purple); }
-    html.light-mode .section-padding { background: linear-gradient(to bottom, var(--bg-2), #E2E8F0); }
-    html.light-mode .hero-title { color: #0F172A; }
-    html.light-mode .hero-subtitle { color: #475569; }
-    html.light-mode .text-gray-400, html.light-mode .text-gray-500 { color: #64748B; }
-    html.light-mode .glass-card { background: rgba(255, 255, 255, 0.9); border-color: rgba(124, 58, 237, 0.2); }
-    html.light-mode .service-card { background: rgba(255, 255, 255, 0.85); border-color: rgba(124, 58, 237, 0.15); }
-    html.light-mode .service-card:hover { background: rgba(255, 255, 255, 0.95); border-color: var(--purple); box-shadow: 0 12px 32px -10px rgba(124, 58, 237, 0.25); }
-    html.light-mode .stat-item { color: #475569; }
-    html.light-mode .stat-value { color: var(--purple-dark); }
-    html.light-mode .footer-links { color: #475569; }
-    html.light-mode footer { background: linear-gradient(to bottom, transparent, #E2E8F0); border-top-color: rgba(124, 58, 237, 0.1); }
-    html.light-mode .btn-outline { background: transparent; border: 1px solid rgba(124, 58, 237, 0.3); color: var(--purple); }
-    html.light-mode .btn-outline:hover { background: rgba(124, 58, 237, 0.1); border-color: var(--purple); }
-    html.light-mode #themeToggle { background: rgba(124, 58, 237, 0.1); border-color: rgba(124, 58, 237, 0.2); }
-    html.light-mode #themeToggle:hover { background: rgba(124, 58, 237, 0.2); }
-    html.light-mode .form-input { background: rgba(255, 255, 255, 0.8); border-color: rgba(124, 58, 237, 0.2); color: #1E293B; }
-    html.light-mode .option-card { background: rgba(255, 255, 255, 0.7); border-color: rgba(124, 58, 237, 0.15); color: #475569; }
-    html.light-mode .option-card:hover { background: rgba(248, 250, 252, 0.9); border-color: rgba(124, 58, 237, 0.3); }
-    html.light-mode textarea { color: #1E293B; }
-    html.light-mode .step-indicator { background: rgba(255, 255, 255, 0.8); border-color: rgba(124, 58, 237, 0.2); color: #64748B; }
-    html.light-mode .progress-line { background: rgba(124, 58, 237, 0.15); }
+    html.light-mode { color-scheme: light; }
+    html.light-mode body { background-color: #F8FAFC !important; color: #1E293B !important; }
+    html.light-mode h1, html.light-mode h2, html.light-mode h3, html.light-mode h4 { color: #0F172A !important; }
+    html.light-mode p { color: #334155 !important; }
+    html.light-mode .text-gray-300, html.light-mode .text-gray-400, html.light-mode .text-gray-500 { color: #475569 !important; }
+    html.light-mode a { color: #7C3AED !important; }
+    html.light-mode .bg-gradient-to-b { background: linear-gradient(to bottom, transparent, #F8FAFC) !important; }
+    html.light-mode nav { background: rgba(248, 250, 252, 0.95) !important; border-bottom: 1px solid rgba(124, 58, 237, 0.1) !important; }
+    html.light-mode .nav-link { color: #475569 !important; }
+    html.light-mode .nav-link:hover, html.light-mode .nav-link.active { color: #7C3AED !important; }
+    html.light-mode .section-padding { background: linear-gradient(to bottom, #F1F5F9, #E2E8F0) !important; }
+    html.light-mode .hero-title { color: #0F172A !important; }
+    html.light-mode .hero-subtitle { color: #475569 !important; }
+    html.light-mode .badge-text { color: #7C3AED !important; }
+    html.light-mode .glass-card { background: rgba(255, 255, 255, 0.95) !important; border-color: rgba(124, 58, 237, 0.2) !important; }
+    html.light-mode .service-card { background: rgba(255, 255, 255, 0.9) !important; border-color: rgba(124, 58, 237, 0.15) !important; }
+    html.light-mode .service-card:hover { background: rgba(255, 255, 255, 1) !important; border-color: #7C3AED !important; box-shadow: 0 12px 32px -10px rgba(124, 58, 237, 0.25) !important; }
+    html.light-mode .service-title { color: #1E293B !important; }
+    html.light-mode .service-desc { color: #64748B !important; }
+    html.light-mode .stat-item { color: #475569 !important; }
+    html.light-mode .stat-value { color: #7C3AED !important; }
+    html.light-mode .footer-links { color: #475569 !important; }
+    html.light-mode footer { background: linear-gradient(to bottom, transparent, #E2E8F0) !important; border-top-color: rgba(124, 58, 237, 0.1) !important; }
+    html.light-mode .footer-links:hover { color: #7C3AED !important; }
+    html.light-mode .btn-outline { background: transparent !important; border: 1px solid rgba(124, 58, 237, 0.3) !important; color: #7C3AED !important; }
+    html.light-mode .btn-outline:hover { background: rgba(124, 58, 237, 0.1) !important; border-color: #7C3AED !important; }
+    html.light-mode #themeToggle { background: rgba(124, 58, 237, 0.1) !important; border-color: rgba(124, 58, 237, 0.2) !important; }
+    html.light-mode #themeToggle:hover { background: rgba(124, 58, 237, 0.2) !important; }
+    html.light-mode .form-input { background: rgba(255, 255, 255, 0.9) !important; border-color: rgba(124, 58, 237, 0.2) !important; color: #1E293B !important; }
+    html.light-mode .option-card { background: rgba(255, 255, 255, 0.8) !important; border-color: rgba(124, 58, 237, 0.15) !important; color: #475569 !important; }
+    html.light-mode .option-card:hover { background: rgba(248, 250, 252, 0.95) !important; border-color: rgba(124, 58, 237, 0.3) !important; }
+    html.light-mode .option-card.selected { background: rgba(124, 58, 237, 0.15) !important; border-color: #7C3AED !important; color: #1E293B !important; }
+    html.light-mode textarea { background: rgba(255, 255, 255, 0.9) !important; color: #1E293B !important; }
+    html.light-mode .step-indicator { background: rgba(255, 255, 255, 0.9) !important; border-color: rgba(124, 58, 237, 0.2) !important; color: #64748B !important; }
+    html.light-mode .step-indicator.active { background: #7C3AED !important; border-color: #7C3AED !important; color: white !important; }
+    html.light-mode .progress-line { background: rgba(124, 58, 237, 0.15) !important; }
+    html.light-mode .progress-line-fill { background: #7C3AED !important; }
+    html.light-mode canvas { opacity: 0.3 !important; }
+    html.light-mode .grid-bg { opacity: 0.05 !important; }
+    html.light-mode .hero-floating-el { border-color: rgba(124, 58, 237, 0.2) !important; background: rgba(124, 58, 237, 0.1) !important; }
+    html.light-mode .field-error { color: #DC2626 !important; }
+    html.light-mode select { background: rgba(255, 255, 255, 0.9) !important; color: #1E293B !important; border-color: rgba(124, 58, 237, 0.2) !important; }
+    html.light-mode label:not(.option-card):not(.multi-choice-card) { color: #475569 !important; }
+    html.light-mode .input-field { background: rgba(255, 255, 255, 0.9) !important; border-color: rgba(124, 58, 237, 0.2) !important; color: #1E293B !important; }
+    html.light-mode .choice-card { background: rgba(255, 255, 255, 0.8) !important; border-color: rgba(124, 58, 237, 0.15) !important; color: #475569 !important; }
+    html.light-mode .choice-card:hover, html.light-mode .choice-card.selected { background: rgba(124, 58, 237, 0.15) !important; border-color: #7C3AED !important; color: #1E293B !important; }
+    html.light-mode .multi-choice-card { background: rgba(255, 255, 255, 0.8) !important; border-color: rgba(124, 58, 237, 0.15) !important; color: #475569 !important; }
+    html.light-mode .multi-choice-card:hover { background: rgba(248, 250, 252, 0.95) !important; }
+    html.light-mode .multi-choice-card.selected { background: rgba(124, 58, 237, 0.15) !important; border-color: #7C3AED !important; color: #1E293B !important; }
+    html.light-mode ::placeholder { color: #94A3B8 !important; }
 
     html { scroll-behavior: smooth; }
 
