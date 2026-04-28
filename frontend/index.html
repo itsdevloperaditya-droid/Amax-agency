@@ -1345,6 +1345,7 @@
     const skillSets = document.querySelectorAll('.skill-set');
 
     const updateSkillSets = skill => {
+      console.log('updateSkillSets called with:', skill);
       skillSets.forEach(s => {
         s.classList.add('hidden');
         s.querySelectorAll('input').forEach(i => { i.disabled = true; i.checked = false; i.closest('.option-card').classList.remove('selected'); });
@@ -1355,8 +1356,15 @@
       });
       const cleanSkill = skill === 'Other' ? (document.querySelector('input[name="primarySkillOther"]')?.value || 'VideoEditor') : skill;
       const id = `set-${cleanSkill.replace(/\s+/g,'')}`;
+      console.log('Looking for element:', id);
       const active = document.getElementById(id);
-      if (active) { active.classList.remove('hidden'); active.querySelectorAll('input').forEach(i => { i.disabled = false; }); }
+      if (active) { 
+        active.classList.remove('hidden'); 
+        active.querySelectorAll('input').forEach(i => { i.disabled = false; }); 
+        console.log('Element found and shown:', id);
+      } else {
+        console.error('Element NOT found:', id);
+      }
     };
     primarySkillRadios.forEach(r => r.addEventListener('change', e => updateSkillSets(e.target.value)));
 
@@ -1376,8 +1384,9 @@
     const updateStepUI = () => {
       steps.forEach(s => { s.classList.remove('active'); if (parseInt(s.dataset.step) === currentStep) s.classList.add('active'); });
 
-      if (currentStep === 3) {
-        const sel = document.querySelector('input[name="primarySkill"]:checked')?.value;
+      if (currentStep >= 3) {
+        const skill = document.querySelector('input[name="primarySkill"]:checked');
+        const sel = skill?.value;
         if (sel) updateSkillSets(sel);
       }
 
