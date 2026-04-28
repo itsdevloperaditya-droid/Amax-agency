@@ -1504,10 +1504,8 @@
     // Hire buttons
     ['heroHireBtn', 'finalHireBtn'].forEach(id => {
       document.getElementById(id)?.addEventListener('click', () => {
-        const token = localStorage.getItem('amax_token');
-        const applied = localStorage.getItem('amax_worker_applied');
-        if (applied === 'true') window.location.href = 'worker-dashboard.html';
-        else window.location.href = token ? 'worker-onboarding.html' : 'auth.html?redirect=worker-onboarding.html';
+        hireMeModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
       });
     });
 
@@ -1523,8 +1521,6 @@
 
     document.getElementById('viewPortfolioBtn')?.addEventListener('click', () => window.location.href = 'portfolio.html');
     document.getElementById('videoEditorBtn')?.addEventListener('click', () => window.location.href = 'services.html');
-
-    // Media modal
     const mediaModal = document.getElementById('mediaModal');
     const modalImg   = document.getElementById('modalImg');
     const closeMedia = document.querySelector('.close-media-modal');
