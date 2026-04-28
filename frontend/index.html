@@ -428,9 +428,6 @@
         <a href="#testimonials" class="hover:text-purple-400 transition-colors">Testimonials</a>
       </div>
       <div class="flex gap-2 items-center">
-        <button class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold btn-primary text-white" id="navAuthBtn">
-          Sign Up / Login
-        </button>
       </div>
     </div>
   </nav>
@@ -864,49 +861,7 @@
   </script>
 
 
-  <div id="authModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/85 backdrop-blur-sm px-4 md:px-6">
-    <div class="glass-card w-full max-w-sm md:max-w-md p-6 md:p-8 relative animate-fade-up">
-      <button id="closeAuthModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl transition-colors">&times;</button>
-
-      <!-- Login -->
-      <div id="loginForm">
-        <h2 class="font-heading text-2xl md:text-3xl font-bold mb-5 md:mb-6 text-center">Login</h2>
-        <form id="loginFormEl" class="space-y-4">
-          <div>
-            <label class="block text-xs md:text-sm font-medium mb-1">Email Address</label>
-            <input type="email" name="email" required class="w-full bg-white/[0.05] border border-white/[0.09] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors" placeholder="your@email.com">
-          </div>
-          <div>
-            <label class="block text-xs md:text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" required class="w-full bg-white/[0.05] border border-white/[0.09] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors" placeholder="••••••••">
-          </div>
-          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-2 text-sm md:text-base">Login</button>
-        </form>
-        <p class="text-center text-xs md:text-sm mt-5 text-gray-400">Don't have an account? <a href="#" id="toggleToSignup" class="text-purple-400 font-semibold">Sign Up</a></p>
-      </div>
-
-      <!-- Signup -->
-      <div id="signupForm" class="hidden">
-        <h2 class="font-heading text-2xl md:text-3xl font-bold mb-5 md:mb-6 text-center">Sign Up</h2>
-        <form id="signupFormEl" class="space-y-4">
-          <div>
-            <label class="block text-xs md:text-sm font-medium mb-1">Full Name</label>
-            <input type="text" name="name" required class="w-full bg-white/[0.05] border border-white/[0.09] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors" placeholder="John Doe">
-          </div>
-          <div>
-            <label class="block text-xs md:text-sm font-medium mb-1">Email Address</label>
-            <input type="email" name="email" required class="w-full bg-white/[0.05] border border-white/[0.09] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors" placeholder="your@email.com">
-          </div>
-          <div>
-            <label class="block text-xs md:text-sm font-medium mb-1">Password</label>
-            <input type="password" name="password" required class="w-full bg-white/[0.05] border border-white/[0.09] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-500 transition-colors" placeholder="••••••••">
-          </div>
-          <button type="submit" class="w-full py-3 rounded-full font-bold text-white btn-primary mt-2 text-sm md:text-base">Create Account</button>
-        </form>
-        <p class="text-center text-xs md:text-sm mt-5 text-gray-400">Already have an account? <a href="#" id="toggleToLogin" class="text-purple-400 font-semibold">Login</a></p>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- ═══════════════════════ HIRE ME MODAL ═══════════════════════ -->
   <div id="hireMeModal" class="fixed inset-0 z-[100] hidden flex items-end md:items-center justify-center bg-black/92 backdrop-blur-md px-0 md:px-4 py-0 md:py-8">
@@ -1192,20 +1147,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════ LOGOUT MODAL ═══════════════════════ -->
-  <div id="logoutModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/85 backdrop-blur-sm px-4">
-    <div class="glass-card w-full max-w-sm p-7 md:p-8 relative animate-fade-up text-center">
-      <div class="w-16 h-16 md:w-20 md:h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-5">
-        <i class="fas fa-sign-out-alt text-2xl md:text-3xl"></i>
-      </div>
-      <h2 class="font-heading text-xl md:text-2xl font-bold mb-2">Are you sure?</h2>
-      <p class="text-gray-400 text-sm mb-6 md:mb-8">You will need to login again to access your account.</p>
-      <div class="flex gap-3 md:gap-4">
-        <button id="cancelLogout" class="flex-1 py-2.5 md:py-3 rounded-full font-bold border border-white/[0.09] hover:bg-white/[0.05] transition text-gray-300 text-sm">Cancel</button>
-        <button id="confirmLogout" class="flex-1 py-2.5 md:py-3 rounded-full font-bold bg-red-500 hover:bg-red-600 transition text-white text-sm">Logout</button>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- ═══════════════════════ SCROLL TO TOP ═══════════════════════ -->
   <button id="scrollTopBtn" aria-label="Scroll to top" class="fixed bottom-6 right-5 md:bottom-8 md:right-8 z-40 w-10 h-10 md:w-12 md:h-12 rounded-full btn-primary flex items-center justify-center shadow-lg opacity-0 pointer-events-none transition-all duration-300">
@@ -1360,84 +1302,7 @@
       setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
     };
 
-    /* ── AUTH ── */
-    const authModal    = document.getElementById('authModal');
-    const logoutModal  = document.getElementById('logoutModal');
-    const loginForm    = document.getElementById('loginForm');
-    const signupForm   = document.getElementById('signupForm');
-    const navAuthBtn   = document.getElementById('navAuthBtn');
-    const isLoggedIn   = () => localStorage.getItem('isLoggedIn') === 'true';
-
-    const showAuthModal = (type = 'login') => {
-      authModal.classList.remove('hidden');
-      if (type === 'signup') { loginForm.classList.add('hidden'); signupForm.classList.remove('hidden'); }
-      else                   { loginForm.classList.remove('hidden'); signupForm.classList.add('hidden'); }
-    };
-    const hideAuthModal   = () => authModal.classList.add('hidden');
-    const showLogoutModal = () => logoutModal.classList.remove('hidden');
-    const hideLogoutModal = () => logoutModal.classList.add('hidden');
-
-    document.getElementById('closeAuthModal').addEventListener('click', hideAuthModal);
-    authModal.addEventListener('click', e => { if (e.target === authModal) hideAuthModal(); });
-
-    document.getElementById('toggleToSignup').addEventListener('click', e => { e.preventDefault(); loginForm.classList.add('hidden'); signupForm.classList.remove('hidden'); });
-    document.getElementById('toggleToLogin').addEventListener('click', e => { e.preventDefault(); signupForm.classList.add('hidden'); loginForm.classList.remove('hidden'); });
-
-    document.getElementById('cancelLogout').addEventListener('click', hideLogoutModal);
-    document.getElementById('confirmLogout').addEventListener('click', () => {
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userName');
-      updateAuthUI();
-      hideLogoutModal();
-      showToast('Logged out successfully!', 'info');
-    });
-
-    navAuthBtn.addEventListener('click', () => { isLoggedIn() ? showLogoutModal() : showAuthModal(); });
-
-    const updateAuthUI = () => {
-      if (isLoggedIn()) {
-        const n = localStorage.getItem('userName') || 'User';
-        navAuthBtn.classList.remove('btn-primary');
-        navAuthBtn.classList.add('bg-white/5', 'border', 'border-white/10', 'hover:bg-white/10');
-        navAuthBtn.innerHTML = `<span class="max-w-[90px] truncate text-purple-300 text-xs" title="${n}">${n}</span><span class="ml-2 px-2 py-0.5 rounded-full text-xs font-bold bg-red-500/20 text-red-400 border border-red-500/30">Logout</span>`;
-      } else {
-        navAuthBtn.classList.add('btn-primary');
-        navAuthBtn.classList.remove('bg-white/5','border','border-white/10','hover:bg-white/10');
-        navAuthBtn.textContent = 'Sign Up / Login';
-      }
-    };
-
     const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
-
-    document.getElementById('signupFormEl').addEventListener('submit', async e => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target).entries());
-      try {
-        const r = await fetch(`${API_URL}/api/signup`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
-        const res = await r.json();
-        r.ok ? (showToast('Account created! Please login.', 'success'), showAuthModal('login')) : showToast(res.error || 'Signup failed', 'error');
-      } catch { showToast('Server connection error.', 'error'); }
-    });
-
-    document.getElementById('loginFormEl').addEventListener('submit', async e => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target).entries());
-      try {
-        const r = await fetch(`${API_URL}/api/login`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
-        const res = await r.json();
-        if (r.ok) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('userName', res.name);
-          updateAuthUI(); hideAuthModal();
-          showToast(`Welcome back, ${res.name}!`, 'success');
-        } else { showToast(res.error || 'Login failed', 'error'); }
-      } catch { showToast('Server connection error.', 'error'); }
-    });
-
-    const withAuth = fn => (...args) => {
-      if (isLoggedIn()) { fn(...args); }
-      else { showToast('Please login to access this feature', 'info'); showAuthModal(); }
-    };
 
     /* ── SMOOTH SCROLL ── */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1656,8 +1521,8 @@
       }
     };
 
-    document.getElementById('viewPortfolioBtn')?.addEventListener('click', withAuth(() => window.location.href = 'portfolio.html'));
-    document.getElementById('videoEditorBtn')?.addEventListener('click', withAuth(() => window.location.href = 'services.html'));
+    document.getElementById('viewPortfolioBtn')?.addEventListener('click', () => window.location.href = 'portfolio.html');
+    document.getElementById('videoEditorBtn')?.addEventListener('click', () => window.location.href = 'services.html');
 
     // Media modal
     const mediaModal = document.getElementById('mediaModal');
