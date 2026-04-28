@@ -883,8 +883,6 @@
         <div class="step-indicator" data-step="3">3</div>
         <div class="progress-line"><div class="progress-line-fill" id="progress-3"></div></div>
         <div class="step-indicator" data-step="4">4</div>
-        <div class="progress-line"><div class="progress-line-fill" id="progress-4"></div></div>
-        <div class="step-indicator" data-step="5">5</div>
       </div>
 
       <form id="hireMeForm" class="space-y-5" novalidate>
@@ -947,131 +945,22 @@
         </div>
 
         <!-- Step 3 -->
-        <div class="step-content" data-step="3">
+<div class="step-content" data-step="3" data-skippable="true">
           <h3 class="text-base md:text-xl font-semibold mb-4 md:mb-6 flex items-center gap-2 text-purple-400 font-heading">
-            <i class="fas fa-tools"></i> Step 3: Tools &amp; Expertise
+            <i class="fas fa-link"></i> Step 3: Portfolio <span class="text-xs font-normal text-gray-500">(Optional)</span>
           </h3>
-          <div id="dynamicToolsContainer" class="space-y-6 md:space-y-8">
-
-            <!-- Video Editor -->
-            <div id="set-VideoEditor" class="skill-set space-y-5 hidden">
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Video Editing Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Premiere Pro"><span>Premiere Pro</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="After Effects"><span>After Effects</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="CapCut"><span>CapCut</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="DaVinci Resolve"><span>DaVinci Resolve</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Final Cut Pro"><span>Final Cut Pro</span></label>
-                  <label class="option-card" data-other="tools"><input type="checkbox" name="tools" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="YouTube Editing"><span>YouTube Editing</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Reels/Shorts"><span>Reels/Shorts</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Ads/Promos"><span>Ads/Promos</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Documentaries"><span>Documentaries</span></label>
-                  <label class="option-card" data-other="workType"><input type="checkbox" name="workType" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
+          <div class="space-y-3 md:space-y-4">
+            <div>
+              <label class="block text-xs md:text-sm font-medium mb-1.5 text-gray-300">Portfolio Link <span class="text-gray-500">(Google Drive / YouTube / Behance)</span></label>
+              <input type="url" name="portfolioLink" class="form-input" placeholder="https://...">
             </div>
-
-            <!-- Thumbnail Designer -->
-            <div id="set-ThumbnailDesigner" class="skill-set space-y-5 hidden">
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Design Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Canva"><span>Canva</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Lightroom"><span>Lightroom</span></label>
-                  <label class="option-card" data-other="tools"><input type="checkbox" name="tools" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Gaming Thumbnails"><span>Gaming Thumbnails</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Vlog Thumbnails"><span>Vlog Thumbnails</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Clickbait Style"><span>Clickbait Style</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Minimalist"><span>Minimalist</span></label>
-                  <label class="option-card" data-other="workType"><input type="checkbox" name="workType" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
+            <div>
+              <label class="block text-xs md:text-sm font-medium mb-1.5 text-gray-300">Past work description <span class="text-gray-500">(Short text)</span></label>
+              <textarea name="workDescription" class="form-input min-h-[100px] md:min-h-[120px]" placeholder="Tell us about your experience and the projects you've worked on..."></textarea>
             </div>
-
-            <!-- Graphic Designer -->
-            <div id="set-GraphicDesigner" class="skill-set space-y-5 hidden">
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Creative Tools <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="Photoshop"><span>Photoshop</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Illustrator"><span>Illustrator</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Figma"><span>Figma</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="InDesign"><span>InDesign</span></label>
-                  <label class="option-card" data-other="tools"><input type="checkbox" name="tools" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Logo Design"><span>Logo Design</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Social Media Posts"><span>Social Media Posts</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Brand Identity"><span>Brand Identity</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Banners/Posters"><span>Banners/Posters</span></label>
-                  <label class="option-card" data-other="workType"><input type="checkbox" name="workType" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-
-            <!-- Web Developer -->
-            <div id="set-WebDeveloper" class="skill-set space-y-5 hidden">
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Development Stack <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="tools">
-                  <label class="option-card"><input type="checkbox" name="tools" value="HTML/CSS/JS"><span>HTML/CSS/JS</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="React/Vue"><span>React/Vue</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Tailwind CSS"><span>Tailwind CSS</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="WordPress"><span>WordPress</span></label>
-                  <label class="option-card"><input type="checkbox" name="tools" value="Node.js"><span>Node.js</span></label>
-                  <label class="option-card" data-other="tools"><input type="checkbox" name="tools" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="toolsOther" class="form-input" placeholder="Enter other tools/frameworks..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one tool</p>
-              </div>
-              <div>
-                <label class="block text-xs md:text-sm font-medium mb-3 text-gray-300">Work Type <span class="text-red-400">*</span></label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3" data-group="workType">
-                  <label class="option-card"><input type="checkbox" name="workType" value="Landing Pages"><span>Landing Pages</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Portfolio Sites"><span>Portfolio Sites</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="E-commerce"><span>E-commerce</span></label>
-                  <label class="option-card"><input type="checkbox" name="workType" value="Custom Web Apps"><span>Custom Web Apps</span></label>
-                  <label class="option-card" data-other="workType"><input type="checkbox" name="workType" value="Other"><span>Other</span></label>
-                </div>
-                <div class="other-input hidden mt-2"><input type="text" name="workTypeOther" class="form-input" placeholder="Enter other work types..."></div>
-                <p class="field-error hidden text-red-400 text-xs mt-1">Select at least one work type</p>
-              </div>
-            </div>
-
           </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="step-content" data-step="4" data-skippable="true">
+        
+        <div class="step-content" data-step="3" data-skippable="true">
           <h3 class="text-base md:text-xl font-semibold mb-4 md:mb-6 flex items-center gap-2 text-purple-400 font-heading">
             <i class="fas fa-link"></i> Step 4: Portfolio <span class="text-xs font-normal text-gray-500">(Optional)</span>
           </h3>
@@ -1087,8 +976,7 @@
           </div>
         </div>
 
-        <!-- Step 5 -->
-        <div class="step-content" data-step="5">
+        
           <h3 class="text-base md:text-xl font-semibold mb-4 md:mb-6 flex items-center gap-2 text-purple-400 font-heading">
             <i class="fas fa-clock"></i> Step 5: Pricing &amp; Availability
           </h3>
@@ -1325,7 +1213,7 @@
     const skipBtn        = document.getElementById('skipStep');
     const submitBtn      = document.getElementById('submitHireForm');
     let currentStep = 1;
-    const totalSteps = 5;
+    const totalSteps = 4;
 
     // Other option handling
     document.querySelectorAll('[data-other]').forEach(card => {
