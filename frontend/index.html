@@ -1380,7 +1380,7 @@ const updateSkillSets = skill => {
     const updateStepUI = () => {
       steps.forEach(s => { s.classList.remove('active'); if (parseInt(s.dataset.step) === currentStep) s.classList.add('active'); });
 
-      if (currentStep >= 3) {
+if (currentStep >= 3) {
         const skill = document.querySelector('input[name="primarySkill"]:checked');
         const sel = skill?.value;
         if (sel) updateSkillSets(sel);
