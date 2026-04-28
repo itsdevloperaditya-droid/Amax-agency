@@ -28,6 +28,48 @@
       --text-secondary: #9CA3AF;
     }
 
+    /* Light Mode */
+    html.light-mode {
+      --purple: #7C3AED;
+      --purple-light: #8B5CF6;
+      --purple-dark: #6D28D9;
+      --cyan: #0891B2;
+      --bg: #F8FAFC;
+      --bg-2: #F1F5F9;
+      --card: rgba(255, 255, 255, 0.8);
+      --border: rgba(124, 58, 237, 0.15);
+      --border-hover: rgba(124, 58, 237, 0.4);
+      --text-muted: #64748B;
+      --text-secondary: #475569;
+    }
+
+    html.light-mode body { background-color: var(--bg); color: #1E293B; }
+    html.light-mode .bg-gradient-to-b { background: linear-gradient(to bottom, transparent, var(--bg)); }
+    html.light-mode nav { background: rgba(248, 250, 252, 0.92); border-bottom: 1px solid rgba(124, 58, 237, 0.1); }
+    html.light-mode .nav-link { color: #475569; }
+    html.light-mode .nav-link:hover, html.light-mode .nav-link.active { color: var(--purple); }
+    html.light-mode .section-padding { background: linear-gradient(to bottom, var(--bg-2), #E2E8F0); }
+    html.light-mode .hero-title { color: #0F172A; }
+    html.light-mode .hero-subtitle { color: #475569; }
+    html.light-mode .text-gray-400, html.light-mode .text-gray-500 { color: #64748B; }
+    html.light-mode .glass-card { background: rgba(255, 255, 255, 0.9); border-color: rgba(124, 58, 237, 0.2); }
+    html.light-mode .service-card { background: rgba(255, 255, 255, 0.85); border-color: rgba(124, 58, 237, 0.15); }
+    html.light-mode .service-card:hover { background: rgba(255, 255, 255, 0.95); border-color: var(--purple); box-shadow: 0 12px 32px -10px rgba(124, 58, 237, 0.25); }
+    html.light-mode .stat-item { color: #475569; }
+    html.light-mode .stat-value { color: var(--purple-dark); }
+    html.light-mode .footer-links { color: #475569; }
+    html.light-mode footer { background: linear-gradient(to bottom, transparent, #E2E8F0); border-top-color: rgba(124, 58, 237, 0.1); }
+    html.light-mode .btn-outline { background: transparent; border: 1px solid rgba(124, 58, 237, 0.3); color: var(--purple); }
+    html.light-mode .btn-outline:hover { background: rgba(124, 58, 237, 0.1); border-color: var(--purple); }
+    html.light-mode #themeToggle { background: rgba(124, 58, 237, 0.1); border-color: rgba(124, 58, 237, 0.2); }
+    html.light-mode #themeToggle:hover { background: rgba(124, 58, 237, 0.2); }
+    html.light-mode .form-input { background: rgba(255, 255, 255, 0.8); border-color: rgba(124, 58, 237, 0.2); color: #1E293B; }
+    html.light-mode .option-card { background: rgba(255, 255, 255, 0.7); border-color: rgba(124, 58, 237, 0.15); color: #475569; }
+    html.light-mode .option-card:hover { background: rgba(248, 250, 252, 0.9); border-color: rgba(124, 58, 237, 0.3); }
+    html.light-mode textarea { color: #1E293B; }
+    html.light-mode .step-indicator { background: rgba(255, 255, 255, 0.8); border-color: rgba(124, 58, 237, 0.2); color: #64748B; }
+    html.light-mode .progress-line { background: rgba(124, 58, 237, 0.15); }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -429,7 +471,10 @@
         <a href="#testimonials" class="hover:text-purple-400 transition-colors">Testimonials</a>
       </div>
       <div class="flex gap-2 items-center">
-      </div>
+          <button id="themeToggle" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition" title="Toggle Theme">
+            <i class="fas fa-moon text-purple-400"></i>
+          </button>
+        </div>
     </div>
   </nav>
 
@@ -1190,6 +1235,26 @@
       setTimeout(() => toast.classList.add('show'), 10);
       setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
     };
+
+    /* ── THEME TOGGLE ── */
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check saved theme or default dark
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      html.classList.add('light-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun text-yellow-500"></i>';
+    }
+    
+    themeToggle?.addEventListener('click', () => {
+      html.classList.toggle('light-mode');
+      const isLight = html.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      themeToggle.innerHTML = isLight 
+        ? '<i class="fas fa-sun text-yellow-500"></i>' 
+        : '<i class="fas fa-moon text-purple-400"></i>';
+    });
 
     const API_URL = window.location.hostname === 'localhost' ? '' : 'https://amax-sskg.onrender.com';
 
